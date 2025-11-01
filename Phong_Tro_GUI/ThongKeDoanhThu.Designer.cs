@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtSoHD = new System.Windows.Forms.TextBox();
             this.txtTongTien = new System.Windows.Forms.TextBox();
@@ -87,6 +87,7 @@
             this.txtSoHD.Name = "txtSoHD";
             this.txtSoHD.Size = new System.Drawing.Size(178, 22);
             this.txtSoHD.TabIndex = 6;
+            this.txtSoHD.TextChanged += new System.EventHandler(this.txtSoHD_TextChanged);
             // 
             // txtTongTien
             // 
@@ -94,6 +95,7 @@
             this.txtTongTien.Name = "txtTongTien";
             this.txtTongTien.Size = new System.Drawing.Size(346, 22);
             this.txtTongTien.TabIndex = 5;
+            this.txtTongTien.TextChanged += new System.EventHandler(this.txtTongTien_TextChanged);
             // 
             // txtTBPhong
             // 
@@ -101,6 +103,7 @@
             this.txtTBPhong.Name = "txtTBPhong";
             this.txtTBPhong.Size = new System.Drawing.Size(346, 22);
             this.txtTBPhong.TabIndex = 4;
+            this.txtTBPhong.TextChanged += new System.EventHandler(this.txtTBPhong_TextChanged);
             // 
             // label9
             // 
@@ -150,6 +153,7 @@
             this.dgvDoanhThuDichVu.RowTemplate.Height = 24;
             this.dgvDoanhThuDichVu.Size = new System.Drawing.Size(397, 164);
             this.dgvDoanhThuDichVu.TabIndex = 19;
+            this.dgvDoanhThuDichVu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDoanhThuDichVu_CellContentClick);
             // 
             // label5
             // 
@@ -182,6 +186,7 @@
             this.dgvHoaDon.RowTemplate.Height = 24;
             this.dgvHoaDon.Size = new System.Drawing.Size(478, 258);
             this.dgvHoaDon.TabIndex = 0;
+            this.dgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick);
             // 
             // groupBox1
             // 
@@ -210,6 +215,7 @@
             this.btnXuatPDF.TabIndex = 9;
             this.btnXuatPDF.Text = "Xuất PDF";
             this.btnXuatPDF.UseVisualStyleBackColor = false;
+            this.btnXuatPDF.Click += new System.EventHandler(this.btnXuatPDF_Click);
             // 
             // btnXuatExcel
             // 
@@ -220,6 +226,7 @@
             this.btnXuatExcel.TabIndex = 8;
             this.btnXuatExcel.Text = "Xuất Excel";
             this.btnXuatExcel.UseVisualStyleBackColor = false;
+            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
             // 
             // btnLamMoi
             // 
@@ -230,6 +237,7 @@
             this.btnLamMoi.TabIndex = 7;
             this.btnLamMoi.Text = "Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // btnThongKe
             // 
@@ -240,6 +248,7 @@
             this.btnThongKe.TabIndex = 6;
             this.btnThongKe.Text = "Thống kê";
             this.btnThongKe.UseVisualStyleBackColor = false;
+            this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 
             // cboPhong
             // 
@@ -249,6 +258,7 @@
             this.cboPhong.Name = "cboPhong";
             this.cboPhong.Size = new System.Drawing.Size(105, 24);
             this.cboPhong.TabIndex = 5;
+            this.cboPhong.SelectedIndexChanged += new System.EventHandler(this.cboPhong_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -267,6 +277,7 @@
             this.cboNam.Name = "cboNam";
             this.cboNam.Size = new System.Drawing.Size(105, 24);
             this.cboNam.TabIndex = 3;
+            this.cboNam.SelectedIndexChanged += new System.EventHandler(this.cboNam_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -285,6 +296,7 @@
             this.cboThang.Name = "cboThang";
             this.cboThang.Size = new System.Drawing.Size(105, 24);
             this.cboThang.TabIndex = 1;
+            this.cboThang.SelectedIndexChanged += new System.EventHandler(this.cboThang_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -308,20 +320,21 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(506, 130);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chart1.Series.Add(series5);
             this.chart1.Size = new System.Drawing.Size(397, 225);
             this.chart1.TabIndex = 22;
             this.chart1.Text = "chart1";
+            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // panelHeader
             // 
@@ -349,6 +362,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "ThongKeDoanhThu";
             this.Text = "Thống kê doanh thu";
+            this.Load += new System.EventHandler(this.ThongKeDoanhThu_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDoanhThuDichVu)).EndInit();

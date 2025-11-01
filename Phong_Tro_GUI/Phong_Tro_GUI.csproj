@@ -179,7 +179,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\phan_mem_quan_ly_nha_tro_0_2b259fe320.webp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Phong_Tro_BUS\Phong_Tro_BUS.csproj">
@@ -190,6 +189,9 @@
       <Project>{fddc6f83-faa1-4194-8d2d-6dbed3021552}</Project>
       <Name>Phong_Tro_DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
