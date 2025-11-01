@@ -1,6 +1,6 @@
 ﻿namespace Phong_Tro_GUI
 {
-    partial class ThongBao
+    partial class ThongBaoo
     {
         /// <summary>
         /// Required designer variable.
@@ -60,9 +60,9 @@
             this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
             this.label1.Location = new System.Drawing.Point(302, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 31);
+            this.label1.Size = new System.Drawing.Size(189, 31);
             this.label1.TabIndex = 0;
-            this.label1.Text = "THÔNG BÁO";
+            this.label1.Text = "THÔNG BÁO 📢";
             // 
             // groupBox1
             // 
@@ -152,6 +152,7 @@
             this.btnXoa.TabIndex = 7;
             this.btnXoa.Text = "🗑️ Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // dtNgayGui
             // 
@@ -178,6 +179,7 @@
             this.btnSua.TabIndex = 6;
             this.btnSua.Text = "✏ Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnLamMoi
             // 
@@ -189,6 +191,7 @@
             this.btnLamMoi.TabIndex = 5;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // btnDaDoc
             // 
@@ -200,6 +203,7 @@
             this.btnDaDoc.TabIndex = 4;
             this.btnDaDoc.Text = "✓ Đã đọc";
             this.btnDaDoc.UseVisualStyleBackColor = false;
+            this.btnDaDoc.Click += new System.EventHandler(this.btnDaDoc_Click);
             // 
             // btnGui
             // 
@@ -211,6 +215,7 @@
             this.btnGui.TabIndex = 3;
             this.btnGui.Text = "✉️ Gửi";
             this.btnGui.UseVisualStyleBackColor = false;
+            this.btnGui.Click += new System.EventHandler(this.btnGui_Click);
             // 
             // label4
             // 
@@ -249,7 +254,7 @@
             this.panelHeader.Size = new System.Drawing.Size(763, 51);
             this.panelHeader.TabIndex = 3;
             // 
-            // ThongBao
+            // ThongBaoo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -258,7 +263,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "ThongBao";
+            this.Name = "ThongBaoo";
             this.Text = "Thông báo";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

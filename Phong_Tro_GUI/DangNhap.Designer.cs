@@ -69,7 +69,7 @@ namespace Phong_Tro_GUI
             this.trợGiúpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(877, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(877, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -82,7 +82,7 @@ namespace Phong_Tro_GUI
             this.lỗiToolStripMenuItem});
             this.trợGiúpToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
             this.trợGiúpToolStripMenuItem.Name = "trợGiúpToolStripMenuItem";
-            this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
+            this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(79, 26);
             this.trợGiúpToolStripMenuItem.Text = "Trợ Giúp";
             // 
             // gửiQuảnTrịViênToolStripMenuItem
@@ -144,7 +144,7 @@ namespace Phong_Tro_GUI
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 28);
+            this.panel1.Location = new System.Drawing.Point(0, 30);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(877, 56);
             this.panel1.TabIndex = 5;
