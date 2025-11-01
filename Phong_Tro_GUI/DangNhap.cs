@@ -7,7 +7,7 @@ namespace Phong_Tro_GUI
 {
     public partial class DangNhap : Form
     {
-        TaiKhoanDB taiKhoanDB = new TaiKhoanDB();
+        private readonly TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
 
         public DangNhap()
         {
@@ -16,109 +16,87 @@ namespace Phong_Tro_GUI
 
         private void DangNhap_Load(object sender, EventArgs e)
         {
-            // Ẩn mật khẩu mặc định
-            txtPassword.UseSystemPasswordChar = true;
-
-            // Load danh sách vai trò
-            cboRole.Items.Add("Chủ trọ");
-            cboRole.Items.Add("Người thuê");
+            cboRole.Items.AddRange(new string[] { "ChuTro", "KhachThue" });
             cboRole.SelectedIndex = 0;
+            txtPassword.UseSystemPasswordChar = true;
         }
 
-        // ✅ Hiện / Ẩn mật khẩu
         private void chkShowPass_CheckedChanged(object sender, EventArgs e)
         {
             txtPassword.UseSystemPasswordChar = !chkShowPass.Checked;
         }
 
-        // ✅ Đăng nhập
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text.Trim();
-            string role = cboRole.SelectedItem.ToString();
-
-            if (username == "" || password == "")
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             try
             {
-                TaiKhoan tk = taiKhoanDB.Login(username, password);
+                string user = txtUsername.Text.Trim();
+                string pass = txtPassword.Text.Trim();
+                string role = cboRole.SelectedItem.ToString();
+
+                if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
+                {
+                    MessageBox.Show("Vui lòng nhập tên đăng nhập và mật khẩu!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                TaiKhoan tk = taiKhoanBUS.KiemTraDangNhap(user, pass, role);
 
                 if (tk != null)
                 {
-                    // Kiểm tra vai trò hợp lệ
-                    if ((role == "Chủ trọ" && tk.LoaiTK == "Admin") ||
-                        (role == "Người thuê" && tk.LoaiTK == "User"))
+                    MessageBox.Show("Đăng nhập thành công!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Hide();
+
+                    // 👉 Mở form chính có chứa UserControl tùy vai trò
+                    Form mainForm = new Form
                     {
-                        MessageBox.Show("Đăng nhập thành công!", "Thành công",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Text = role == "ChuTro" ? "Chủ Trọ - Quản lý phòng trọ" : "Người Thuê - Giao diện người dùng",
+                        WindowState = FormWindowState.Maximized,
+                        BackColor = System.Drawing.Color.White
+                    };
 
-                        this.Hide(); // Ẩn form đăng nhập
-
-                        // ✅ Mở form tương ứng
-                        if (role == "Chủ trọ")
-                        {
-                            ChuTro frm = new ChuTro();
-                            frm.ShowDialog();
-                        }
-                        else
-                        {
-                            NguoiThue frm = new NguoiThue();
-                            frm.ShowDialog();
-                        }
-
-                        // Khi form con đóng → hiện lại form đăng nhập
-                        this.Show();
-
-                        // Reset dữ liệu
-                        txtUsername.Clear();
-                        txtPassword.Clear();
-                        cboRole.SelectedIndex = 0;
-                        chkShowPass.Checked = false;
-                    }
-                    else
+                    // 👉 Nạp UserControl phù hợp
+                    if (role == "ChuTro")
                     {
-                        MessageBox.Show("Sai loại tài khoản. Vui lòng chọn đúng vai trò!",
-                            "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        var ucChuTro = new UC_ChuTroDashboard();
+                        ucChuTro.Dock = DockStyle.Fill;
+                        mainForm.Controls.Add(ucChuTro);
                     }
+                    else if (role == "KhachThue")
+                    {
+                        // Nếu bạn có control người thuê
+                        // var ucNguoiThue = new UC_NguoiThue();
+                        // ucNguoiThue.Dock = DockStyle.Fill;
+                        // mainForm.Controls.Add(ucNguoiThue);
+                        MessageBox.Show("Chức năng cho Khách Thuê đang được phát triển.", "Thông báo");
+                    }
+
+                    mainForm.FormClosed += (s, args) => Application.Exit();
+                    mainForm.ShowDialog();
                 }
                 else
                 {
-                    MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!",
-                        "Lỗi đăng nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Sai tài khoản hoặc mật khẩu!", "Lỗi đăng nhập",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi đăng nhập: " + ex.Message,
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi đăng nhập: " + ex.Message, "Lỗi hệ thống",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ✅ Thoát chương trình
         private void btnExit_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc muốn thoát không?",
-                "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show("Bạn có chắc muốn thoát chương trình?", "Xác nhận",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
                 Application.Exit();
-        }
-
-        // ✅ Label "Quên mật khẩu"
-        private void lblQuenMK_Click(object sender, EventArgs e)
-        {
-            this.Hide(); // Ẩn form đăng nhập
-
-            QuenMatKhau frm = new QuenMatKhau();
-            frm.ShowDialog();
-
-            // Khi form quên mật khẩu đóng → hiện lại form đăng nhập
-            this.Show();
+            }
         }
     }
 }

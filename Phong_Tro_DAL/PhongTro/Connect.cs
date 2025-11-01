@@ -14,7 +14,7 @@ namespace Phong_Tro_DAL.Phong_Tro
 
         public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual DbSet<ChiTietTienIch> ChiTietTienIches { get; set; }
-        public virtual DbSet<ChuTro> ChuNhas { get; set; }
+        public virtual DbSet<ChuTro> ChuTro{ get; set; }
         public virtual DbSet<DichVu> DichVus { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<HopDong> HopDongs { get; set; }

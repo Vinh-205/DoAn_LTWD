@@ -206,7 +206,6 @@ namespace Phong_Tro_GUI
             this.btnExit.TabIndex = 6;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // label4
             // 
@@ -245,7 +244,6 @@ namespace Phong_Tro_GUI
             this.labelQuenMK.Size = new System.Drawing.Size(61, 16);
             this.labelQuenMK.TabIndex = 7;
             this.labelQuenMK.Text = "Quên MK";
-            this.labelQuenMK.Click += new System.EventHandler(this.lblQuenMK_Click);
             // 
             // pnlLogin
             // 
@@ -267,7 +265,6 @@ namespace Phong_Tro_GUI
             this.pnlLogin.Name = "pnlLogin";
             this.pnlLogin.Size = new System.Drawing.Size(898, 478);
             this.pnlLogin.TabIndex = 0;
-            this.pnlLogin.Click += new System.EventHandler(this.lblQuenMK_Click);
             // 
             // DangNhap
             // 

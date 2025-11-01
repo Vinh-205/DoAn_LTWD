@@ -1,116 +1,113 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_BUS.Shared;
+using Phong_Tro_BUS.Services;
 using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
 {
     public partial class ThongBaoo : Form
     {
-        private readonly ThongBaoDB tbBUS = new ThongBaoDB();
-        private List<ThongBao> danhSachThongBao = new List<ThongBao>();
+        private readonly ThongBaoBUS _thongBaoBUS = new ThongBaoBUS();
 
         public ThongBaoo()
         {
             InitializeComponent();
+            Load += ThongBaoo_Load;
         }
 
         private void ThongBaoo_Load(object sender, EventArgs e)
         {
-            LoadThongBao();
+            TaiDanhSachThongBao();
+            TaiDanhSachNguoiNhan();
+            dtNgayGui.Value = DateTime.Now;
         }
 
-        // 🩵 Load danh sách thông báo vào DataGridView
-        private void LoadThongBao()
+        /// <summary>
+        /// Nạp danh sách phòng để chọn người nhận
+        /// </summary>
+        private void TaiDanhSachNguoiNhan()
         {
-            try
+            using (var db = new Connect())
             {
-                danhSachThongBao = tbBUS.GetAll();
-                dgvThongBao.DataSource = danhSachThongBao
-                    .Select(tb => new
-                    {
-                        tb.MaTB,
-                        tb.NoiDung,
-                        tb.NgayTao,
-                        tb.MaPhong,
-                        tb.MaHopDong
-                    }).ToList();
+                var listPhong = db.Phongs.Select(p => new
+                {
+                    MaPhong = p.MaPhong,
+                    TenPhong = p.TenPhong
+                }).ToList();
 
-                dgvThongBao.ClearSelection();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi tải thông báo: " + ex.Message,
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cboNguoiNhan.DataSource = listPhong;
+                cboNguoiNhan.DisplayMember = "TenPhong";
+                cboNguoiNhan.ValueMember = "MaPhong";
             }
         }
 
-        // 🩵 Khi click vào 1 dòng trong bảng → hiện nội dung chi tiết
-        private void dgvThongBao_CellClick(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// Nạp danh sách thông báo
+        /// </summary>
+        private void TaiDanhSachThongBao()
         {
-            if (e.RowIndex >= 0 && e.RowIndex < dgvThongBao.Rows.Count)
+            var ds = _thongBaoBUS.LayTatCaThongBao();
+            dgvThongBao.DataSource = ds.Select(tb => new
             {
-                var row = dgvThongBao.Rows[e.RowIndex];
-                txtTieuDe.Text = row.Cells["NoiDung"].Value?.ToString();
-                txtNoiDung.Text = row.Cells["NoiDung"].Value?.ToString();
-                dtNgayGui.Value = Convert.ToDateTime(row.Cells["NgayTao"].Value ?? DateTime.Now);
-            }
+                tb.MaTB,
+                tb.MaPhong,
+                tb.NoiDung,
+                NgayTao = tb.NgayTao.HasValue ? tb.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : ""
+            }).ToList();
+
+            dgvThongBao.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // 🩵 Gửi thông báo mới
+        private void btnLamMoi_Click(object sender, EventArgs e)
+        {
+            txtTieuDe.Clear(); // giữ cho UI ổn định, không dùng trong DAL
+            txtNoiDung.Clear();
+            cboNguoiNhan.SelectedIndex = -1;
+            dtNgayGui.Value = DateTime.Now;
+            TaiDanhSachThongBao();
+        }
+
         private void btnGui_Click(object sender, EventArgs e)
         {
-            string noiDung = txtNoiDung.Text.Trim();
-            if (string.IsNullOrEmpty(noiDung))
+            if (string.IsNullOrWhiteSpace(txtNoiDung.Text) || cboNguoiNhan.SelectedValue == null)
             {
-                MessageBox.Show("Vui lòng nhập nội dung thông báo!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập nội dung và chọn người nhận.",
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                tbBUS.Add(noiDung);
-                MessageBox.Show("Gửi thông báo thành công!", "Thành công",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadThongBao();
-                LamMoiForm();
+                var tb = new ThongBao
+                {
+                    MaPhong = cboNguoiNhan.SelectedValue.ToString(),
+                    NoiDung = txtNoiDung.Text.Trim(),
+                    NgayTao = DateTime.Now
+                };
+
+                bool ketQua = _thongBaoBUS.GuiThongBao(tb);
+
+                if (ketQua)
+                {
+                    MessageBox.Show("Gửi thông báo thành công!", "Thành công",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TaiDanhSachThongBao();
+                    btnLamMoi.PerformClick();
+                }
+                else
+                {
+                    MessageBox.Show("Gửi thông báo thất bại!", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi gửi thông báo: " + ex.Message,
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // 🩵 Sửa thông báo
-        private void btnSua_Click(object sender, EventArgs e)
-        {
-            if (dgvThongBao.CurrentRow == null)
-            {
-                MessageBox.Show("Vui lòng chọn thông báo cần sửa!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int maTB = Convert.ToInt32(dgvThongBao.CurrentRow.Cells["MaTB"].Value);
-            var tb = tbBUS.GetById(maTB);
-
-            if (tb != null)
-            {
-                tb.NoiDung = txtNoiDung.Text.Trim();
-                tb.NgayTao = dtNgayGui.Value;
-
-                tbBUS.Update(tb);
-                MessageBox.Show("Cập nhật thông báo thành công!", "Thành công",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadThongBao();
-            }
-        }
-
-        // 🩵 Xóa thông báo
         private void btnXoa_Click(object sender, EventArgs e)
         {
             if (dgvThongBao.CurrentRow == null)
@@ -121,35 +118,76 @@ namespace Phong_Tro_GUI
             }
 
             int maTB = Convert.ToInt32(dgvThongBao.CurrentRow.Cells["MaTB"].Value);
-            DialogResult result = MessageBox.Show("Bạn có chắc muốn xóa thông báo này?",
-                "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show("Bạn có chắc muốn xóa thông báo này?", "Xác nhận",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                tbBUS.Delete(maTB);
-                LoadThongBao();
-                LamMoiForm();
+                bool kq = _thongBaoBUS.XoaThongBao(maTB);
+
+                if (kq)
+                {
+                    MessageBox.Show("Đã xóa thông báo!", "Thành công",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TaiDanhSachThongBao();
+                }
+                else
+                {
+                    MessageBox.Show("Không thể xóa thông báo!", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-        // 🩵 Làm mới form
-        private void btnLamMoi_Click(object sender, EventArgs e)
+        private void dgvThongBao_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            LamMoiForm();
+            if (e.RowIndex >= 0)
+            {
+                var row = dgvThongBao.Rows[e.RowIndex];
+                txtNoiDung.Text = row.Cells["NoiDung"].Value.ToString();
+                cboNguoiNhan.SelectedValue = row.Cells["MaPhong"].Value.ToString();
+                DateTime dt;
+                if (DateTime.TryParse(row.Cells["NgayTao"].Value.ToString(), out dt))
+                    dtNgayGui.Value = dt;
+            }
         }
 
-        private void LamMoiForm()
+        private void btnSua_Click(object sender, EventArgs e)
         {
-            txtTieuDe.Clear();
-            txtNoiDung.Clear();
-            dtNgayGui.Value = DateTime.Now;
-            dgvThongBao.ClearSelection();
+            if (dgvThongBao.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn thông báo để sửa!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                int maTB = Convert.ToInt32(dgvThongBao.CurrentRow.Cells["MaTB"].Value);
+
+                using (var db = new Connect())
+                {
+                    var tb = db.ThongBaos.FirstOrDefault(t => t.MaTB == maTB);
+                    if (tb != null)
+                    {
+                        tb.NoiDung = txtNoiDung.Text.Trim();
+                        tb.MaPhong = cboNguoiNhan.SelectedValue.ToString();
+                        db.SaveChanges();
+                        MessageBox.Show("Đã cập nhật thông báo!", "Thành công",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        TaiDanhSachThongBao();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        // 🩵 Đánh dấu là "Đã đọc"
         private void btnDaDoc_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Thông báo đã được đánh dấu là đã đọc (demo).",
+            MessageBox.Show("Chức năng này chỉ để hiển thị, vì bảng ThongBao không có cột DaDoc.",
                 "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

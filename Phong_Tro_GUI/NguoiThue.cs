@@ -15,6 +15,13 @@ namespace Phong_Tro_GUI
         public NguoiThue()
         {
             InitializeComponent();
+            
+        }
+        private void LoadUserControl(UserControl uc)
+        {
+            uc.Dock = DockStyle.Fill;
+            this.Controls.Clear();
+            this.Controls.Add(uc);
         }
     }
 }
