@@ -44,7 +44,7 @@ namespace Phong_Tro_DAL.Phong_Tro
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTienIch> ChiTietTienIches { get; set; }
 
-        public virtual ChuNha ChuNha { get; set; }
+        public virtual ChuTro ChuNha { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HopDong> HopDongs { get; set; }

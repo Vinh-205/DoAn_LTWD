@@ -14,7 +14,7 @@ namespace Phong_Tro_DAL.Phong_Tro
 
         public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual DbSet<ChiTietTienIch> ChiTietTienIches { get; set; }
-        public virtual DbSet<ChuNha> ChuNhas { get; set; }
+        public virtual DbSet<ChuTro> ChuNhas { get; set; }
         public virtual DbSet<DichVu> DichVus { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<HopDong> HopDongs { get; set; }
@@ -45,7 +45,7 @@ namespace Phong_Tro_DAL.Phong_Tro
                 .Property(e => e.Gia)
                 .HasPrecision(12, 2);
 
-            modelBuilder.Entity<ChuNha>()
+            modelBuilder.Entity<ChuTro>()
                 .HasMany(e => e.Phongs)
                 .WithRequired(e => e.ChuNha)
                 .WillCascadeOnDelete(false);

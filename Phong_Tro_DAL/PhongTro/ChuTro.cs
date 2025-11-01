@@ -7,10 +7,10 @@ namespace Phong_Tro_DAL.Phong_Tro
     using System.Data.Entity.Spatial;
 
     [Table("ChuNha")]
-    public partial class ChuNha
+    public partial class ChuTro
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ChuNha()
+        public ChuTro()
         {
             Phongs = new HashSet<Phong>();
         }

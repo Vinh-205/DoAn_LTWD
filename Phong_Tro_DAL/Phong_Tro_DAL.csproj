@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="PhongTro\ChiTietHoaDon.cs" />
     <Compile Include="PhongTro\ChiTietTienIch.cs" />
-    <Compile Include="PhongTro\ChuNha.cs" />
+    <Compile Include="PhongTro\ChuTro.cs" />
     <Compile Include="PhongTro\Connect.cs" />
     <Compile Include="PhongTro\DichVu.cs" />
     <Compile Include="PhongTro\HoaDon.cs" />

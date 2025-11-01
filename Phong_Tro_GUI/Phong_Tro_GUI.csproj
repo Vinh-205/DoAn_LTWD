@@ -154,6 +154,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="QuenMatKhau.resx">
       <DependentUpon>QuenMatKhau.cs</DependentUpon>
@@ -178,11 +179,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\phan_mem_quan_ly_nha_tro_0_2b259fe320.webp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Phong_Tro_BUS\Phong_Tro_BUS.csproj">
       <Project>{e664ea42-acee-4bcc-8c6a-357382873902}</Project>
       <Name>Phong_Tro_BUS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Phong_Tro_DAL\Phong_Tro_DAL.csproj">
+      <Project>{fddc6f83-faa1-4194-8d2d-6dbed3021552}</Project>
+      <Name>Phong_Tro_DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
