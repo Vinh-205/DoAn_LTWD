@@ -107,6 +107,7 @@
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "➕ Thêm HĐ";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -120,6 +121,7 @@
             this.btnSua.TabIndex = 1;
             this.btnSua.Text = "✏️ Sửa HĐ";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -133,6 +135,7 @@
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "🗑️ Xóa HĐ";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -146,6 +149,7 @@
             this.btnLamMoi.TabIndex = 3;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // txtTimKiem
             // 
@@ -156,6 +160,7 @@
             this.txtTimKiem.Size = new System.Drawing.Size(160, 27);
             this.txtTimKiem.TabIndex = 4;
             this.txtTimKiem.Text = "Nhập mã hoặc tên KH...";
+            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
             // 
             // btnTimKiem
             // 
@@ -169,6 +174,7 @@
             this.btnTimKiem.TabIndex = 5;
             this.btnTimKiem.Text = "🔍 Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = false;
+            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // gbThongTin
             // 
@@ -277,6 +283,7 @@
             this.txtTienPhong.Name = "txtTienPhong";
             this.txtTienPhong.Size = new System.Drawing.Size(200, 30);
             this.txtTienPhong.TabIndex = 9;
+            this.txtTienPhong.TextChanged += new System.EventHandler(this.txtTienPhong_TextChanged);
             // 
             // label6
             // 
@@ -293,6 +300,7 @@
             this.txtTienDien.Name = "txtTienDien";
             this.txtTienDien.Size = new System.Drawing.Size(200, 30);
             this.txtTienDien.TabIndex = 11;
+            this.txtTienDien.TextChanged += new System.EventHandler(this.txtTienDien_TextChanged);
             // 
             // label7
             // 
@@ -309,6 +317,7 @@
             this.txtTienNuoc.Name = "txtTienNuoc";
             this.txtTienNuoc.Size = new System.Drawing.Size(200, 30);
             this.txtTienNuoc.TabIndex = 13;
+            this.txtTienNuoc.TextChanged += new System.EventHandler(this.txtTienNuoc_TextChanged);
             // 
             // label8
             // 
@@ -363,7 +372,7 @@
             this.btnGuiThongBao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuiThongBao.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnGuiThongBao.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(55)))), ((int)(((byte)(71)))));
-            this.btnGuiThongBao.Location = new System.Drawing.Point(270, 38);
+            this.btnGuiThongBao.Location = new System.Drawing.Point(270, 41);
             this.btnGuiThongBao.Name = "btnGuiThongBao";
             this.btnGuiThongBao.Size = new System.Drawing.Size(160, 30);
             this.btnGuiThongBao.TabIndex = 2;
@@ -446,6 +455,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "HoaDon";
             this.Text = "Quản lý Hóa Đơn";
+            this.Load += new System.EventHandler(this.HoaDon_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.panelMenu.ResumeLayout(false);
