@@ -7,38 +7,36 @@ namespace Phong_Tro_GUI.ConTrol
     {
         private bool sidebarExpand = true;
 
-        public UC_HoaDon()
-        {
-            InitializeComponent();
-        }
+        //public UC_HoaDon()
+        //{
+        //    InitializeComponent();
+        //}
 
-        private void sidebarTimer_Tick(object sender, EventArgs e)
-        {
-            if (sidebarExpand)
-            {
-                panelMenu.Width -= 10;
-                if (panelMenu.Width <= 60)
-                {
-                    sidebarExpand = false;
-                    sidebarTimer.Stop();
-                }
-            }
-            else
-            {
-                panelMenu.Width += 10;
-                if (panelMenu.Width >= 200)
-                {
-                    sidebarExpand = true;
-                    sidebarTimer.Stop();
-                }
-            }
-        }
+        //private void sidebarTimer_Tick(object sender, EventArgs e)
+        //{
+        //    if (sidebarExpand)
+        //    {
+        //        panelMenu.Width -= 10;
+        //        if (panelMenu.Width <= 60)
+        //        {
+        //            sidebarExpand = false;
+        //            sidebarTimer.Stop();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        panelMenu.Width += 10;
+        //        if (panelMenu.Width >= 200)
+        //        {
+        //            sidebarExpand = true;
+        //            sidebarTimer.Stop();
+        //        }
+        //    }
+        //}
 
-        private void btnMenu_Click(object sender, EventArgs e)
-        {
-            sidebarTimer.Start();
-        }
-
-      
+        //private void btnMenu_Click(object sender, EventArgs e)
+        //{
+        //    sidebarTimer.Start();
+        //}
     }
 }

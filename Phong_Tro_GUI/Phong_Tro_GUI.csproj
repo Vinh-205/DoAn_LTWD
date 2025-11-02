@@ -137,11 +137,23 @@
     <Compile Include="HoaDon.Designer.cs">
       <DependentUpon>HoaDon.cs</DependentUpon>
     </Compile>
+    <Compile Include="HoaDonNguoiThue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HoaDonNguoiThue.Designer.cs">
+      <DependentUpon>HoaDonNguoiThue.cs</DependentUpon>
+    </Compile>
     <Compile Include="HopDong.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HopDong.Designer.cs">
       <DependentUpon>HopDong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PhongDangThue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PhongDangThue.Designer.cs">
+      <DependentUpon>PhongDangThue.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +162,12 @@
     </Compile>
     <Compile Include="QuenMatKhau.Designer.cs">
       <DependentUpon>QuenMatKhau.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongBaoNguoiDung.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThongBaoNguoiDung.Designer.cs">
+      <DependentUpon>ThongBaoNguoiDung.cs</DependentUpon>
     </Compile>
     <Compile Include="ThongBaoo.cs">
       <SubType>Form</SubType>
@@ -193,6 +211,12 @@
     <Compile Include="ConTrol\UC_DichVu.Designer.cs">
       <DependentUpon>UC_DichVu.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThongTinCaNhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThongTinCaNhan.Designer.cs">
+      <DependentUpon>ThongTinCaNhan.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ConTrol\UC_ChuTro.resx">
       <DependentUpon>UC_ChuTro.cs</DependentUpon>
     </EmbeddedResource>
@@ -217,6 +241,9 @@
     <EmbeddedResource Include="HoaDon.resx">
       <DependentUpon>HoaDon.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HoaDonNguoiThue.resx">
+      <DependentUpon>HoaDonNguoiThue.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HopDong.resx">
       <DependentUpon>HopDong.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrol\UC_NguoiThue.resx">
       <DependentUpon>UC_NguoiThue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongTinCaNhan.resx">
+      <DependentUpon>ThongTinCaNhan.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />
