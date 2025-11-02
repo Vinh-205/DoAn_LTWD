@@ -22,12 +22,6 @@ namespace Phong_Tro_GUI
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DangNhap));
             this.label1 = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.trợGiúpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gửiQuảnTrịViênToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hỏiĐápToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.liênHệToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lỗiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -45,7 +39,6 @@ namespace Phong_Tro_GUI
             this.chkShowPass = new System.Windows.Forms.CheckBox();
             this.labelQuenMK = new System.Windows.Forms.Label();
             this.pnlLogin = new System.Windows.Forms.Panel();
-            this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.pnlLogin.SuspendLayout();
             this.SuspendLayout();
@@ -61,53 +54,6 @@ namespace Phong_Tro_GUI
             this.label1.TabIndex = 0;
             this.label1.Text = "ĐĂNG NHẬP HỆ THỐNG QUẢN LÝ PHÒNG TRỌ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.trợGiúpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(877, 30);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // trợGiúpToolStripMenuItem
-            // 
-            this.trợGiúpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gửiQuảnTrịViênToolStripMenuItem,
-            this.hỏiĐápToolStripMenuItem,
-            this.liênHệToolStripMenuItem,
-            this.lỗiToolStripMenuItem});
-            this.trợGiúpToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
-            this.trợGiúpToolStripMenuItem.Name = "trợGiúpToolStripMenuItem";
-            this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(79, 26);
-            this.trợGiúpToolStripMenuItem.Text = "Trợ Giúp";
-            // 
-            // gửiQuảnTrịViênToolStripMenuItem
-            // 
-            this.gửiQuảnTrịViênToolStripMenuItem.Name = "gửiQuảnTrịViênToolStripMenuItem";
-            this.gửiQuảnTrịViênToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.gửiQuảnTrịViênToolStripMenuItem.Text = "Gửi Quản Trị Viên";
-            // 
-            // hỏiĐápToolStripMenuItem
-            // 
-            this.hỏiĐápToolStripMenuItem.Name = "hỏiĐápToolStripMenuItem";
-            this.hỏiĐápToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.hỏiĐápToolStripMenuItem.Text = "Hỏi Đáp";
-            // 
-            // liênHệToolStripMenuItem
-            // 
-            this.liênHệToolStripMenuItem.Name = "liênHệToolStripMenuItem";
-            this.liênHệToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.liênHệToolStripMenuItem.Text = "Liên Hệ";
-            // 
-            // lỗiToolStripMenuItem
-            // 
-            this.lỗiToolStripMenuItem.Name = "lỗiToolStripMenuItem";
-            this.lỗiToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.lỗiToolStripMenuItem.Text = "Lỗi";
             // 
             // contextMenuStrip1
             // 
@@ -144,7 +90,7 @@ namespace Phong_Tro_GUI
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 30);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(877, 56);
             this.panel1.TabIndex = 5;
@@ -206,6 +152,7 @@ namespace Phong_Tro_GUI
             this.btnExit.TabIndex = 6;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // label4
             // 
@@ -272,33 +219,22 @@ namespace Phong_Tro_GUI
             this.ClientSize = new System.Drawing.Size(877, 507);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlLogin);
-            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "DangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hệ thống quản lý phòng trọ";
             this.Load += new System.EventHandler(this.DangNhap_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.pnlLogin.ResumeLayout(false);
             this.pnlLogin.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem trợGiúpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gửiQuảnTrịViênToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hỏiĐápToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem liênHệToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lỗiToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;

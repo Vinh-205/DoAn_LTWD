@@ -149,6 +149,12 @@
     <Compile Include="HopDong.Designer.cs">
       <DependentUpon>HopDong.cs</DependentUpon>
     </Compile>
+    <Compile Include="NguoiThue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NguoiThue.Designer.cs">
+      <DependentUpon>NguoiThue.cs</DependentUpon>
+    </Compile>
     <Compile Include="PhongDangThue.cs">
       <SubType>Form</SubType>
     </Compile>
