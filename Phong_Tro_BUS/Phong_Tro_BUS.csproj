@@ -63,15 +63,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChiTietHoaDonBUS.cs" />
-    <Compile Include="ChiTietTienIchBUS.cs" />
-    <Compile Include="HoaDonBUS.cs" />
-    <Compile Include="HopDongBUS.cs" />
-    <Compile Include="PhongBUS.cs" />
-    <Compile Include="TaiKhoanBUS.cs" />
-    <Compile Include="ThongBaoService.cs" />
-    <Compile Include="ThongKeService.cs" />
-    <Compile Include="TienIchBUS.cs" />
+    <Compile Include="Dependent\ChiTietHoaDonBUS.cs" />
+    <Compile Include="Dependent\ChiTietTienIchBUS.cs" />
+    <Compile Include="Dependent\DichVuBUS.cs" />
+    <Compile Include="Dependent\ThongBao.cs" />
+    <Compile Include="Dependent\ThongKeBUS.cs" />
+    <Compile Include="Main\ChuTroBUS.cs" />
+    <Compile Include="Main\HoaDonBUS.cs" />
+    <Compile Include="Main\HopDongBUS.cs" />
+    <Compile Include="Main\KhachThueBUS.cs" />
+    <Compile Include="Main\PhongBUS.cs" />
+    <Compile Include="Main\TaiKhoanBUS.cs" />
+    <Compile Include="Dependent\TienIchBUS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_BUS.Services;
+using Phong_Tro_BUS;
 using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
@@ -28,18 +28,11 @@ namespace Phong_Tro_GUI
         /// </summary>
         private void TaiDanhSachNguoiNhan()
         {
-            using (var db = new Connect())
-            {
-                var listPhong = db.Phongs.Select(p => new
-                {
-                    MaPhong = p.MaPhong,
-                    TenPhong = p.TenPhong
-                }).ToList();
+            var listPhong = _thongBaoBUS.LayDanhSachPhong(); // BUS trả về danh sách phòng
 
-                cboNguoiNhan.DataSource = listPhong;
-                cboNguoiNhan.DisplayMember = "TenPhong";
-                cboNguoiNhan.ValueMember = "MaPhong";
-            }
+            cboNguoiNhan.DataSource = listPhong;
+            cboNguoiNhan.DisplayMember = "TenPhong";
+            cboNguoiNhan.ValueMember = "MaPhong";
         }
 
         /// <summary>
@@ -47,7 +40,8 @@ namespace Phong_Tro_GUI
         /// </summary>
         private void TaiDanhSachThongBao()
         {
-            var ds = _thongBaoBUS.LayTatCaThongBao();
+            var ds = _thongBaoBUS.LayTatCa();
+
             dgvThongBao.DataSource = ds.Select(tb => new
             {
                 tb.MaTB,
@@ -61,7 +55,6 @@ namespace Phong_Tro_GUI
 
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
-            txtTieuDe.Clear(); // giữ cho UI ổn định, không dùng trong DAL
             txtNoiDung.Clear();
             cboNguoiNhan.SelectedIndex = -1;
             dtNgayGui.Value = DateTime.Now;
@@ -86,7 +79,7 @@ namespace Phong_Tro_GUI
                     NgayTao = DateTime.Now
                 };
 
-                bool ketQua = _thongBaoBUS.GuiThongBao(tb);
+                bool ketQua = _thongBaoBUS.Them(tb);
 
                 if (ketQua)
                 {
@@ -122,17 +115,24 @@ namespace Phong_Tro_GUI
             if (MessageBox.Show("Bạn có chắc muốn xóa thông báo này?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                bool kq = _thongBaoBUS.XoaThongBao(maTB);
-
-                if (kq)
+                try
                 {
-                    MessageBox.Show("Đã xóa thông báo!", "Thành công",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TaiDanhSachThongBao();
+                    bool kq = _thongBaoBUS.Xoa(maTB);
+                    if (kq)
+                    {
+                        MessageBox.Show("Đã xóa thông báo!", "Thành công",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        TaiDanhSachThongBao();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể xóa thông báo!", "Lỗi",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Không thể xóa thông báo!", "Lỗi",
+                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -145,8 +145,8 @@ namespace Phong_Tro_GUI
                 var row = dgvThongBao.Rows[e.RowIndex];
                 txtNoiDung.Text = row.Cells["NoiDung"].Value.ToString();
                 cboNguoiNhan.SelectedValue = row.Cells["MaPhong"].Value.ToString();
-                DateTime dt;
-                if (DateTime.TryParse(row.Cells["NgayTao"].Value.ToString(), out dt))
+
+                if (DateTime.TryParse(row.Cells["NgayTao"].Value.ToString(), out DateTime dt))
                     dtNgayGui.Value = dt;
             }
         }
@@ -160,22 +160,29 @@ namespace Phong_Tro_GUI
                 return;
             }
 
+            int maTB = Convert.ToInt32(dgvThongBao.CurrentRow.Cells["MaTB"].Value);
+
+            var tb = new ThongBao
+            {
+                MaTB = maTB,
+                MaPhong = cboNguoiNhan.SelectedValue.ToString(),
+                NoiDung = txtNoiDung.Text.Trim(),
+                NgayTao = dtNgayGui.Value
+            };
+
             try
             {
-                int maTB = Convert.ToInt32(dgvThongBao.CurrentRow.Cells["MaTB"].Value);
-
-                using (var db = new Connect())
+                bool kq = _thongBaoBUS.Sua(tb);
+                if (kq)
                 {
-                    var tb = db.ThongBaos.FirstOrDefault(t => t.MaTB == maTB);
-                    if (tb != null)
-                    {
-                        tb.NoiDung = txtNoiDung.Text.Trim();
-                        tb.MaPhong = cboNguoiNhan.SelectedValue.ToString();
-                        db.SaveChanges();
-                        MessageBox.Show("Đã cập nhật thông báo!", "Thành công",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        TaiDanhSachThongBao();
-                    }
+                    MessageBox.Show("Đã cập nhật thông báo!", "Thành công",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TaiDanhSachThongBao();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật thất bại!", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

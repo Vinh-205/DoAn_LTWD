@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_BUS.Services;
+using Phong_Tro_BUS;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Phong_Tro_GUI
 {
@@ -12,47 +13,69 @@ namespace Phong_Tro_GUI
         public UC_ThongKeDoanhThu()
         {
             InitializeComponent();
+            LoadComboBox();
         }
 
-        private void UC_ThongKeDoanhThu_Load(object sender, EventArgs e)
+        private void LoadComboBox()
         {
-            // Load combobox tháng, năm
-            cboThang.Items.AddRange(Enumerable.Range(1, 12).Select(x => (object)x).ToArray());
-            cboNam.Items.AddRange(Enumerable.Range(2020, 10).Select(x => (object)x).ToArray());
-            cboThang.SelectedIndex = DateTime.Now.Month - 1;
-            cboNam.SelectedItem = DateTime.Now.Year;
+            // Tháng
+            cboThang.Items.Clear();
+            for (int i = 1; i <= 12; i++)
+                cboThang.Items.Add(i);
+
+            // Năm
+            cboNam.Items.Clear();
+            for (int i = 2020; i <= DateTime.Now.Year; i++)
+                cboNam.Items.Add(i);
+
+            cboThang.SelectedIndex = 0;
+            cboNam.SelectedIndex = cboNam.Items.Count - 1;
+
+            // Phòng (danh sách từ BUS hoặc DB)
+            var phongList = thongKeBUS.LayDanhSachPhong();
+            cboPhong.DataSource = phongList;
+            cboPhong.DisplayMember = "TenPhong";
+            cboPhong.ValueMember = "MaPhong";
         }
 
         private void btnThongKe_Click(object sender, EventArgs e)
         {
             if (cboThang.SelectedItem == null || cboNam.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn tháng và năm để thống kê!", "Thông báo");
+                MessageBox.Show("Vui lòng chọn tháng và năm!");
                 return;
             }
 
             int thang = Convert.ToInt32(cboThang.SelectedItem);
             int nam = Convert.ToInt32(cboNam.SelectedItem);
+            string maPhong = cboPhong.SelectedValue?.ToString();
 
-            // Load dữ liệu hóa đơn
-            var dsHoaDon = thongKeBUS.LayDanhSachHoaDon(thang, nam);
-            dgvHoaDon.DataSource = dsHoaDon;
+            // === Hóa đơn theo phòng ===
+            var hoaDonList = thongKeBUS.DoanhThuTheoPhong(thang, nam);
+            if (!string.IsNullOrEmpty(maPhong))
+                hoaDonList = hoaDonList.Where(x => x.MaPhong == maPhong).ToList();
 
-            // Load tổng hợp
-            txtSoHD.Text = thongKeBUS.DemSoHoaDon(thang, nam).ToString();
-            txtTongTien.Text = thongKeBUS.TinhTongDoanhThu(thang, nam).ToString("N0") + " VNĐ";
-            txtTBHoaDon.Text = thongKeBUS.TinhTrungBinhHoaDon(thang, nam).ToString("N0") + " VNĐ";
+            dgvHoaDon.DataSource = hoaDonList;
 
-            // Load biểu đồ (Chart)
-            var dataChart = thongKeBUS.LayDoanhThuTheoDichVu(thang, nam);
-            chart1.Series[0].Points.Clear();
-            foreach (dynamic item in dataChart)
+            // === Doanh thu dịch vụ ===
+            var dvList = thongKeBUS.DoanhThuDichVuTheoThang(thang, nam);
+            dgvDoanhThuDichVu.DataSource = dvList;
+
+            // === Tổng hợp ===
+            txtSoHD.Text = hoaDonList.Count.ToString();
+            txtTongTien.Text = hoaDonList.Sum(x => x.TongTien).ToString("N0");
+            txtTBHoaDon.Text = hoaDonList.Count > 0
+                ? (hoaDonList.Sum(x => x.TongTien) / hoaDonList.Count).ToString("N0")
+                : "0";
+
+            // === Vẽ chart Pie ===
+            chart1.Series["Series1"].Points.Clear();
+            foreach (var item in hoaDonList)
             {
-                chart1.Series[0].Points.AddXY(item.TenDichVu, item.TongTien);
+                chart1.Series["Series1"].Points.AddXY(item.MaPhong, item.TongTien);
             }
-
-            // Load DataGridView doanh thu dịch vụ
-            dgvDoanhThuDichVu.DataSource = dataChart;
+            chart1.Series["Series1"].ChartType = SeriesChartType.Pie;
+            chart1.Legends[0].Docking = Docking.Bottom;
         }
 
         private void btnLamMoi_Click(object sender, EventArgs e)
@@ -62,7 +85,10 @@ namespace Phong_Tro_GUI
             txtSoHD.Clear();
             txtTongTien.Clear();
             txtTBHoaDon.Clear();
-            chart1.Series[0].Points.Clear();
+            chart1.Series["Series1"].Points.Clear();
+            cboThang.SelectedIndex = 0;
+            cboNam.SelectedIndex = cboNam.Items.Count - 1;
+            cboPhong.SelectedIndex = -1;
         }
     }
 }

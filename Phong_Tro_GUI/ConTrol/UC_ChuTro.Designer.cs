@@ -64,7 +64,6 @@
             this.btnDangXuat.TabIndex = 8;
             this.btnDangXuat.Text = "🚪 Đăng xuất";
             this.btnDangXuat.UseVisualStyleBackColor = true;
-            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
             // 
             // btnHopDong
             // 
@@ -74,7 +73,6 @@
             this.btnHopDong.TabIndex = 7;
             this.btnHopDong.Text = "📜 Hợp đồng";
             this.btnHopDong.UseVisualStyleBackColor = true;
-            this.btnHopDong.Click += new System.EventHandler(this.btnHopDong_Click);
             // 
             // btnDichVu
             // 
@@ -150,7 +148,6 @@
             this.btnMenu.TabIndex = 0;
             this.btnMenu.Text = "☰ Menu";
             this.btnMenu.UseVisualStyleBackColor = false;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // pnlHeader
             // 
@@ -193,6 +190,8 @@
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(784, 561);
             this.pnlContent.TabIndex = 2;
+            this.pnlContent.Click += new System.EventHandler(this.pnlContent_Click);
+            this.pnlContent.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlContent_Paint);
             // 
             // UC_ChuTro
             // 

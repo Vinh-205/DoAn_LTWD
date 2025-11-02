@@ -151,18 +151,6 @@
     <Compile Include="ThongBaoo.Designer.cs">
       <DependentUpon>ThongBaoo.cs</DependentUpon>
     </Compile>
-    <Compile Include="ThongKeDoanhThu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ThongKeDoanhThu.Designer.cs">
-      <DependentUpon>ThongKeDoanhThu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TienIch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TienIch.Designer.cs">
-      <DependentUpon>TienIch.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConTrol\UC_ChuTro.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -193,11 +181,23 @@
     <Compile Include="ConTrol\UC_TienIch.Designer.cs">
       <DependentUpon>UC_TienIch.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConTrol\UC_DichVu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrol\UC_DichVu.Designer.cs">
+      <DependentUpon>UC_DichVu.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ConTrol\UC_ChuTro.resx">
       <DependentUpon>UC_ChuTro.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConTrol\UC_DichVu.resx">
+      <DependentUpon>UC_DichVu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConTrol\UC_QLPhong.resx">
       <DependentUpon>UC_QLPhong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConTrol\UC_ThongKeDoanhThu.resx">
+      <DependentUpon>UC_ThongKeDoanhThu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
@@ -226,12 +226,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ThongBaoo.resx">
       <DependentUpon>ThongBaoo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ThongKeDoanhThu.resx">
-      <DependentUpon>ThongKeDoanhThu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TienIch.resx">
-      <DependentUpon>TienIch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrol\UC_NguoiThue.resx">
       <DependentUpon>UC_NguoiThue.cs</DependentUpon>
