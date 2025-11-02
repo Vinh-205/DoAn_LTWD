@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Phong_Tro_GUI
 {
-    partial class UC_DichVu
+    partial class DichVuMain
     {
         private System.ComponentModel.IContainer components = null;
 

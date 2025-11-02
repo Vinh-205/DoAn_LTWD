@@ -60,7 +60,7 @@ namespace Phong_Tro_GUI
 
                     if (role == "ChuTro")
                     {
-                        var ucChuTro = new UC_ChuTro();
+                        var ucChuTro = new ChuTroMain();
                         ucChuTro.Dock = DockStyle.Fill;
                         mainForm.Controls.Add(ucChuTro);
                     }

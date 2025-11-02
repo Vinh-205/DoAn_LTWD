@@ -1,6 +1,6 @@
 ﻿namespace Phong_Tro_GUI
 {
-    partial class HoaDon
+    partial class HoaDonMain
     {
         private System.ComponentModel.IContainer components = null;
 

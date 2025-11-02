@@ -21,8 +21,8 @@
             // 
             // panelMain
             // 
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 0);
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(1080, 650);
@@ -36,9 +36,10 @@
             this.Controls.Add(this.panelMain);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "🏡 Quản lý phòng trọ";
+            this.Text = "🏡 Phòng Trọ";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
+
         }
 
         #endregion

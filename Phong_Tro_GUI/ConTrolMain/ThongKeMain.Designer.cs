@@ -3,7 +3,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Phong_Tro_GUI
 {
-    partial class UC_ThongKeDoanhThu : UserControl
+    partial class ThongKeMain : UserControl
     {
         private System.ComponentModel.IContainer components = null;
 

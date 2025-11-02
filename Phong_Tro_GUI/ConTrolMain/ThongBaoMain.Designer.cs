@@ -1,6 +1,6 @@
 ﻿namespace Phong_Tro_GUI
 {
-    partial class ThongBaoo
+    partial class ThongBaoMain
     {
         /// <summary>
         /// Required designer variable.

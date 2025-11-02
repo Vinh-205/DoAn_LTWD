@@ -1,6 +1,6 @@
 ﻿namespace Phong_Tro_GUI
 {
-    partial class PhongDangThue
+    partial class PhongUser
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.DataGridView dgvPhong;

@@ -1,6 +1,6 @@
 ﻿namespace Phong_Tro_GUI
 {
-    partial class HopDong
+    partial class HopDongMain
     {
         private System.ComponentModel.IContainer components = null;
 

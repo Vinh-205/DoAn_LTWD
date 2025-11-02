@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace Phong_Tro_GUI
 {
-    public partial class PhongDangThue : Form
+    public partial class PhongUser : Form
     {
         private readonly PhongBUS _phongBUS;
 
-        public PhongDangThue()
+        public PhongUser()
         {
             InitializeComponent();
             _phongBUS = new PhongBUS();

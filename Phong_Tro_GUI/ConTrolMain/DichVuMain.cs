@@ -7,11 +7,11 @@ using Phong_Tro_BUS;
 
 namespace Phong_Tro_GUI
 {
-    public partial class UC_DichVu : UserControl
+    public partial class DichVuMain : UserControl
     {
         private readonly DichVuBUS dichVuBUS = new DichVuBUS();
 
-        public UC_DichVu()
+        public DichVuMain()
         {
             InitializeComponent();
             InitializeDataGridView();

@@ -6,7 +6,7 @@ using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
 {
-    public partial class HoaDon : Form
+    public partial class HoaDonMain : Form
     {
         private void btnThem_Click(object sender, EventArgs e)
         {

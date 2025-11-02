@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Phong_Tro_GUI
 {
-    partial class UC_TienIch : UserControl
+    partial class TienIchMain : UserControl
     {
         private System.ComponentModel.IContainer components = null;
         private Label lblTieuDe;

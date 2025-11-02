@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Phong_Tro_GUI
 {
-    public partial class UC_TienIch : UserControl
+    public partial class TienIchMain : UserControl
     {
-        public UC_TienIch()
+        public TienIchMain()
         {
             InitializeComponent();
         }

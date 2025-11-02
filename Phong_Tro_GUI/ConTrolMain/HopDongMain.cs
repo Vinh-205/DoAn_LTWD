@@ -5,11 +5,11 @@ using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
 {
-    public partial class HopDong : Form
+    public partial class HopDongMain : Form
     {
         private HopDongBUS bus = new HopDongBUS();
 
-        public HopDong()
+        public HopDongMain()
         {
             InitializeComponent();
         }

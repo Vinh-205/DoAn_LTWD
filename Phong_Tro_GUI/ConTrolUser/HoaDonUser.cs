@@ -7,11 +7,11 @@ using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
 {
-    public partial class HoaDonNguoiThue : Form
+    public partial class HoaDonUser : Form
     {
         private Connect db = new Connect(); // EF DbContext
 
-        public HoaDonNguoiThue()
+        public HoaDonUser()
         {
             InitializeComponent();
         }

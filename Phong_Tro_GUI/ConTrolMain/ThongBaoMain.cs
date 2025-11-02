@@ -6,11 +6,11 @@ using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
 {
-    public partial class ThongBaoo : Form
+    public partial class ThongBaoMain : Form
     {
         private readonly ThongBaoBUS _thongBaoBUS = new ThongBaoBUS();
 
-        public ThongBaoo()
+        public ThongBaoMain()
         {
             InitializeComponent();
             Load += ThongBaoo_Load;

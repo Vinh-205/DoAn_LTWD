@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Phong_Tro_GUI.ConTrol; // để load UC_HoaDon
-using Phong_Tro_GUI;         // để load UC_ThongKeDoanhThu, UC_DichVu,...
+using Phong_Tro_BUS;
+using Phong_Tro_GUI.ConTrol;
 
 namespace Phong_Tro_GUI
 {
-    public partial class UC_ChuTro : UserControl
+    public partial class ChuTroMain : UserControl
     {
         private bool sidebarExpanded = true;
         private Timer sidebarTimer;
         private Panel activeBorderPanel;
 
-        public UC_ChuTro()
+        public ChuTroMain()
         {
             InitializeComponent();
             SetupSidebarBorder();
@@ -86,8 +86,9 @@ namespace Phong_Tro_GUI
         private void btnTrangChu_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
-            pnlContent.Controls.Clear();
+            LoadUC(new PhongMain());
         }
+
 
         private void btnPhong_Click(object sender, EventArgs e)
         {
@@ -99,7 +100,7 @@ namespace Phong_Tro_GUI
         private void btnHoaDon_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
-            LoadUC(new UC_HoaDon());
+            //LoadUC(new HoaDonMain());
         }
 
         private void btnThongBao_Click(object sender, EventArgs e)
@@ -111,13 +112,36 @@ namespace Phong_Tro_GUI
         private void btnThongKe_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
-            LoadUC(new UC_ThongKeDoanhThu());
+            LoadUC(new ThongKeMain());
         }
 
         private void btnDichVu_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
-            LoadUC(new UC_DichVu());
+            LoadUC(new DichVuMain());
         }
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn đăng xuất không?",
+                "Xác nhận đăng xuất",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                // Tìm form cha của UserControl hiện tại
+                Form parentForm = this.FindForm();
+
+                // Ẩn form hiện tại (hoặc Close() nếu bạn muốn đóng hẳn)
+                parentForm.Hide();
+
+                // Mở lại form đăng nhập (đổi tên theo form của bạn)
+                DangNhap frmLogin = new DangNhap();
+                frmLogin.Show();
+            }
+        }
+
     }
 }

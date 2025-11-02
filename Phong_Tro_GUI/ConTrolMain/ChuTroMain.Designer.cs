@@ -1,6 +1,6 @@
 ﻿namespace Phong_Tro_GUI
 {
-    partial class UC_ChuTro
+    partial class ChuTroMain
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Panel pnlSidebar;

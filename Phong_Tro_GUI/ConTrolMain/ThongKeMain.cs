@@ -6,11 +6,11 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Phong_Tro_GUI
 {
-    public partial class UC_ThongKeDoanhThu : UserControl
+    public partial class ThongKeMain : UserControl
     {
         private readonly ThongKeBUS thongKeBUS = new ThongKeBUS();
 
-        public UC_ThongKeDoanhThu()
+        public ThongKeMain()
         {
             InitializeComponent();
             LoadComboBox();
