@@ -75,6 +75,7 @@ namespace Phong_Tro_GUI
             this.dgvDichVu.RowHeadersWidth = 51;
             this.dgvDichVu.Size = new System.Drawing.Size(720, 220);
             this.dgvDichVu.TabIndex = 0;
+            this.dgvDichVu.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDichVu_CellClick);
             // 
             // btnThem
             // 
@@ -87,6 +88,7 @@ namespace Phong_Tro_GUI
             this.btnThem.TabIndex = 2;
             this.btnThem.Text = "➕  Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -99,6 +101,7 @@ namespace Phong_Tro_GUI
             this.btnSua.TabIndex = 3;
             this.btnSua.Text = "✏️  Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -111,6 +114,7 @@ namespace Phong_Tro_GUI
             this.btnXoa.TabIndex = 4;
             this.btnXoa.Text = "🗑️  Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -123,6 +127,7 @@ namespace Phong_Tro_GUI
             this.btnLamMoi.TabIndex = 5;
             this.btnLamMoi.Text = "🔄  Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // pnlFormNhap
             // 
@@ -151,6 +156,7 @@ namespace Phong_Tro_GUI
             // 
             // txtMaDV
             // 
+            this.txtMaDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaDV.Location = new System.Drawing.Point(105, 20);
             this.txtMaDV.Name = "txtMaDV";
             this.txtMaDV.Size = new System.Drawing.Size(150, 22);
@@ -170,33 +176,34 @@ namespace Phong_Tro_GUI
             this.txtTenDV.Name = "txtTenDV";
             this.txtTenDV.Size = new System.Drawing.Size(250, 22);
             this.txtTenDV.TabIndex = 3;
+            this.txtTenDV.TextChanged += new System.EventHandler(this.txtTenDV_TextChanged);
             // 
             // lblDonGia
             // 
-            this.lblDonGia.Location = new System.Drawing.Point(24, 76);
+            this.lblDonGia.Location = new System.Drawing.Point(24, 79);
             this.lblDonGia.Name = "lblDonGia";
-            this.lblDonGia.Size = new System.Drawing.Size(61, 25);
+            this.lblDonGia.Size = new System.Drawing.Size(57, 25);
             this.lblDonGia.TabIndex = 4;
             this.lblDonGia.Text = "Đơn giá:";
             // 
             // txtDonGia
             // 
-            this.txtDonGia.Location = new System.Drawing.Point(105, 73);
+            this.txtDonGia.Location = new System.Drawing.Point(105, 76);
             this.txtDonGia.Name = "txtDonGia";
             this.txtDonGia.Size = new System.Drawing.Size(150, 22);
             this.txtDonGia.TabIndex = 5;
             // 
             // lblMoTa
             // 
-            this.lblMoTa.Location = new System.Drawing.Point(324, 73);
+            this.lblMoTa.Location = new System.Drawing.Point(324, 79);
             this.lblMoTa.Name = "lblMoTa";
-            this.lblMoTa.Size = new System.Drawing.Size(56, 25);
+            this.lblMoTa.Size = new System.Drawing.Size(48, 25);
             this.lblMoTa.TabIndex = 6;
             this.lblMoTa.Text = "Mô tả:";
             // 
             // txtMoTa
             // 
-            this.txtMoTa.Location = new System.Drawing.Point(416, 70);
+            this.txtMoTa.Location = new System.Drawing.Point(416, 74);
             this.txtMoTa.Multiline = true;
             this.txtMoTa.Name = "txtMoTa";
             this.txtMoTa.Size = new System.Drawing.Size(250, 60);
@@ -228,6 +235,7 @@ namespace Phong_Tro_GUI
             this.Name = "TienIch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý Tiện Ích phòng trọ";
+            this.Load += new System.EventHandler(this.TienIch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDichVu)).EndInit();
             this.pnlFormNhap.ResumeLayout(false);
             this.pnlFormNhap.PerformLayout();
