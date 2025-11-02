@@ -214,24 +214,16 @@ namespace Phong_Tro_GUI
         private void btnThongKe_Click(object sender, EventArgs e)
         {
             HighlightButton(btnThongKe);
-            LoadControl(new Label()
-            {
-                Text = "📊 Khu vực thống kê doanh thu đang phát triển...",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 14, FontStyle.Italic),
-                TextAlign = ContentAlignment.MiddleCenter
-            });
+            LoadControl(new UC_ThongKeDoanhThu());
+           
         }
 
         private void btnDichVu_Click(object sender, EventArgs e)
         {
             HighlightButton(btnDichVu);
-            LoadControl(new Label()
+            LoadControl(new UC_TienIch()
             {
-                Text = "🧰 Quản lý dịch vụ đang phát triển...",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 14, FontStyle.Italic),
-                TextAlign = ContentAlignment.MiddleCenter
+                
             });
         }
 

@@ -181,6 +181,18 @@
     <Compile Include="ConTrol\UC_QLPhong.Designer.cs">
       <DependentUpon>UC_QLPhong.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConTrol\UC_ThongKeDoanhThu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrol\UC_ThongKeDoanhThu.Designer.cs">
+      <DependentUpon>UC_ThongKeDoanhThu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConTrol\UC_TienIch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrol\UC_TienIch.Designer.cs">
+      <DependentUpon>UC_TienIch.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ConTrol\UC_ChuTro.resx">
       <DependentUpon>UC_ChuTro.cs</DependentUpon>
     </EmbeddedResource>

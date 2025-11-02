@@ -72,7 +72,7 @@ namespace Phong_Tro_GUI
 
         private void btnPhongDangThue_Click(object sender, EventArgs e)
         {
-            //HighlightButton(btnPhongDangThue);
+            HighlightButton(btnPhongDangThue);
             //LoadControl(new UC_QLPhong("KhachThue"));
         }
 
