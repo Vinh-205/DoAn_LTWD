@@ -22,20 +22,21 @@
             // panelMain
             // 
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelMain.Location = new System.Drawing.Point(0, 0);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(1200, 800);
+            this.panelMain.Size = new System.Drawing.Size(1080, 650);
             this.panelMain.TabIndex = 0;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ClientSize = new System.Drawing.Size(1080, 650);
             this.Controls.Add(this.panelMain);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Hệ thống quản lý phòng trọ";
+            this.Text = "🏡 Quản lý phòng trọ";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
         }

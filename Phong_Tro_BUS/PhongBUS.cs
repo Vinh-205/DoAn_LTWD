@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Phong_Tro_DAL.Phong_Tro;
-using System.Data.Entity;
 
 namespace Phong_Tro_BUS
 {
@@ -42,9 +41,6 @@ namespace Phong_Tro_BUS
 
         public bool CapNhatPhong(Phong phong)
         {
-            if (phong == null)
-                throw new ArgumentNullException(nameof(phong));
-
             using (var db = new Connect())
             {
                 var old = db.Phongs.FirstOrDefault(p => p.MaPhong == phong.MaPhong);

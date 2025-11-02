@@ -16,7 +16,7 @@ namespace Phong_Tro_GUI
             this.WindowState = FormWindowState.Maximized;
         }
 
-        // Phương thức load control động
+ 
         public void LoadControl(UserControl control)
         {
             panelMain.Controls.Clear();

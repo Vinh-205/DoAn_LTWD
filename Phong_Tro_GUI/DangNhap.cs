@@ -61,17 +61,16 @@ namespace Phong_Tro_GUI
                     // 👉 Nạp UserControl phù hợp
                     if (role == "ChuTro")
                     {
-                        var ucChuTro = new UC_ChuTroDashboard();
+                        var ucChuTro = new UC_ChuTro();
                         ucChuTro.Dock = DockStyle.Fill;
                         mainForm.Controls.Add(ucChuTro);
                     }
                     else if (role == "KhachThue")
                     {
-                        // Nếu bạn có control người thuê
-                        // var ucNguoiThue = new UC_NguoiThue();
-                        // ucNguoiThue.Dock = DockStyle.Fill;
-                        // mainForm.Controls.Add(ucNguoiThue);
-                        MessageBox.Show("Chức năng cho Khách Thuê đang được phát triển.", "Thông báo");
+                        
+                         var ucNguoiThue = new UC_NguoiThue();
+                        ucNguoiThue.Dock = DockStyle.Fill;
+                        mainForm.Controls.Add(ucNguoiThue);
                     }
 
                     mainForm.FormClosed += (s, args) => Application.Exit();
