@@ -48,9 +48,9 @@ namespace Phong_Tro_GUI
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    // Ẩn form đăng nhập
                     this.Hide();
 
-                    // 👉 Mở form chính có chứa UserControl tùy vai trò
                     Form mainForm = new Form
                     {
                         Text = role == "ChuTro" ? "Chủ Trọ - Quản lý phòng trọ" : "Người Thuê - Giao diện người dùng",
@@ -58,7 +58,6 @@ namespace Phong_Tro_GUI
                         BackColor = System.Drawing.Color.White
                     };
 
-                    // 👉 Nạp UserControl phù hợp
                     if (role == "ChuTro")
                     {
                         var ucChuTro = new UC_ChuTro();
@@ -67,14 +66,17 @@ namespace Phong_Tro_GUI
                     }
                     else if (role == "KhachThue")
                     {
-                        
-                         var ucNguoiThue = new UC_NguoiThue();
+                        var ucNguoiThue = new UC_NguoiThue();
                         ucNguoiThue.Dock = DockStyle.Fill;
                         mainForm.Controls.Add(ucNguoiThue);
                     }
 
+                    // Khi form chính đóng, thoát toàn bộ ứng dụng
                     mainForm.FormClosed += (s, args) => Application.Exit();
-                    mainForm.ShowDialog();
+
+                    // ❌ ShowDialog() → đơ
+                    // ✅ Dùng Show() cho luồng chính tiếp tục
+                    mainForm.Show();
                 }
                 else
                 {
@@ -88,7 +90,6 @@ namespace Phong_Tro_GUI
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Bạn có chắc muốn thoát chương trình?", "Xác nhận",

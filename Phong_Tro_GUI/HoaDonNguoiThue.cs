@@ -1,91 +1,103 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-using Phong_Tro_BUS;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
+using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_GUI
 {
     public partial class HoaDonNguoiThue : Form
     {
-        private HoaDonBUS hoaDonBUS;
+        private Connect db = new Connect(); // EF DbContext
 
         public HoaDonNguoiThue()
         {
             InitializeComponent();
-            hoaDonBUS = new HoaDonBUS();
         }
 
         private void HoaDonNguoiThue_Load(object sender, EventArgs e)
         {
-            // Ngăn lỗi khi mở Designer
-            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-                return;
-
-            LoadDanhSachHoaDon();
+            SetPlaceholder();
+            LoadHoaDon();
+            SetupGridView();
         }
 
-        private void LoadDanhSachHoaDon()
+        private void SetPlaceholder()
         {
-            try
-            {
-                var ds = hoaDonBUS.LayTatCa()
-                    .Select(hd => new
-                    {
-                        hd.MaHD,
-                        hd.Thang,
-                        hd.Nam,
-                        hd.GiaPhong,
-                        hd.TienDien,
-                        hd.TienNuoc,
-                        hd.TienDichVu,
-                        hd.TongTien,
-                        NgayLap = hd.NgayLap?.ToString("dd/MM/yyyy")
-                    })
-                    .ToList();
+            txtTimKiem.Text = "Nhập mã hóa đơn hoặc tên phòng...";
+            txtTimKiem.ForeColor = Color.Gray;
 
-                dgvHoaDon.DataSource = ds;
-                FormatDataGridView();
-            }
-            catch (Exception ex)
+            txtTimKiem.Enter += (s, e) =>
             {
-                MessageBox.Show("Không thể tải danh sách hóa đơn!\n" + ex.Message,
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                if (txtTimKiem.Text == "Nhập mã hóa đơn hoặc tên phòng...")
+                {
+                    txtTimKiem.Text = "";
+                    txtTimKiem.ForeColor = Color.Black;
+                }
+            };
+
+            txtTimKiem.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtTimKiem.Text))
+                {
+                    txtTimKiem.Text = "Nhập mã hóa đơn hoặc tên phòng...";
+                    txtTimKiem.ForeColor = Color.Gray;
+                }
+            };
         }
 
-        private void FormatDataGridView()
+        private void SetupGridView()
         {
-            dgvHoaDon.ReadOnly = true;
-            dgvHoaDon.AllowUserToAddRows = false;
-            dgvHoaDon.AllowUserToDeleteRows = false;
             dgvHoaDon.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvHoaDon.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvHoaDon.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvHoaDon.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+            dgvHoaDon.EnableHeadersVisualStyles = false;
+            dgvHoaDon.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dgvHoaDon.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
             dgvHoaDon.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+        private void LoadHoaDon()
+        {
+            var data = db.HoaDons
+                .Include("HopDong.Phong")
+                .Select(hd => new
+                {
+                    hd.MaHD,
+                    Phong = hd.HopDong.Phong.TenPhong,
+                    hd.Thang,
+                    hd.Nam,
+                    hd.NgayLap,
+                    hd.TongTien
+                })
+                .ToList();
 
-            dgvHoaDon.Columns["GiaPhong"].HeaderText = "Giá phòng";
-            dgvHoaDon.Columns["TienDien"].HeaderText = "Tiền điện";
-            dgvHoaDon.Columns["TienNuoc"].HeaderText = "Tiền nước";
-            dgvHoaDon.Columns["TienDichVu"].HeaderText = "Dịch vụ";
-            dgvHoaDon.Columns["TongTien"].HeaderText = "Tổng tiền";
-            dgvHoaDon.Columns["NgayLap"].HeaderText = "Ngày lập";
+            dgvHoaDon.DataSource = data;
         }
 
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
-            string keyword = txtTimKiem.Text.Trim();
-            dgvHoaDon.DataSource = hoaDonBUS.TimKiem(keyword)
+            if (txtTimKiem.Text == "Nhập mã hóa đơn hoặc tên phòng...") return;
+
+            string keyword = txtTimKiem.Text.Trim().ToLower();
+
+            var data = db.HoaDons
+                .Include("HopDong.Phong")
+                .Where(hd => hd.MaHD.ToLower().Contains(keyword)
+                             || hd.HopDong.Phong.TenPhong.ToLower().Contains(keyword))
                 .Select(hd => new
                 {
                     hd.MaHD,
+                    Phong = hd.HopDong.Phong.TenPhong,
                     hd.Thang,
                     hd.Nam,
-                    hd.GiaPhong,
-                    hd.TienDien,
-                    hd.TienNuoc,
-                    hd.TienDichVu,
-                    hd.TongTien,
-                    NgayLap = hd.NgayLap?.ToString("dd/MM/yyyy")
-                }).ToList();
+                    hd.NgayLap,
+                    hd.TongTien
+                })
+                .ToList();
+
+            dgvHoaDon.DataSource = data;
         }
     }
 }

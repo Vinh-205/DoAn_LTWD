@@ -20,9 +20,52 @@ namespace Phong_Tro_GUI
 
         private void PhongDangThue_Load(object sender, EventArgs e)
         {
+            CaiDatTimKiemPlaceholder();
+            CaiDatBangPhong();
             TaiDanhSachPhong();
         }
 
+        // 🌸 Hiển thị placeholder cho ô tìm kiếm
+        private void CaiDatTimKiemPlaceholder()
+        {
+            txtTimKiem.Text = "🔍 Nhập tên hoặc mã phòng...";
+            txtTimKiem.ForeColor = Color.Gray;
+
+            txtTimKiem.Enter += (s, e) =>
+            {
+                if (txtTimKiem.Text == "🔍 Nhập tên hoặc mã phòng...")
+                {
+                    txtTimKiem.Text = "";
+                    txtTimKiem.ForeColor = Color.Black;
+                }
+            };
+
+            txtTimKiem.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtTimKiem.Text))
+                {
+                    txtTimKiem.Text = "🔍 Nhập tên hoặc mã phòng...";
+                    txtTimKiem.ForeColor = Color.Gray;
+                }
+            };
+        }
+
+        // 🎨 Cấu hình DataGridView đẹp mắt
+        private void CaiDatBangPhong()
+        {
+            dgvPhong.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPhong.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(41, 128, 185);
+            dgvPhong.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvPhong.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dgvPhong.EnableHeadersVisualStyles = false;
+            dgvPhong.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dgvPhong.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            dgvPhong.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPhong.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+            dgvPhong.DefaultCellStyle.SelectionForeColor = Color.Black;
+        }
+
+        // 📋 Tải toàn bộ danh sách phòng
         private void TaiDanhSachPhong()
         {
             var ds = _phongBUS.LayTatCa()
@@ -45,10 +88,16 @@ namespace Phong_Tro_GUI
             dgvPhong.Columns["DienTich"].HeaderText = "Diện tích (m²)";
             dgvPhong.Columns["GiaThue"].HeaderText = "Giá thuê (VNĐ)";
             dgvPhong.Columns["TrangThai"].HeaderText = "Trạng thái";
+
+            dgvPhong.ClearSelection();
+            XoaThongTinChiTiet();
         }
 
+        // 🔍 Tìm kiếm khi nhập
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
+            if (txtTimKiem.ForeColor == Color.Gray) return;
+
             string keyword = txtTimKiem.Text.Trim();
             var ds = _phongBUS.TimKiem(keyword)
                               .Select(p => new
@@ -64,6 +113,7 @@ namespace Phong_Tro_GUI
             dgvPhong.DataSource = ds;
         }
 
+        // 🏠 Khi chọn 1 phòng
         private void dgvPhong_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -75,6 +125,7 @@ namespace Phong_Tro_GUI
             }
         }
 
+        // 💡 Hiển thị thông tin phòng chi tiết
         private void HienThiThongTinPhong(Phong phong)
         {
             lblTenPhong.Text = $"Tên phòng: {phong.TenPhong}";
@@ -85,15 +136,24 @@ namespace Phong_Tro_GUI
             txtTienNghi.Text = phong.TienNghi ?? "Chưa có thông tin";
             lblChuTro.Text = $"Chủ trọ: {phong.ChuNha?.Ten ?? "Không rõ"}";
 
-            // Ảnh minh hoạ
+            // Ảnh minh họa
             if (!string.IsNullOrEmpty(phong.AnhMinhHoa) && File.Exists(phong.AnhMinhHoa))
-            {
                 picAnhMinhHoa.Image = Image.FromFile(phong.AnhMinhHoa);
-            }
             else
-            {
                 picAnhMinhHoa.Image = SystemIcons.Information.ToBitmap();
-            }
+        }
+
+        // 🧹 Khi chưa chọn phòng
+        private void XoaThongTinChiTiet()
+        {
+            lblTenPhong.Text = "Tên phòng: —";
+            lblLoaiPhong.Text = "Loại: —";
+            lblGiaThue.Text = "Giá thuê: —";
+            lblDienTich.Text = "Diện tích: —";
+            lblTrangThai.Text = "Trạng thái: —";
+            lblChuTro.Text = "Chủ trọ: —";
+            txtTienNghi.Text = "";
+            picAnhMinhHoa.Image = SystemIcons.Information.ToBitmap();
         }
     }
 }
