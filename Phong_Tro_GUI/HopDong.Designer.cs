@@ -68,7 +68,7 @@
             // 
             // lblMaHD
             // 
-            this.lblMaHD.Location = new System.Drawing.Point(46, 37);
+            this.lblMaHD.Location = new System.Drawing.Point(45, 34);
             this.lblMaHD.Name = "lblMaHD";
             this.lblMaHD.Size = new System.Drawing.Size(100, 23);
             this.lblMaHD.TabIndex = 19;
@@ -76,7 +76,7 @@
             // 
             // lblPhong
             // 
-            this.lblPhong.Location = new System.Drawing.Point(46, 77);
+            this.lblPhong.Location = new System.Drawing.Point(45, 72);
             this.lblPhong.Name = "lblPhong";
             this.lblPhong.Size = new System.Drawing.Size(100, 23);
             this.lblPhong.TabIndex = 20;
@@ -92,7 +92,7 @@
             // 
             // lblNgayBatDau
             // 
-            this.lblNgayBatDau.Location = new System.Drawing.Point(396, 34);
+            this.lblNgayBatDau.Location = new System.Drawing.Point(396, 35);
             this.lblNgayBatDau.Name = "lblNgayBatDau";
             this.lblNgayBatDau.Size = new System.Drawing.Size(97, 23);
             this.lblNgayBatDau.TabIndex = 22;
@@ -100,7 +100,7 @@
             // 
             // lblNgayKetThuc
             // 
-            this.lblNgayKetThuc.Location = new System.Drawing.Point(396, 75);
+            this.lblNgayKetThuc.Location = new System.Drawing.Point(396, 72);
             this.lblNgayKetThuc.Name = "lblNgayKetThuc";
             this.lblNgayKetThuc.Size = new System.Drawing.Size(97, 23);
             this.lblNgayKetThuc.TabIndex = 23;
@@ -123,7 +123,7 @@
             // 
             // cboPhong
             // 
-            this.cboPhong.Location = new System.Drawing.Point(156, 74);
+            this.cboPhong.Location = new System.Drawing.Point(156, 69);
             this.cboPhong.Name = "cboPhong";
             this.cboPhong.Size = new System.Drawing.Size(200, 24);
             this.cboPhong.TabIndex = 26;
@@ -144,7 +144,7 @@
             // 
             // dtpNgayKetThuc
             // 
-            this.dtpNgayKetThuc.Location = new System.Drawing.Point(499, 72);
+            this.dtpNgayKetThuc.Location = new System.Drawing.Point(499, 69);
             this.dtpNgayKetThuc.Name = "dtpNgayKetThuc";
             this.dtpNgayKetThuc.Size = new System.Drawing.Size(250, 22);
             this.dtpNgayKetThuc.TabIndex = 29;
@@ -166,6 +166,7 @@
             this.btnThem.TabIndex = 31;
             this.btnThem.Text = "➕ Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -177,6 +178,7 @@
             this.btnSua.TabIndex = 32;
             this.btnSua.Text = "✏️ Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -188,6 +190,7 @@
             this.btnXoa.TabIndex = 33;
             this.btnXoa.Text = "🗑️ Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -199,6 +202,7 @@
             this.btnLamMoi.TabIndex = 34;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // dgvHopDong
             // 
@@ -210,6 +214,7 @@
             this.dgvHopDong.RowHeadersWidth = 51;
             this.dgvHopDong.Size = new System.Drawing.Size(720, 244);
             this.dgvHopDong.TabIndex = 35;
+            this.dgvHopDong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHopDong_CellContentClick);
             // 
             // panel1
             // 
@@ -239,6 +244,7 @@
             this.Name = "HopDong";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hợp đồng thuê phòng";
+            this.Load += new System.EventHandler(this.HopDong_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHopDong)).EndInit();
