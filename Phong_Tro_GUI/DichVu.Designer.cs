@@ -88,6 +88,7 @@
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "➕ Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -101,6 +102,7 @@
             this.btnSua.TabIndex = 1;
             this.btnSua.Text = "✏️ Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -114,6 +116,7 @@
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "🗑️ Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -127,6 +130,7 @@
             this.btnLamMoi.TabIndex = 3;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // txtTimKiem
             // 
@@ -137,6 +141,7 @@
             this.txtTimKiem.Size = new System.Drawing.Size(160, 27);
             this.txtTimKiem.TabIndex = 4;
             this.txtTimKiem.Text = "Nhập tên dịch vụ...";
+            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
             // 
             // btnTimKiem
             // 
@@ -150,6 +155,7 @@
             this.btnTimKiem.TabIndex = 5;
             this.btnTimKiem.Text = "🔍 Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = false;
+            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // gbThongTin
             // 
@@ -256,14 +262,15 @@
             // 
             this.dgvDichVu.BackgroundColor = System.Drawing.Color.White;
             this.dgvDichVu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDichVu.Location = new System.Drawing.Point(220, 300);
+            this.dgvDichVu.Location = new System.Drawing.Point(220, 286);
             this.dgvDichVu.Name = "dgvDichVu";
             this.dgvDichVu.ReadOnly = true;
             this.dgvDichVu.RowHeadersVisible = false;
             this.dgvDichVu.RowHeadersWidth = 51;
             this.dgvDichVu.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDichVu.Size = new System.Drawing.Size(960, 360);
+            this.dgvDichVu.Size = new System.Drawing.Size(960, 402);
             this.dgvDichVu.TabIndex = 10;
+            this.dgvDichVu.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDichVu_CellClick);
             // 
             // DichVu
             // 
@@ -278,6 +285,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "DichVu";
             this.Text = "Quản lý Dịch Vụ";
+            this.Load += new System.EventHandler(this.DichVu_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.panelMenu.ResumeLayout(false);
