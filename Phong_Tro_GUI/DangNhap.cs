@@ -66,7 +66,7 @@ namespace Phong_Tro_GUI
                     }
                     else if (role == "KhachThue")
                     {
-                        var ucNguoiThue = new UC_NguoiThue();
+                        var ucNguoiThue = new NguoiThueUser();
                         ucNguoiThue.Dock = DockStyle.Fill;
                         mainForm.Controls.Add(ucNguoiThue);
                     }

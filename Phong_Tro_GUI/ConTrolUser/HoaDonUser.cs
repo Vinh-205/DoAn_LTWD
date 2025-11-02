@@ -5,18 +5,19 @@ using System.Linq;
 using System.Windows.Forms;
 using Phong_Tro_DAL.Phong_Tro;
 
-namespace Phong_Tro_GUI
+namespace Phong_Tro_GUI.ConTrolUser
 {
-    public partial class HoaDonUser : Form
+    public partial class HoaDonUser : UserControl
     {
         private Connect db = new Connect(); // EF DbContext
 
         public HoaDonUser()
         {
             InitializeComponent();
+            this.Load += HoaDonUser_Load;
         }
 
-        private void HoaDonNguoiThue_Load(object sender, EventArgs e)
+        private void HoaDonUser_Load(object sender, EventArgs e)
         {
             SetPlaceholder();
             LoadHoaDon();
@@ -58,6 +59,7 @@ namespace Phong_Tro_GUI
             dgvHoaDon.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
             dgvHoaDon.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
+
         private void LoadHoaDon()
         {
             var data = db.HoaDons

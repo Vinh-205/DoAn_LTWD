@@ -4,11 +4,11 @@ using System.Windows.Forms;
 
 namespace Phong_Tro_GUI
 {
-    public partial class UC_NguoiThue : UserControl
+    public partial class NguoiThueUser : UserControl
     {
         private Panel activeIndicator;
 
-        public UC_NguoiThue()
+        public NguoiThueUser()
         {
             InitializeComponent();
             InitializeMenuEffects();

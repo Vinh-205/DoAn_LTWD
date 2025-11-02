@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Phong_Tro_GUI
 {
-    partial class UC_NguoiThue
+    partial class NguoiThueUser
     {
         private System.ComponentModel.IContainer components = null;
         private Panel pnlMenu;

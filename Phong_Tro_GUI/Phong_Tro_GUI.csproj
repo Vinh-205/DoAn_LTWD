@@ -113,6 +113,30 @@
     <Compile Include="ConTrolMain\PhongMain.Designer.cs">
       <DependentUpon>PhongMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConTrolUser\HoaDonUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolUser\HoaDonUser.Designer.cs">
+      <DependentUpon>HoaDonUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConTrolUser\PhongUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolUser\PhongUser.Designer.cs">
+      <DependentUpon>PhongUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConTrolUser\ThongBaoUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolUser\ThongBaoUser.Designer.cs">
+      <DependentUpon>ThongBaoUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConTrolUser\ThongTinUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolUser\ThongTinUser.Designer.cs">
+      <DependentUpon>ThongTinUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,23 +155,11 @@
     <Compile Include="ConTrolMain\HoaDonMain.Designer.cs">
       <DependentUpon>HoaDonMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConTrolUser\HoaDonUser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolUser\HoaDonUser.Designer.cs">
-      <DependentUpon>HoaDonUser.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConTrolMain\HopDongMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConTrolMain\HopDongMain.Designer.cs">
       <DependentUpon>HopDongMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ConTrolUser\PhongUser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolUser\PhongUser.Designer.cs">
-      <DependentUpon>PhongUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,12 +168,6 @@
     </Compile>
     <Compile Include="QuenMatKhau.Designer.cs">
       <DependentUpon>QuenMatKhau.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ConTrolUser\ThongBaoNguoiDung.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolUser\ThongBaoNguoiDung.Designer.cs">
-      <DependentUpon>ThongBaoNguoiDung.cs</DependentUpon>
     </Compile>
     <Compile Include="ConTrolMain\ThongBaoMain.cs">
       <SubType>Form</SubType>
@@ -175,11 +181,11 @@
     <Compile Include="ConTrolMain\ChuTroMain.Designer.cs">
       <DependentUpon>ChuTroMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConTrolUser\UC_NguoiThue.cs">
+    <Compile Include="ConTrolUser\NguoiThueUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ConTrolUser\UC_NguoiThue.Designer.cs">
-      <DependentUpon>UC_NguoiThue.cs</DependentUpon>
+    <Compile Include="ConTrolUser\NguoiThueUser.Designer.cs">
+      <DependentUpon>NguoiThueUser.cs</DependentUpon>
     </Compile>
     <Compile Include="ConTrolMain\ThongKeMain.cs">
       <SubType>UserControl</SubType>
@@ -199,12 +205,6 @@
     <Compile Include="ConTrolMain\DichVuMain.Designer.cs">
       <DependentUpon>DichVuMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConTrolUser\ThongTinCaNhan.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolUser\ThongTinCaNhan.Designer.cs">
-      <DependentUpon>ThongTinCaNhan.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="ConTrolMain\ChuTroMain.resx">
       <DependentUpon>ChuTroMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,14 +214,17 @@
     <EmbeddedResource Include="ConTrolMain\ThongKeMain.resx">
       <DependentUpon>ThongKeMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConTrolUser\PhongUser.resx">
+      <DependentUpon>PhongUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConTrolUser\ThongTinUser.resx">
+      <DependentUpon>ThongTinUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrolMain\HoaDonMain.resx">
       <DependentUpon>HoaDonMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConTrolUser\HoaDonUser.resx">
-      <DependentUpon>HoaDonUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -245,11 +248,8 @@
     <EmbeddedResource Include="ConTrolMain\ThongBaoMain.resx">
       <DependentUpon>ThongBaoMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConTrolUser\UC_NguoiThue.resx">
-      <DependentUpon>UC_NguoiThue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConTrolUser\ThongTinCaNhan.resx">
-      <DependentUpon>ThongTinCaNhan.cs</DependentUpon>
+    <EmbeddedResource Include="ConTrolUser\NguoiThueUser.resx">
+      <DependentUpon>NguoiThueUser.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />

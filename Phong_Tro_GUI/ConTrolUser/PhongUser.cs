@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Phong_Tro_GUI
 {
-    public partial class PhongUser : Form
+    public partial class PhongUser : UserControl
     {
         private readonly PhongBUS _phongBUS;
 
@@ -16,9 +16,10 @@ namespace Phong_Tro_GUI
         {
             InitializeComponent();
             _phongBUS = new PhongBUS();
+            this.Load += PhongUser_Load;
         }
 
-        private void PhongDangThue_Load(object sender, EventArgs e)
+        private void PhongUser_Load(object sender, EventArgs e)
         {
             CaiDatTimKiemPlaceholder();
             CaiDatBangPhong();
@@ -50,7 +51,7 @@ namespace Phong_Tro_GUI
             };
         }
 
-        // 🎨 Cấu hình DataGridView đẹp mắt
+        // 🎨 Cấu hình DataGridView
         private void CaiDatBangPhong()
         {
             dgvPhong.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -65,7 +66,7 @@ namespace Phong_Tro_GUI
             dgvPhong.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
 
-        // 📋 Tải toàn bộ danh sách phòng
+        // 📋 Tải danh sách phòng
         private void TaiDanhSachPhong()
         {
             var ds = _phongBUS.LayTatCa()
@@ -125,7 +126,7 @@ namespace Phong_Tro_GUI
             }
         }
 
-        // 💡 Hiển thị thông tin phòng chi tiết
+        // 💡 Hiển thị thông tin chi tiết
         private void HienThiThongTinPhong(Phong phong)
         {
             lblTenPhong.Text = $"Tên phòng: {phong.TenPhong}";
@@ -136,14 +137,13 @@ namespace Phong_Tro_GUI
             txtTienNghi.Text = phong.TienNghi ?? "Chưa có thông tin";
             lblChuTro.Text = $"Chủ trọ: {phong.ChuNha?.Ten ?? "Không rõ"}";
 
-            // Ảnh minh họa
             if (!string.IsNullOrEmpty(phong.AnhMinhHoa) && File.Exists(phong.AnhMinhHoa))
                 picAnhMinhHoa.Image = Image.FromFile(phong.AnhMinhHoa);
             else
                 picAnhMinhHoa.Image = SystemIcons.Information.ToBitmap();
         }
 
-        // 🧹 Khi chưa chọn phòng
+        // 🧹 Xóa thông tin khi chưa chọn phòng
         private void XoaThongTinChiTiet()
         {
             lblTenPhong.Text = "Tên phòng: —";

@@ -4,19 +4,19 @@ using System.Windows.Forms;
 using Phong_Tro_BUS;
 using Phong_Tro_DAL.Phong_Tro;
 
-namespace Phong_Tro_GUI
+namespace Phong_Tro_GUI.ConTrolUser
 {
-    public partial class ThongBaoNguoiDung : Form
+    public partial class ThongBaoUser : UserControl
     {
         private readonly ThongBaoBUS _thongBaoBUS;
 
-        public ThongBaoNguoiDung()
+        public ThongBaoUser()
         {
             InitializeComponent();
             _thongBaoBUS = new ThongBaoBUS();
         }
 
-        private void ThongBaoNguoiDung_Load(object sender, EventArgs e)
+        private void ThongBaoUser_Load(object sender, EventArgs e)
         {
             TaiDanhSachThongBao();
             dgvThongBao.ClearSelection();

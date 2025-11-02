@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Phong_Tro_BUS;
-using Phong_Tro_GUI.ConTrol;
+using Phong_Tro_GUI.ConTrolUser;
 
 namespace Phong_Tro_GUI
 {
