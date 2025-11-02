@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Phong_Tro_GUI; // đảm bảo UC_ThongKeDoanhThu đã được import
+using Phong_Tro_GUI.ConTrol; // để load UC_HoaDon
+using Phong_Tro_GUI;         // để load UC_ThongKeDoanhThu, UC_DichVu,...
 
 namespace Phong_Tro_GUI
 {
@@ -14,14 +15,57 @@ namespace Phong_Tro_GUI
         public UC_ChuTro()
         {
             InitializeComponent();
-            // Khởi tạo border panel nếu muốn highlight button active
-            activeBorderPanel = new Panel();
-            activeBorderPanel.Size = new Size(5, 50); // chiều rộng viền
-            activeBorderPanel.BackColor = Color.MidnightBlue;
-            pnlSidebar.Controls.Add(activeBorderPanel); // giả sử bạn có pnlSidebar
-            activeBorderPanel.Visible = false;
+            SetupSidebarBorder();
+            SetupSidebarTimer();
         }
 
+        private void SetupSidebarBorder()
+        {
+            // Border nhỏ bên trái để đánh dấu nút đang chọn
+            activeBorderPanel = new Panel
+            {
+                Size = new Size(5, 50),
+                BackColor = Color.MidnightBlue,
+                Visible = false
+            };
+            pnlSidebar.Controls.Add(activeBorderPanel);
+        }
+
+        private void SetupSidebarTimer()
+        {
+            sidebarTimer = new Timer();
+            sidebarTimer.Interval = 10;
+            sidebarTimer.Tick += SidebarTimer_Tick;
+        }
+
+        private void SidebarTimer_Tick(object sender, EventArgs e)
+        {
+            if (sidebarExpanded)
+            {
+                pnlSidebar.Width -= 10;
+                if (pnlSidebar.Width <= 60)
+                {
+                    sidebarExpanded = false;
+                    sidebarTimer.Stop();
+                }
+            }
+            else
+            {
+                pnlSidebar.Width += 10;
+                if (pnlSidebar.Width >= 200)
+                {
+                    sidebarExpanded = true;
+                    sidebarTimer.Stop();
+                }
+            }
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            sidebarTimer.Start();
+        }
+
+        // Load user control con vào vùng content
         private void LoadUC(UserControl uc)
         {
             pnlContent.Controls.Clear();
@@ -29,15 +73,6 @@ namespace Phong_Tro_GUI
             pnlContent.Controls.Add(uc);
         }
 
-        // Ví dụ: khi bấm "Thống kê"
-        private void btnThongKe_Click(object sender, EventArgs e)
-        {
-            MoveActiveBorder(sender as Button);
-            LoadUC(new UC_ThongKeDoanhThu());
-        }
-
-
-        // Hàm di chuyển active border
         private void MoveActiveBorder(Button btn)
         {
             if (btn == null) return;
@@ -47,62 +82,42 @@ namespace Phong_Tro_GUI
             activeBorderPanel.BringToFront();
         }
 
-
+        // === Nút Menu ===
         private void btnTrangChu_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
             pnlContent.Controls.Clear();
-            // load UC_TrangChu nếu có
         }
 
         private void btnPhong_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
             pnlContent.Controls.Clear();
-            // load UC_Phong nếu có
+            // Load UC_Phong nếu có
         }
 
         private void btnHoaDon_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
-            pnlContent.Controls.Clear();
-            // load UC_HoaDon nếu có
+            LoadUC(new UC_HoaDon());
         }
 
         private void btnThongBao_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
             pnlContent.Controls.Clear();
-            // load UC_ThongBao nếu có
+        }
+
+        private void btnThongKe_Click(object sender, EventArgs e)
+        {
+            MoveActiveBorder(sender as Button);
+            LoadUC(new UC_ThongKeDoanhThu());
         }
 
         private void btnDichVu_Click(object sender, EventArgs e)
         {
             MoveActiveBorder(sender as Button);
             LoadUC(new UC_DichVu());
-        }
-
-        //private void btnHopDong_Click(object sender, EventArgs e)
-        //{
-        //    MoveActiveBorder(sender as Button);
-        //    LoadUC(new UC_HopDong());
-        //}
-
-        //private void btnHoaDon_Click(object sender, EventArgs e)
-        //{
-        //    MoveActiveBorder(sender as Button);
-        //    LoadUC(new UC_HoaDon());
-        //}
-
-
-        private void pnlContent_Paint(object sender, PaintEventArgs e)
-        {
-            // Nếu muốn custom vẽ pnlContent
-        }
-
-        private void pnlContent_Click(object sender, EventArgs e)
-        {
-            // xử lý nếu click vào pnlContent
         }
     }
 }

@@ -190,8 +190,6 @@
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(784, 561);
             this.pnlContent.TabIndex = 2;
-            this.pnlContent.Click += new System.EventHandler(this.pnlContent_Click);
-            this.pnlContent.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlContent_Paint);
             // 
             // UC_ChuTro
             // 

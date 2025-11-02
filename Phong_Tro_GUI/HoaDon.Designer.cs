@@ -218,6 +218,7 @@
             this.txtMaHD.Name = "txtMaHD";
             this.txtMaHD.Size = new System.Drawing.Size(200, 30);
             this.txtMaHD.TabIndex = 1;
+            this.txtMaHD.TextChanged += new System.EventHandler(this.txtMaHD_TextChanged);
             // 
             // label2
             // 
@@ -234,6 +235,7 @@
             this.txtTenKH.Name = "txtTenKH";
             this.txtTenKH.Size = new System.Drawing.Size(200, 30);
             this.txtTenKH.TabIndex = 3;
+            this.txtTenKH.TextChanged += new System.EventHandler(this.txtTenKH_TextChanged);
             // 
             // label3
             // 
@@ -251,6 +253,7 @@
             this.cbPhong.Name = "cbPhong";
             this.cbPhong.Size = new System.Drawing.Size(200, 31);
             this.cbPhong.TabIndex = 5;
+            this.cbPhong.SelectedIndexChanged += new System.EventHandler(this.cbPhong_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -267,6 +270,7 @@
             this.dtpNgayLap.Name = "dtpNgayLap";
             this.dtpNgayLap.Size = new System.Drawing.Size(200, 30);
             this.dtpNgayLap.TabIndex = 7;
+            this.dtpNgayLap.ValueChanged += new System.EventHandler(this.dtpNgayLap_ValueChanged);
             // 
             // label5
             // 
@@ -335,6 +339,7 @@
             this.txtTongTien.ReadOnly = true;
             this.txtTongTien.Size = new System.Drawing.Size(200, 30);
             this.txtTongTien.TabIndex = 15;
+            this.txtTongTien.TextChanged += new System.EventHandler(this.txtTongTien_TextChanged);
             // 
             // gbThongBao
             // 
@@ -357,6 +362,7 @@
             this.cbPhongThongBao.Name = "cbPhongThongBao";
             this.cbPhongThongBao.Size = new System.Drawing.Size(200, 31);
             this.cbPhongThongBao.TabIndex = 0;
+            this.cbPhongThongBao.SelectedIndexChanged += new System.EventHandler(this.cbPhongThongBao_SelectedIndexChanged);
             // 
             // txtNoiDungThongBao
             // 
@@ -365,6 +371,7 @@
             this.txtNoiDungThongBao.Name = "txtNoiDungThongBao";
             this.txtNoiDungThongBao.Size = new System.Drawing.Size(400, 60);
             this.txtNoiDungThongBao.TabIndex = 1;
+            this.txtNoiDungThongBao.TextChanged += new System.EventHandler(this.txtNoiDungThongBao_TextChanged);
             // 
             // btnGuiThongBao
             // 
@@ -378,6 +385,7 @@
             this.btnGuiThongBao.TabIndex = 2;
             this.btnGuiThongBao.Text = "📢 Gửi thông báo";
             this.btnGuiThongBao.UseVisualStyleBackColor = false;
+            this.btnGuiThongBao.Click += new System.EventHandler(this.btnGuiThongBao_Click);
             // 
             // dgvThongBao
             // 
@@ -391,6 +399,7 @@
             this.dgvThongBao.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvThongBao.Size = new System.Drawing.Size(460, 150);
             this.dgvThongBao.TabIndex = 17;
+            this.dgvThongBao.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvThongBao_CellContentClick);
             // 
             // gbHienTrang
             // 
@@ -425,6 +434,7 @@
             this.cbTrangThai.Name = "cbTrangThai";
             this.cbTrangThai.Size = new System.Drawing.Size(200, 31);
             this.cbTrangThai.TabIndex = 1;
+            this.cbTrangThai.SelectedIndexChanged += new System.EventHandler(this.cbTrangThai_SelectedIndexChanged);
             // 
             // dgvHoaDon
             // 
@@ -438,6 +448,7 @@
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHoaDon.Size = new System.Drawing.Size(480, 150);
             this.dgvHoaDon.TabIndex = 19;
+            this.dgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick);
             // 
             // HoaDon
             // 
@@ -455,7 +466,6 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "HoaDon";
             this.Text = "Quản lý Hóa Đơn";
-            this.Load += new System.EventHandler(this.HoaDon_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.panelMenu.ResumeLayout(false);

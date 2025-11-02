@@ -166,7 +166,6 @@
             this.btnThem.TabIndex = 31;
             this.btnThem.Text = "➕ Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
-            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -178,7 +177,6 @@
             this.btnSua.TabIndex = 32;
             this.btnSua.Text = "✏️ Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
-            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -190,7 +188,6 @@
             this.btnXoa.TabIndex = 33;
             this.btnXoa.Text = "🗑️ Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
-            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -202,7 +199,6 @@
             this.btnLamMoi.TabIndex = 34;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
-            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // dgvHopDong
             // 
@@ -214,7 +210,6 @@
             this.dgvHopDong.RowHeadersWidth = 51;
             this.dgvHopDong.Size = new System.Drawing.Size(720, 244);
             this.dgvHopDong.TabIndex = 35;
-            this.dgvHopDong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHopDong_CellContentClick);
             // 
             // panel1
             // 
@@ -244,7 +239,6 @@
             this.Name = "HopDong";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hợp đồng thuê phòng";
-            this.Load += new System.EventHandler(this.HopDong_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHopDong)).EndInit();

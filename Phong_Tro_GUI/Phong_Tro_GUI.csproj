@@ -107,6 +107,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConTrol\UC_HoaDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrol\UC_HoaDon.Designer.cs">
+      <DependentUpon>UC_HoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrol\UC_DichVu.resx">
       <DependentUpon>UC_DichVu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConTrol\UC_HoaDon.resx">
+      <DependentUpon>UC_HoaDon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrol\UC_QLPhong.resx">
       <DependentUpon>UC_QLPhong.cs</DependentUpon>
