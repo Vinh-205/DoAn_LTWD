@@ -1,4 +1,4 @@
-﻿namespace Phong_Tro_GUI
+﻿namespace Phong_Tro_GUI.ConTrolMain
 {
     partial class HoaDonMain
     {
@@ -11,7 +11,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         private void InitializeComponent()
         {
@@ -63,7 +63,6 @@
             // 
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(224)))), ((int)(((byte)(210)))));
             this.panelHeader.Controls.Add(this.labelTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(200, 0);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1000, 60);
@@ -89,7 +88,6 @@
             this.panelMenu.Controls.Add(this.btnLamMoi);
             this.panelMenu.Controls.Add(this.txtTimKiem);
             this.panelMenu.Controls.Add(this.btnTimKiem);
-            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(200, 700);
@@ -107,7 +105,6 @@
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "➕ Thêm HĐ";
             this.btnThem.UseVisualStyleBackColor = false;
-            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -121,7 +118,6 @@
             this.btnSua.TabIndex = 1;
             this.btnSua.Text = "✏️ Sửa HĐ";
             this.btnSua.UseVisualStyleBackColor = false;
-            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -135,7 +131,6 @@
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "🗑️ Xóa HĐ";
             this.btnXoa.UseVisualStyleBackColor = false;
-            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -149,7 +144,6 @@
             this.btnLamMoi.TabIndex = 3;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
-            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // txtTimKiem
             // 
@@ -160,7 +154,6 @@
             this.txtTimKiem.Size = new System.Drawing.Size(160, 27);
             this.txtTimKiem.TabIndex = 4;
             this.txtTimKiem.Text = "Nhập mã hoặc tên KH...";
-            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
             // 
             // btnTimKiem
             // 
@@ -174,7 +167,6 @@
             this.btnTimKiem.TabIndex = 5;
             this.btnTimKiem.Text = "🔍 Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = false;
-            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // gbThongTin
             // 
@@ -218,7 +210,6 @@
             this.txtMaHD.Name = "txtMaHD";
             this.txtMaHD.Size = new System.Drawing.Size(200, 30);
             this.txtMaHD.TabIndex = 1;
-            this.txtMaHD.TextChanged += new System.EventHandler(this.txtMaHD_TextChanged);
             // 
             // label2
             // 
@@ -235,7 +226,6 @@
             this.txtTenKH.Name = "txtTenKH";
             this.txtTenKH.Size = new System.Drawing.Size(200, 30);
             this.txtTenKH.TabIndex = 3;
-            this.txtTenKH.TextChanged += new System.EventHandler(this.txtTenKH_TextChanged);
             // 
             // label3
             // 
@@ -253,7 +243,6 @@
             this.cbPhong.Name = "cbPhong";
             this.cbPhong.Size = new System.Drawing.Size(200, 31);
             this.cbPhong.TabIndex = 5;
-            this.cbPhong.SelectedIndexChanged += new System.EventHandler(this.cbPhong_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -268,9 +257,8 @@
             // 
             this.dtpNgayLap.Location = new System.Drawing.Point(520, 78);
             this.dtpNgayLap.Name = "dtpNgayLap";
-            this.dtpNgayLap.Size = new System.Drawing.Size(200, 30);
+            this.dtpNgayLap.Size = new System.Drawing.Size(310, 30);
             this.dtpNgayLap.TabIndex = 7;
-            this.dtpNgayLap.ValueChanged += new System.EventHandler(this.dtpNgayLap_ValueChanged);
             // 
             // label5
             // 
@@ -287,7 +275,6 @@
             this.txtTienPhong.Name = "txtTienPhong";
             this.txtTienPhong.Size = new System.Drawing.Size(200, 30);
             this.txtTienPhong.TabIndex = 9;
-            this.txtTienPhong.TextChanged += new System.EventHandler(this.txtTienPhong_TextChanged);
             // 
             // label6
             // 
@@ -304,7 +291,6 @@
             this.txtTienDien.Name = "txtTienDien";
             this.txtTienDien.Size = new System.Drawing.Size(200, 30);
             this.txtTienDien.TabIndex = 11;
-            this.txtTienDien.TextChanged += new System.EventHandler(this.txtTienDien_TextChanged);
             // 
             // label7
             // 
@@ -321,7 +307,6 @@
             this.txtTienNuoc.Name = "txtTienNuoc";
             this.txtTienNuoc.Size = new System.Drawing.Size(200, 30);
             this.txtTienNuoc.TabIndex = 13;
-            this.txtTienNuoc.TextChanged += new System.EventHandler(this.txtTienNuoc_TextChanged);
             // 
             // label8
             // 
@@ -339,7 +324,6 @@
             this.txtTongTien.ReadOnly = true;
             this.txtTongTien.Size = new System.Drawing.Size(200, 30);
             this.txtTongTien.TabIndex = 15;
-            this.txtTongTien.TextChanged += new System.EventHandler(this.txtTongTien_TextChanged);
             // 
             // gbThongBao
             // 
@@ -362,7 +346,6 @@
             this.cbPhongThongBao.Name = "cbPhongThongBao";
             this.cbPhongThongBao.Size = new System.Drawing.Size(200, 31);
             this.cbPhongThongBao.TabIndex = 0;
-            this.cbPhongThongBao.SelectedIndexChanged += new System.EventHandler(this.cbPhongThongBao_SelectedIndexChanged);
             // 
             // txtNoiDungThongBao
             // 
@@ -371,7 +354,6 @@
             this.txtNoiDungThongBao.Name = "txtNoiDungThongBao";
             this.txtNoiDungThongBao.Size = new System.Drawing.Size(400, 60);
             this.txtNoiDungThongBao.TabIndex = 1;
-            this.txtNoiDungThongBao.TextChanged += new System.EventHandler(this.txtNoiDungThongBao_TextChanged);
             // 
             // btnGuiThongBao
             // 
@@ -385,7 +367,6 @@
             this.btnGuiThongBao.TabIndex = 2;
             this.btnGuiThongBao.Text = "📢 Gửi thông báo";
             this.btnGuiThongBao.UseVisualStyleBackColor = false;
-            this.btnGuiThongBao.Click += new System.EventHandler(this.btnGuiThongBao_Click);
             // 
             // dgvThongBao
             // 
@@ -399,7 +380,6 @@
             this.dgvThongBao.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvThongBao.Size = new System.Drawing.Size(460, 150);
             this.dgvThongBao.TabIndex = 17;
-            this.dgvThongBao.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvThongBao_CellContentClick);
             // 
             // gbHienTrang
             // 
@@ -434,7 +414,6 @@
             this.cbTrangThai.Name = "cbTrangThai";
             this.cbTrangThai.Size = new System.Drawing.Size(200, 31);
             this.cbTrangThai.TabIndex = 1;
-            this.cbTrangThai.SelectedIndexChanged += new System.EventHandler(this.cbTrangThai_SelectedIndexChanged);
             // 
             // dgvHoaDon
             // 
@@ -448,14 +427,12 @@
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHoaDon.Size = new System.Drawing.Size(480, 150);
             this.dgvHoaDon.TabIndex = 19;
-            this.dgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick);
             // 
-            // HoaDon
+            // HoaDonMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelMenu);
             this.Controls.Add(this.gbThongTin);
@@ -464,8 +441,8 @@
             this.Controls.Add(this.dgvThongBao);
             this.Controls.Add(this.dgvHoaDon);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Name = "HoaDon";
-            this.Text = "Quản lý Hóa Đơn";
+            this.Name = "HoaDonMain";
+            this.Size = new System.Drawing.Size(1200, 700);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.panelMenu.ResumeLayout(false);

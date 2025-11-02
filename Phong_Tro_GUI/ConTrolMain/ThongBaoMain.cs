@@ -4,40 +4,34 @@ using System.Windows.Forms;
 using Phong_Tro_BUS;
 using Phong_Tro_DAL.Phong_Tro;
 
-namespace Phong_Tro_GUI
+namespace Phong_Tro_GUI.ConTrolMain
 {
-    public partial class ThongBaoMain : Form
+    public partial class ThongBaoMain : UserControl
     {
         private readonly ThongBaoBUS _thongBaoBUS = new ThongBaoBUS();
 
         public ThongBaoMain()
         {
             InitializeComponent();
-            Load += ThongBaoo_Load;
+            this.Load += ThongBaoMain_Load;
         }
 
-        private void ThongBaoo_Load(object sender, EventArgs e)
+        private void ThongBaoMain_Load(object sender, EventArgs e)
         {
             TaiDanhSachThongBao();
             TaiDanhSachNguoiNhan();
             dtNgayGui.Value = DateTime.Now;
         }
 
-        /// <summary>
-        /// Nạp danh sách phòng để chọn người nhận
-        /// </summary>
         private void TaiDanhSachNguoiNhan()
         {
-            var listPhong = _thongBaoBUS.LayDanhSachPhong(); // BUS trả về danh sách phòng
+            var listPhong = _thongBaoBUS.LayDanhSachPhong();
 
             cboNguoiNhan.DataSource = listPhong;
             cboNguoiNhan.DisplayMember = "TenPhong";
             cboNguoiNhan.ValueMember = "MaPhong";
         }
 
-        /// <summary>
-        /// Nạp danh sách thông báo
-        /// </summary>
         private void TaiDanhSachThongBao()
         {
             var ds = _thongBaoBUS.LayTatCa();

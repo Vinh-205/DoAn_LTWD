@@ -107,11 +107,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConTrolMain\HoaDonMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolMain\HoaDonMain.Designer.cs">
+      <DependentUpon>HoaDonMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConTrolMain\HopDongMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolMain\HopDongMain.Designer.cs">
+      <DependentUpon>HopDongMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConTrolMain\PhongMain.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ConTrolMain\PhongMain.Designer.cs">
       <DependentUpon>PhongMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConTrolMain\ThongBaoMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolMain\ThongBaoMain.Designer.cs">
+      <DependentUpon>ThongBaoMain.cs</DependentUpon>
     </Compile>
     <Compile Include="ConTrolUser\HoaDonUser.cs">
       <SubType>UserControl</SubType>
@@ -149,18 +167,6 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConTrolMain\HoaDonMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolMain\HoaDonMain.Designer.cs">
-      <DependentUpon>HoaDonMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ConTrolMain\HopDongMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolMain\HopDongMain.Designer.cs">
-      <DependentUpon>HopDongMain.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuenMatKhau.cs">
@@ -168,12 +174,6 @@
     </Compile>
     <Compile Include="QuenMatKhau.Designer.cs">
       <DependentUpon>QuenMatKhau.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ConTrolMain\ThongBaoMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConTrolMain\ThongBaoMain.Designer.cs">
-      <DependentUpon>ThongBaoMain.cs</DependentUpon>
     </Compile>
     <Compile Include="ConTrolMain\ChuTroMain.cs">
       <SubType>UserControl</SubType>
@@ -211,8 +211,14 @@
     <EmbeddedResource Include="ConTrolMain\DichVuMain.resx">
       <DependentUpon>DichVuMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConTrolMain\HoaDonMain.resx">
+      <DependentUpon>HoaDonMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConTrolMain\ThongKeMain.resx">
       <DependentUpon>ThongKeMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConTrolMain\TienIchMain.resx">
+      <DependentUpon>TienIchMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrolUser\PhongUser.resx">
       <DependentUpon>PhongUser.cs</DependentUpon>
@@ -223,14 +229,8 @@
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConTrolMain\HoaDonMain.resx">
-      <DependentUpon>HoaDonMain.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConTrolMain\HopDongMain.resx">
-      <DependentUpon>HopDongMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -244,9 +244,6 @@
     </Compile>
     <EmbeddedResource Include="QuenMatKhau.resx">
       <DependentUpon>QuenMatKhau.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConTrolMain\ThongBaoMain.resx">
-      <DependentUpon>ThongBaoMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrolUser\NguoiThueUser.resx">
       <DependentUpon>NguoiThueUser.cs</DependentUpon>

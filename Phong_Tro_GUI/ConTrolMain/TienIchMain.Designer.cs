@@ -75,7 +75,9 @@ namespace Phong_Tro_GUI
             this.dgvDichVu.Name = "dgvDichVu";
             this.dgvDichVu.RowHeadersWidth = 51;
             this.dgvDichVu.Size = new System.Drawing.Size(720, 220);
-            this.dgvDichVu.TabIndex = 0;            // 
+            this.dgvDichVu.TabIndex = 0;
+            this.dgvDichVu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDichVu_CellContentClick);
+            // 
             // btnThem
             // 
             this.btnThem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -87,6 +89,7 @@ namespace Phong_Tro_GUI
             this.btnThem.TabIndex = 2;
             this.btnThem.Text = "➕  Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -99,6 +102,7 @@ namespace Phong_Tro_GUI
             this.btnSua.TabIndex = 3;
             this.btnSua.Text = "✏️  Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -111,6 +115,7 @@ namespace Phong_Tro_GUI
             this.btnXoa.TabIndex = 4;
             this.btnXoa.Text = "🗑️  Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -123,6 +128,7 @@ namespace Phong_Tro_GUI
             this.btnLamMoi.TabIndex = 5;
             this.btnLamMoi.Text = "🔄  Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // pnlFormNhap
             // 
@@ -156,6 +162,7 @@ namespace Phong_Tro_GUI
             this.txtMaDV.Name = "txtMaDV";
             this.txtMaDV.Size = new System.Drawing.Size(150, 22);
             this.txtMaDV.TabIndex = 1;
+            this.txtMaDV.TextChanged += new System.EventHandler(this.txtMaDV_TextChanged);
             // 
             // lblTenDV
             // 
@@ -171,6 +178,7 @@ namespace Phong_Tro_GUI
             this.txtTenDV.Name = "txtTenDV";
             this.txtTenDV.Size = new System.Drawing.Size(250, 22);
             this.txtTenDV.TabIndex = 3;
+            this.txtTenDV.TextChanged += new System.EventHandler(this.txtTenDV_TextChanged);
             // 
             // lblDonGia
             // 
@@ -186,6 +194,7 @@ namespace Phong_Tro_GUI
             this.txtDonGia.Name = "txtDonGia";
             this.txtDonGia.Size = new System.Drawing.Size(150, 22);
             this.txtDonGia.TabIndex = 5;
+            this.txtDonGia.TextChanged += new System.EventHandler(this.txtDonGia_TextChanged);
             // 
             // lblMoTa
             // 
@@ -202,6 +211,7 @@ namespace Phong_Tro_GUI
             this.txtMoTa.Name = "txtMoTa";
             this.txtMoTa.Size = new System.Drawing.Size(250, 60);
             this.txtMoTa.TabIndex = 7;
+            this.txtMoTa.TextChanged += new System.EventHandler(this.txtMoTa_TextChanged);
             // 
             // panelHeader
             // 
@@ -213,7 +223,7 @@ namespace Phong_Tro_GUI
             this.panelHeader.Size = new System.Drawing.Size(891, 67);
             this.panelHeader.TabIndex = 6;
             // 
-            // TienIch (UserControl)
+            // TienIchMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -225,13 +235,14 @@ namespace Phong_Tro_GUI
             this.Controls.Add(this.btnSua);
             this.Controls.Add(this.btnXoa);
             this.Controls.Add(this.btnLamMoi);
-            this.Name = "TienIch";
+            this.Name = "TienIchMain";
             this.Size = new System.Drawing.Size(891, 500);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDichVu)).EndInit();
             this.pnlFormNhap.ResumeLayout(false);
             this.pnlFormNhap.PerformLayout();
             this.panelHeader.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion

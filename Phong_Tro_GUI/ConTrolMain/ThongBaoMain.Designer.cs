@@ -1,4 +1,4 @@
-﻿namespace Phong_Tro_GUI
+﻿namespace Phong_Tro_GUI.ConTrolMain
 {
     partial class ThongBaoMain
     {
@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -83,6 +83,7 @@
             this.dgvThongBao.RowTemplate.Height = 24;
             this.dgvThongBao.Size = new System.Drawing.Size(727, 193);
             this.dgvThongBao.TabIndex = 1;
+            this.dgvThongBao.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvThongBao_CellClick);
             // 
             // chkChuaDoc
             // 
@@ -109,8 +110,8 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Enabled = false;
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Enabled = true;
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.groupBox2.Location = new System.Drawing.Point(10, 310);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(741, 192);
@@ -171,7 +172,7 @@
             // 
             // btnSua
             // 
-            this.btnSua.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnSua.BackColor = System.Drawing.Color.Teal;
             this.btnSua.ForeColor = System.Drawing.Color.White;
             this.btnSua.Location = new System.Drawing.Point(642, 26);
             this.btnSua.Name = "btnSua";
@@ -195,7 +196,7 @@
             // 
             // btnDaDoc
             // 
-            this.btnDaDoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnDaDoc.BackColor = System.Drawing.Color.Green;
             this.btnDaDoc.ForeColor = System.Drawing.Color.White;
             this.btnDaDoc.Location = new System.Drawing.Point(552, 26);
             this.btnDaDoc.Name = "btnDaDoc";
@@ -246,7 +247,7 @@
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(224, 224, 224);
             this.panelHeader.Controls.Add(this.label1);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
@@ -254,17 +255,17 @@
             this.panelHeader.Size = new System.Drawing.Size(763, 51);
             this.panelHeader.TabIndex = 3;
             // 
-            // ThongBaoo
+            // ThongBaoMain (UserControl)
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 514);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "ThongBaoo";
-            this.Text = "Thông báo";
+            this.Font = new System.Drawing.Font("Segoe UI", 7.8F);
+            this.Name = "ThongBaoMain";
+            this.Size = new System.Drawing.Size(763, 514);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvThongBao)).EndInit();
@@ -275,7 +276,9 @@
             this.ResumeLayout(false);
 
         }
+
         #endregion
+
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvThongBao;
