@@ -191,6 +191,7 @@ namespace Phong_Tro_GUI
             this.labelQuenMK.Size = new System.Drawing.Size(61, 16);
             this.labelQuenMK.TabIndex = 7;
             this.labelQuenMK.Text = "Quên MK";
+            this.labelQuenMK.Click += new System.EventHandler(this.labelQuenMK_Click);
             // 
             // pnlLogin
             // 

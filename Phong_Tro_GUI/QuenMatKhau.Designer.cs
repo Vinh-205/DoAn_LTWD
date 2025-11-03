@@ -123,7 +123,7 @@
             this.btnLayLai.ForeColor = System.Drawing.Color.White;
             this.btnLayLai.Location = new System.Drawing.Point(217, 288);
             this.btnLayLai.Name = "btnLayLai";
-            this.btnLayLai.Size = new System.Drawing.Size(154, 37);
+            this.btnLayLai.Size = new System.Drawing.Size(173, 37);
             this.btnLayLai.TabIndex = 8;
             this.btnLayLai.Text = "Lấy lại mật khẩu";
             this.btnLayLai.UseVisualStyleBackColor = false;
@@ -135,9 +135,9 @@
             this.btnThoat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThoat.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnThoat.ForeColor = System.Drawing.Color.White;
-            this.btnThoat.Location = new System.Drawing.Point(391, 288);
+            this.btnThoat.Location = new System.Drawing.Point(407, 288);
             this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(100, 37);
+            this.btnThoat.Size = new System.Drawing.Size(84, 37);
             this.btnThoat.TabIndex = 9;
             this.btnThoat.Text = "Thoát";
             this.btnThoat.UseVisualStyleBackColor = false;

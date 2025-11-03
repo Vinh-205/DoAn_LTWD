@@ -16,7 +16,7 @@ namespace Phong_Tro_GUI
 
         private void DangNhap_Load(object sender, EventArgs e)
         {
-            cboRole.Items.AddRange(new string[] { "ChuTro", "KhachThue" });
+            cboRole.Items.AddRange(new string[] { "Admin", "User" });
             cboRole.SelectedIndex = 0;
             txtPassword.UseSystemPasswordChar = true;
         }
@@ -97,6 +97,13 @@ namespace Phong_Tro_GUI
             {
                 Application.Exit();
             }
+        }
+        private void labelQuenMK_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            QuenMatKhau frm = new QuenMatKhau();
+            frm.FormClosed += (s, args) => this.Show(); // Khi đóng form Quên mật khẩu -> hiện lại form đăng nhập
+            frm.Show();
         }
     }
 }
