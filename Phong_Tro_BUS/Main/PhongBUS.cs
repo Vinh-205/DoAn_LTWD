@@ -16,16 +16,15 @@ namespace Phong_Tro_BUS
         }
 
         // ======== LẤY TẤT CẢ PHÒNG ========
-        public List<Phong> LayTatCa()
-        {
+        public List<Phong> LayTatCa() 
+        { 
             return db.Phongs
-                     .Include(p => p.ChuNha)
-                     .Include(p => p.ChiTietTienIches)
-                     .Include(p => p.HopDongs)
-                     .Include(p => p.ThongBaos)
-                     .AsNoTracking()
-                     .ToList();
-        }
+                .Include(p => p.ChuNha)
+                .Include(p => p.ChiTietTienIches)
+                .Include(p => p.HopDongs)
+                .Include(p => p.ThongBaos)
+                .AsNoTracking()
+                .ToList(); }
 
         // ======== LẤY THEO MÃ PHÒNG ========
         public Phong LayTheoMa(string maPhong)

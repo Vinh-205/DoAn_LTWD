@@ -34,6 +34,7 @@ namespace Phong_Tro_GUI
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.btnYKien = new System.Windows.Forms.Button();
             this.pnlMenu.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
@@ -42,6 +43,7 @@ namespace Phong_Tro_GUI
             // 
             this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.pnlMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMenu.Controls.Add(this.btnYKien);
             this.pnlMenu.Controls.Add(this.btnDangXuat);
             this.pnlMenu.Controls.Add(this.btnThongBao);
             this.pnlMenu.Controls.Add(this.btnHoaDon);
@@ -161,12 +163,27 @@ namespace Phong_Tro_GUI
             this.pnlContent.Size = new System.Drawing.Size(830, 585);
             this.pnlContent.TabIndex = 2;
             // 
-            // UC_NguoiThue
+            // btnYKien
+            // 
+            this.btnYKien.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnYKien.FlatAppearance.BorderSize = 0;
+            this.btnYKien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnYKien.Font = new System.Drawing.Font("Segoe UI Emoji", 10F, System.Drawing.FontStyle.Bold);
+            this.btnYKien.ForeColor = System.Drawing.Color.White;
+            this.btnYKien.Location = new System.Drawing.Point(10, 265);
+            this.btnYKien.Name = "btnYKien";
+            this.btnYKien.Size = new System.Drawing.Size(220, 38);
+            this.btnYKien.TabIndex = 5;
+            this.btnYKien.Text = "✍️Ý kiến";
+            this.btnYKien.UseVisualStyleBackColor = false;
+            this.btnYKien.Click += new System.EventHandler(this.btnYKien_Click);
+            // 
+            // NguoiThueUser
             // 
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlMenu);
             this.Controls.Add(this.panelHeader);
-            this.Name = "UC_NguoiThue";
+            this.Name = "NguoiThueUser";
             this.Size = new System.Drawing.Size(1080, 650);
             this.pnlMenu.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
@@ -174,5 +191,7 @@ namespace Phong_Tro_GUI
             this.PerformLayout();
 
         }
+
+        private Button btnYKien;
     }
 }

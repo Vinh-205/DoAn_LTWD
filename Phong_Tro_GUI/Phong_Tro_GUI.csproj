@@ -155,6 +155,12 @@
     <Compile Include="ConTrolUser\ThongTinUser.Designer.cs">
       <DependentUpon>ThongTinUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConTrolUser\YKienUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConTrolUser\YKienUser.Designer.cs">
+      <DependentUpon>YKienUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,11 +226,17 @@
     <EmbeddedResource Include="ConTrolMain\TienIchMain.resx">
       <DependentUpon>TienIchMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConTrolUser\HoaDonUser.resx">
+      <DependentUpon>HoaDonUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConTrolUser\PhongUser.resx">
       <DependentUpon>PhongUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConTrolUser\ThongTinUser.resx">
       <DependentUpon>ThongTinUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConTrolUser\YKienUser.resx">
+      <DependentUpon>YKienUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>

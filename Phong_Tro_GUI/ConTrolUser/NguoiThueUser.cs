@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Phong_Tro_GUI.ConTrolUser;
 
 namespace Phong_Tro_GUI
 {
@@ -64,35 +65,50 @@ namespace Phong_Tro_GUI
             pnlContent.Controls.Add(lbl);
         }
 
+        private int maKhachHienTai;
+        public NguoiThueUser(int maKhach)
+        {
+            InitializeComponent();
+            maKhachHienTai = maKhach;
+            InitializeMenuEffects();
+            HighlightButton(btnThongTin);
+            LoadControl(new ThongTinUser(maKhachHienTai));
+        } 
         private void btnThongTin_Click(object sender, EventArgs e)
         {
             HighlightButton(btnThongTin);
             LoadContent("👤 Thông tin cá nhân của bạn sẽ hiển thị tại đây.");
+            LoadControl(new ThongTinUser(maKhachHienTai)); // ✅ truyền đúng tham số
         }
+
 
         private void btnPhongDangThue_Click(object sender, EventArgs e)
         {
             HighlightButton(btnPhongDangThue);
-            //LoadControl(new UC_QLPhong("KhachThue"));
+            LoadContent("🏠 Danh sách các phòng bạn đang thuê.");
+            LoadControl(new PhongUser(maKhachHienTai));
         }
 
         private void btnHoaDon_Click(object sender, EventArgs e)
         {
             HighlightButton(btnHoaDon);
             LoadContent("🧾 Danh sách hóa đơn thanh toán của bạn.");
+            LoadControl(new HoaDonUser());
         }
 
         private void btnThongBao_Click(object sender, EventArgs e)
         {
             HighlightButton(btnThongBao);
             LoadContent("🔔 Các thông báo mới nhất từ chủ trọ.");
+            LoadControl(new ThongBaoUser());
         }
 
-        //private void btnYKien_Click(object sender, EventArgs e)
-        //{
-        //    HighlightButton(btnYKien);
-        //    LoadContent("✍️ Gửi ý kiến hoặc phản hồi cho chủ trọ.");
-        //}
+        private void btnYKien_Click(object sender, EventArgs e)
+        {
+            HighlightButton(btnYKien);
+            LoadContent("✍️ Gửi ý kiến hoặc phản hồi cho chủ trọ.");
+            LoadControl(new YKienUser());
+        }
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {

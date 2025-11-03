@@ -48,34 +48,29 @@ namespace Phong_Tro_GUI
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Ẩn form đăng nhập
                     this.Hide();
 
                     Form mainForm = new Form
                     {
-                        Text = role == "ChuTro" ? "Chủ Trọ - Quản lý phòng trọ" : "Người Thuê - Giao diện người dùng",
+                        Text = role == "Admin" ? "Chủ trọ - Quản lý phòng" : "Người thuê - Giao diện người dùng",
                         WindowState = FormWindowState.Maximized,
                         BackColor = System.Drawing.Color.White
                     };
 
-                    if (role == "ChuTro")
+                    if (role == "Admin")
                     {
                         var ucChuTro = new ChuTroMain();
                         ucChuTro.Dock = DockStyle.Fill;
                         mainForm.Controls.Add(ucChuTro);
                     }
-                    else if (role == "KhachThue")
+                    else if (role == "User")
                     {
                         var ucNguoiThue = new NguoiThueUser();
                         ucNguoiThue.Dock = DockStyle.Fill;
                         mainForm.Controls.Add(ucNguoiThue);
                     }
 
-                    // Khi form chính đóng, thoát toàn bộ ứng dụng
                     mainForm.FormClosed += (s, args) => Application.Exit();
-
-                    // ❌ ShowDialog() → đơ
-                    // ✅ Dùng Show() cho luồng chính tiếp tục
                     mainForm.Show();
                 }
                 else
