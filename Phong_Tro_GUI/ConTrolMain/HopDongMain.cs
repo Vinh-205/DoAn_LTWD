@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using Phong_Tro_BUS;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_GUI.ConTrolMain
 {
@@ -19,7 +19,6 @@ namespace Phong_Tro_GUI.ConTrolMain
 
         private void HopDongMain_Load(object sender, EventArgs e)
         {
-            // Load dữ liệu theo đúng thứ tự
             LoadPhong();
             LoadKhachThue();
             LoadDanhSachHopDong();
@@ -51,8 +50,7 @@ namespace Phong_Tro_GUI.ConTrolMain
             cboPhong.DataSource = phongList;
             cboPhong.DisplayMember = "TenPhong";
             cboPhong.ValueMember = "MaPhong";
-            if (phongList.Count > 0)
-                cboPhong.SelectedIndex = 0;
+            cboPhong.SelectedIndex = phongList.Count > 0 ? 0 : -1;
         }
 
         private void LoadKhachThue()
@@ -61,8 +59,7 @@ namespace Phong_Tro_GUI.ConTrolMain
             cboNguoiThue.DataSource = khList;
             cboNguoiThue.DisplayMember = "Ten";
             cboNguoiThue.ValueMember = "MaKhach";
-            if (khList.Count > 0)
-                cboNguoiThue.SelectedIndex = 0;
+            cboNguoiThue.SelectedIndex = khList.Count > 0 ? 0 : -1;
         }
 
         // ==================== LÀM MỚI ====================
@@ -99,7 +96,8 @@ namespace Phong_Tro_GUI.ConTrolMain
                     MaKhach = Convert.ToInt32(cboNguoiThue.SelectedValue),
                     NgayBatDau = dtpNgayBatDau.Value,
                     NgayKetThuc = dtpNgayKetThuc.Value,
-                    TienThue = decimal.TryParse(txtGiaThue.Text, out decimal tt) ? tt : 0
+                    TienThue = decimal.TryParse(txtGiaThue.Text, out decimal tt) ? tt : 0,
+                    TrangThai = "Đang hoạt động"
                 };
 
                 bus.Them(hd);
@@ -121,6 +119,12 @@ namespace Phong_Tro_GUI.ConTrolMain
                 if (string.IsNullOrEmpty(txtMaHD.Text))
                 {
                     MessageBox.Show("Vui lòng chọn hợp đồng cần sửa!");
+                    return;
+                }
+
+                if (cboPhong.SelectedValue == null || cboNguoiThue.SelectedValue == null)
+                {
+                    MessageBox.Show("Vui lòng chọn đầy đủ phòng và khách thuê!");
                     return;
                 }
 
@@ -173,7 +177,7 @@ namespace Phong_Tro_GUI.ConTrolMain
         }
 
         // ==================== CLICK DỮ LIỆU ====================
-        private void dgvHopDong_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvHopDong_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || dgvHopDong.Rows[e.RowIndex].Cells["MaHopDong"].Value == null)
                 return;
@@ -189,7 +193,7 @@ namespace Phong_Tro_GUI.ConTrolMain
             if (DateTime.TryParse(row.Cells["NgayKetThuc"].Value?.ToString(), out DateTime nkt))
                 dtpNgayKetThuc.Value = nkt;
 
-            txtGiaThue.Text = row.Cells["TienThue"].Value?.ToString();
+            txtGiaThue.Text = row.Cells["TienThue"].Value?.ToString() ?? "0";
         }
     }
 }

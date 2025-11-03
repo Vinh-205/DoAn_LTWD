@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_DAL.Phong_Tro;
-using Phong_Tro_BUS;
-
+using Phong_Tro_BUS;                  // Kết nối tầng BUS
+using Phong_Tro_DAL.PhongTro;        // Kết nối tầng DAL (DichVu, Connect, ...)
 
 namespace Phong_Tro_GUI
 {
@@ -18,7 +17,7 @@ namespace Phong_Tro_GUI
             LoadDichVu();
         }
 
-        // ======== Khởi tạo DataGridView ========
+        // ================== KHỞI TẠO DATAGRIDVIEW ==================
         private void InitializeDataGridView()
         {
             dgvDichVu.AutoGenerateColumns = false;
@@ -31,6 +30,7 @@ namespace Phong_Tro_GUI
                 Name = "MaDV",
                 Width = 100
             });
+
             dgvDichVu.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Tên DV",
@@ -38,36 +38,49 @@ namespace Phong_Tro_GUI
                 Name = "TenDV",
                 Width = 200
             });
+
             dgvDichVu.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Đơn Giá",
                 DataPropertyName = "DonGia",
                 Name = "DonGia",
-                Width = 100
+                Width = 120,
+                DefaultCellStyle = { Format = "N0" }
             });
+
             dgvDichVu.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Mô Tả",
                 DataPropertyName = "MoTa",
                 Name = "MoTa",
-                Width = 300
+                Width = 250
             });
         }
 
-        // ======== Load dữ liệu lên DataGridView ========
+        // ================== LOAD DỮ LIỆU ==================
         private void LoadDichVu()
         {
-            dgvDichVu.DataSource = dichVuBUS.LayTatCa()
-                .Select(d => new
-                {
-                    d.MaDV,
-                    d.TenDV,
-                    d.DonGia,
-                    d.MoTa
-                }).ToList();
+            try
+            {
+                var data = dichVuBUS.LayTatCa()
+                    .Select(d => new
+                    {
+                        d.MaDV,
+                        d.TenDV,
+                        d.DonGia,
+                        d.MoTa
+                    })
+                    .ToList();
+
+                dgvDichVu.DataSource = data;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        // ======== Validate DonGia ========
+        // ================== HÀM KIỂM TRA ĐƠN GIÁ ==================
         private bool TryGetDonGia(out decimal donGia)
         {
             if (!decimal.TryParse(txtDonGia.Text.Trim(), out donGia))
@@ -79,14 +92,14 @@ namespace Phong_Tro_GUI
             return true;
         }
 
-        // ======== Thêm dịch vụ ========
+        // ================== NÚT THÊM ==================
         private void btnThem_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!TryGetDonGia(out decimal donGia)) return;
 
-                var dv = new Phong_Tro_DAL.Phong_Tro.DichVu
+                var dv = new DichVu
                 {
                     MaDV = txtMaDV.Text.Trim(),
                     TenDV = txtTenDV.Text.Trim(),
@@ -96,22 +109,22 @@ namespace Phong_Tro_GUI
 
                 dichVuBUS.Them(dv);
                 LoadDichVu();
-                MessageBox.Show("Thêm dịch vụ thành công!");
+                MessageBox.Show("✅ Thêm dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Lỗi thêm dịch vụ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ======== Sửa dịch vụ ========
+        // ================== NÚT SỬA ==================
         private void btnSua_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!TryGetDonGia(out decimal donGia)) return;
 
-                var dv = new Phong_Tro_DAL.Phong_Tro.DichVu
+                var dv = new DichVu
                 {
                     MaDV = txtMaDV.Text.Trim(),
                     TenDV = txtTenDV.Text.Trim(),
@@ -121,53 +134,54 @@ namespace Phong_Tro_GUI
 
                 dichVuBUS.Sua(dv);
                 LoadDichVu();
-                MessageBox.Show("Cập nhật dịch vụ thành công!");
+                MessageBox.Show("✅ Cập nhật dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Lỗi cập nhật", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ======== Xóa dịch vụ ========
+        // ================== NÚT XÓA ==================
         private void btnXoa_Click(object sender, EventArgs e)
         {
             try
             {
                 string maDV = txtMaDV.Text.Trim();
-                if (string.IsNullOrWhiteSpace(maDV))
+                if (string.IsNullOrEmpty(maDV))
                 {
                     MessageBox.Show("Vui lòng chọn dịch vụ để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                if (MessageBox.Show($"Bạn có chắc muốn xóa dịch vụ {maDV}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show($"Bạn có chắc muốn xóa dịch vụ {maDV}?", "Xác nhận",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     dichVuBUS.Xoa(maDV);
                     LoadDichVu();
-                    MessageBox.Show("Xóa dịch vụ thành công!");
+                    MessageBox.Show("✅ Xóa dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Lỗi xóa dịch vụ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ======== Click vào DataGridView ========
+        // ================== CLICK DATAGRIDVIEW ==================
         private void dgvDichVu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 var row = dgvDichVu.Rows[e.RowIndex];
-                txtMaDV.Text = row.Cells["MaDV"].Value?.ToString() ?? "";
-                txtTenDV.Text = row.Cells["TenDV"].Value?.ToString() ?? "";
-                txtDonGia.Text = row.Cells["DonGia"].Value?.ToString() ?? "";
-                txtGhiChu.Text = row.Cells["MoTa"].Value?.ToString() ?? "";
+                txtMaDV.Text = row.Cells["MaDV"].Value?.ToString();
+                txtTenDV.Text = row.Cells["TenDV"].Value?.ToString();
+                txtDonGia.Text = row.Cells["DonGia"].Value?.ToString();
+                txtGhiChu.Text = row.Cells["MoTa"].Value?.ToString();
             }
         }
 
-        // ======== Làm mới form ========
+        // ================== NÚT LÀM MỚI ==================
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             txtMaDV.Clear();
@@ -177,18 +191,30 @@ namespace Phong_Tro_GUI
             LoadDichVu();
         }
 
-        // ======== Tìm kiếm ========
+        // ================== NÚT TÌM KIẾM ==================
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            string keyword = txtTimKiem.Text.Trim();
-            var result = string.IsNullOrWhiteSpace(keyword) ? dichVuBUS.LayTatCa() : dichVuBUS.TimKiem(keyword);
-            dgvDichVu.DataSource = result.Select(d => new
+            try
             {
-                d.MaDV,
-                d.TenDV,
-                d.DonGia,
-                d.MoTa
-            }).ToList();
+                string tuKhoa = txtTimKiem.Text.Trim();
+                var result = string.IsNullOrWhiteSpace(tuKhoa)
+                    ? dichVuBUS.LayTatCa()
+                    : dichVuBUS.TimKiem(tuKhoa);
+
+                dgvDichVu.DataSource = result
+                    .Select(d => new
+                    {
+                        d.MaDV,
+                        d.TenDV,
+                        d.DonGia,
+                        d.MoTa
+                    })
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

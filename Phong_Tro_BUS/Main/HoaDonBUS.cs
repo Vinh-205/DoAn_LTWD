@@ -21,6 +21,8 @@ namespace Phong_Tro_BUS
         {
             return db.HoaDons
                      .Include(hd => hd.HopDong)
+                     .Include(hd => hd.HopDong.Phong)      
+                     .Include(hd => hd.HopDong.KhachThue)  
                      .Include(hd => hd.ChiTietHoaDons.Select(ct => ct.DichVu))
                      .AsNoTracking()
                      .OrderByDescending(hd => hd.NgayLap)
@@ -50,7 +52,7 @@ namespace Phong_Tro_BUS
                 throw new Exception("❌ Mã hóa đơn đã tồn tại!");
 
             hd.TongTien = TinhTongTien(hd);
-            hd.NgayLap ??= DateTime.Now;
+            hd.NgayLap = DateTime.Now;
 
             db.HoaDons.Add(hd);
             db.SaveChanges();

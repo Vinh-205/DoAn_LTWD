@@ -18,7 +18,7 @@ namespace Phong_Tro_BUS
         // =================== 1️⃣ LẤY TẤT CẢ ===================
         public List<ChuTro> LayTatCa()
         {
-            return db.ChuTros
+            return db.ChuTroes
                      .AsNoTracking()
                      .OrderBy(c => c.Ten)
                      .ToList();
@@ -27,7 +27,7 @@ namespace Phong_Tro_BUS
         // =================== 2️⃣ LẤY THEO MÃ ===================
         public ChuTro LayTheoMa(int maChuTro)
         {
-            return db.ChuTros
+            return db.ChuTroes
                      .AsNoTracking()
                      .FirstOrDefault(c => c.MaChuTro == maChuTro);
         }
@@ -39,13 +39,13 @@ namespace Phong_Tro_BUS
                 throw new ArgumentNullException(nameof(chu), "Dữ liệu chủ trọ không hợp lệ!");
 
             // Kiểm tra trùng email hoặc số điện thoại
-            bool tonTai = db.ChuTros.Any(c =>
+            bool tonTai = db.ChuTroes.Any(c =>
                 c.Email == chu.Email || c.SDT == chu.SDT);
 
             if (tonTai)
                 throw new Exception("Email hoặc số điện thoại đã tồn tại!");
 
-            db.ChuTros.Add(chu);
+            db.ChuTroes.Add(chu);
             db.SaveChanges();
             return true;
         }
@@ -56,12 +56,12 @@ namespace Phong_Tro_BUS
             if (chu == null)
                 throw new ArgumentNullException(nameof(chu), "Dữ liệu cập nhật không hợp lệ!");
 
-            var existing = db.ChuTros.Find(chu.MaChuTro);
+            var existing = db.ChuTroes.Find(chu.MaChuTro);
             if (existing == null)
                 throw new Exception("Không tìm thấy chủ trọ để cập nhật!");
 
             // Kiểm tra trùng email/sđt (trừ chính nó)
-            bool trung = db.ChuTros.Any(c =>
+            bool trung = db.ChuTroes.Any(c =>
                 (c.Email == chu.Email || c.SDT == chu.SDT) &&
                 c.MaChuTro != chu.MaChuTro);
 
@@ -81,11 +81,11 @@ namespace Phong_Tro_BUS
         // =================== 5️⃣ XÓA ===================
         public bool Xoa(int maChuTro)
         {
-            var chu = db.ChuTros.Find(maChuTro);
+            var chu = db.ChuTroes.Find(maChuTro);
             if (chu == null)
                 throw new Exception("Không tìm thấy chủ trọ để xóa!");
 
-            db.ChuTros.Remove(chu);
+            db.ChuTroes.Remove(chu);
             db.SaveChanges();
             return true;
         }
@@ -98,7 +98,7 @@ namespace Phong_Tro_BUS
 
             tuKhoa = tuKhoa.Trim().ToLower();
 
-            return db.ChuTros
+            return db.ChuTroes
                      .AsNoTracking()
                      .Where(c => c.Ten.ToLower().Contains(tuKhoa) ||
                                  (c.Email != null && c.Email.ToLower().Contains(tuKhoa)) ||

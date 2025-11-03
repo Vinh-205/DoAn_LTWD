@@ -1,52 +1,57 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_BUS;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_GUI
 {
     public partial class PhongMain : UserControl
     {
-        private readonly Connect db = new Connect();
+        private readonly PhongBUS bus = new PhongBUS();
 
         public PhongMain()
         {
             InitializeComponent();
+            this.Load += PhongMain_Load;
         }
 
         private void PhongMain_Load(object sender, EventArgs e)
         {
             HienThiDanhSachPhong();
+            LamMoi();
         }
 
+        // ==================== LOAD DỮ LIỆU ====================
         private void HienThiDanhSachPhong()
         {
-            dgvDanhSachPhong.DataSource = db.Phongs
+            var phongList = bus.LayTatCa();
+            dgvDanhSachPhong.DataSource = phongList
                 .Select(p => new
                 {
                     p.MaPhong,
                     p.TenPhong,
-                    p.GiaThue,
+                    p.GiaPhong,
                     p.TrangThai,
-                    p.TienNghi
+                    MoTa = p.MoTa
                 })
                 .ToList();
             dgvDanhSachPhong.ClearSelection();
         }
 
-        private void dgvDanhSachPhong_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvDanhSachPhong_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                txtMaPhong.Text = dgvDanhSachPhong.Rows[e.RowIndex].Cells["MaPhong"].Value.ToString();
-                txtTenPhong.Text = dgvDanhSachPhong.Rows[e.RowIndex].Cells["TenPhong"].Value.ToString();
-                txtGiaPhong.Text = dgvDanhSachPhong.Rows[e.RowIndex].Cells["GiaThue"].Value.ToString();
-                cboTrangThai.Text = dgvDanhSachPhong.Rows[e.RowIndex].Cells["TrangThai"].Value.ToString();
-                txtMoTa.Text = dgvDanhSachPhong.Rows[e.RowIndex].Cells["TienNghi"].Value?.ToString();
-            }
+            if (e.RowIndex < 0) return;
+
+            var row = dgvDanhSachPhong.Rows[e.RowIndex];
+            txtMaPhong.Text = row.Cells["MaPhong"].Value?.ToString();
+            txtTenPhong.Text = row.Cells["TenPhong"].Value?.ToString();
+            txtGiaPhong.Text = row.Cells["GiaPhong"].Value?.ToString();
+            cboTrangThai.Text = row.Cells["TrangThai"].Value?.ToString();
+            txtMoTa.Text = row.Cells["MoTa"].Value?.ToString();
         }
 
+        // ==================== THÊM ====================
         private void btnThem_Click(object sender, EventArgs e)
         {
             try
@@ -59,30 +64,22 @@ namespace Phong_Tro_GUI
                     return;
                 }
 
-                if (db.Phongs.Any(p => p.MaPhong == txtMaPhong.Text))
-                {
-                    MessageBox.Show("Mã phòng đã tồn tại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 if (!decimal.TryParse(txtGiaPhong.Text, out decimal gia))
                 {
                     MessageBox.Show("Giá phòng không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                var phong = new Phong_Tro_DAL.Phong_Tro.Phong
+                var phong = new Phong
                 {
                     MaPhong = txtMaPhong.Text.Trim(),
                     TenPhong = txtTenPhong.Text.Trim(),
-                    GiaThue = gia,
+                    GiaPhong = gia,
                     TrangThai = cboTrangThai.Text,
-                    TienNghi = txtMoTa.Text.Trim()
+                    MoTa = txtMoTa.Text.Trim()
                 };
 
-                db.Phongs.Add(phong);
-                db.SaveChanges();
-
+                bus.Them(phong);
                 MessageBox.Show("Thêm phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 HienThiDanhSachPhong();
                 LamMoi();
@@ -93,31 +90,34 @@ namespace Phong_Tro_GUI
             }
         }
 
+        // ==================== SỬA ====================
         private void btnSua_Click(object sender, EventArgs e)
         {
             try
             {
-                var ma = txtMaPhong.Text.Trim();
-                var phong = db.Phongs.FirstOrDefault(p => p.MaPhong == ma);
-                if (phong == null)
+                if (string.IsNullOrWhiteSpace(txtMaPhong.Text))
                 {
-                    MessageBox.Show("Không tìm thấy phòng cần sửa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng chọn phòng cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (!decimal.TryParse(txtGiaPhong.Text, out decimal gia))
                 {
-                    MessageBox.Show("Giá phòng không hợp lệ!");
+                    MessageBox.Show("Giá phòng không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                phong.TenPhong = txtTenPhong.Text.Trim();
-                phong.GiaThue = gia;
-                phong.TrangThai = cboTrangThai.Text;
-                phong.TienNghi = txtMoTa.Text.Trim();
-                db.SaveChanges();
+                var phong = new Phong
+                {
+                    MaPhong = txtMaPhong.Text.Trim(),
+                    TenPhong = txtTenPhong.Text.Trim(),
+                    GiaPhong = gia,
+                    TrangThai = cboTrangThai.Text,
+                    MoTa = txtMoTa.Text.Trim()
+                };
 
-                MessageBox.Show("Cập nhật thành công!");
+                bus.Sua(phong);
+                MessageBox.Show("Cập nhật phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 HienThiDanhSachPhong();
                 LamMoi();
             }
@@ -127,23 +127,21 @@ namespace Phong_Tro_GUI
             }
         }
 
+        // ==================== XÓA ====================
         private void btnXoa_Click(object sender, EventArgs e)
         {
             try
             {
-                var ma = txtMaPhong.Text.Trim();
-                var phong = db.Phongs.FirstOrDefault(p => p.MaPhong == ma);
-                if (phong == null)
+                if (string.IsNullOrWhiteSpace(txtMaPhong.Text))
                 {
-                    MessageBox.Show("Không tìm thấy phòng cần xóa!");
+                    MessageBox.Show("Vui lòng chọn phòng cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (MessageBox.Show("Bạn có chắc muốn xóa phòng này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xóa phòng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    db.Phongs.Remove(phong);
-                    db.SaveChanges();
-                    MessageBox.Show("Đã xóa phòng thành công!");
+                    bus.Xoa(txtMaPhong.Text.Trim());
+                    MessageBox.Show("Xóa phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     HienThiDanhSachPhong();
                     LamMoi();
                 }
@@ -154,6 +152,7 @@ namespace Phong_Tro_GUI
             }
         }
 
+        // ==================== LÀM MỚI ====================
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             LamMoi();

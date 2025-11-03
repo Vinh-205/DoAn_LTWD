@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_BUS
 {
-    public class PhongBUS
+    public class PhongBUS : IDisposable
     {
         private readonly Connect db;
 
@@ -16,26 +16,28 @@ namespace Phong_Tro_BUS
         }
 
         // ======== LẤY TẤT CẢ PHÒNG ========
-        public List<Phong> LayTatCa() 
-        { 
+        public List<Phong> LayTatCa()
+        {
             return db.Phongs
-                .Include(p => p.ChuNha)
                 .Include(p => p.ChiTietTienIches)
                 .Include(p => p.HopDongs)
-                .Include(p => p.ThongBaos)
+                .Include(p => p.ThuePhongs)
                 .AsNoTracking()
-                .ToList(); }
+                .ToList();
+        }
 
         // ======== LẤY THEO MÃ PHÒNG ========
         public Phong LayTheoMa(string maPhong)
         {
+            if (string.IsNullOrWhiteSpace(maPhong))
+                throw new ArgumentException("Mã phòng không hợp lệ!", nameof(maPhong));
+
             return db.Phongs
-                     .Include(p => p.ChuNha)
-                     .Include(p => p.ChiTietTienIches)
-                     .Include(p => p.HopDongs)
-                     .Include(p => p.ThongBaos)
-                     .AsNoTracking()
-                     .FirstOrDefault(p => p.MaPhong == maPhong);
+                .Include(p => p.ChiTietTienIches)
+                .Include(p => p.HopDongs)
+                .Include(p => p.ThuePhongs)
+                .AsNoTracking()
+                .FirstOrDefault(p => p.MaPhong == maPhong);
         }
 
         // ======== THÊM PHÒNG ========
@@ -44,8 +46,7 @@ namespace Phong_Tro_BUS
             if (phong == null)
                 throw new ArgumentNullException(nameof(phong));
 
-            bool tonTai = db.Phongs.Any(p => p.MaPhong == phong.MaPhong);
-            if (tonTai)
+            if (db.Phongs.Any(p => p.MaPhong == phong.MaPhong))
                 throw new Exception("Mã phòng đã tồn tại!");
 
             db.Phongs.Add(phong);
@@ -63,14 +64,10 @@ namespace Phong_Tro_BUS
             if (existing == null)
                 throw new Exception("Không tìm thấy phòng để cập nhật!");
 
-            existing.MaChu = phong.MaChu;
             existing.TenPhong = phong.TenPhong;
-            existing.LoaiPhong = phong.LoaiPhong;
-            existing.DienTich = phong.DienTich;
-            existing.GiaThue = phong.GiaThue;
+            existing.GiaPhong = phong.GiaPhong;
             existing.TrangThai = phong.TrangThai;
-            existing.TienNghi = phong.TienNghi;
-            existing.AnhMinhHoa = phong.AnhMinhHoa;
+            existing.MoTa = phong.MoTa;
 
             db.Entry(existing).State = EntityState.Modified;
             db.SaveChanges();
@@ -80,6 +77,9 @@ namespace Phong_Tro_BUS
         // ======== XÓA PHÒNG ========
         public bool Xoa(string maPhong)
         {
+            if (string.IsNullOrWhiteSpace(maPhong))
+                throw new ArgumentException("Mã phòng không hợp lệ!", nameof(maPhong));
+
             var phong = db.Phongs.Find(maPhong);
             if (phong == null)
                 throw new Exception("Không tìm thấy phòng để xóa!");
@@ -96,11 +96,18 @@ namespace Phong_Tro_BUS
                 return LayTatCa();
 
             return db.Phongs
-                     .Where(p => p.TenPhong.Contains(tuKhoa) ||
-                                 p.LoaiPhong.Contains(tuKhoa) ||
-                                 p.TrangThai.Contains(tuKhoa))
-                     .AsNoTracking()
-                     .ToList();
+                .Where(p => p.TenPhong.Contains(tuKhoa)
+                         || p.TrangThai.Contains(tuKhoa)
+                         || p.MoTa.Contains(tuKhoa))
+                .AsNoTracking()
+                .ToList();
+        }
+
+        // ======== GIẢI PHÓNG TÀI NGUYÊN ========
+        public void Dispose()
+        {
+            db?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

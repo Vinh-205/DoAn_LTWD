@@ -21,8 +21,8 @@ namespace Phong_Tro_BUS
             try
             {
                 return db.ThongBaos
-                    .Include(tb => tb.TaiKhoan_Gui)
-                    .Include(tb => tb.TaiKhoan_Nhan)
+                    .Include(tb => tb.MaTK_Gui)
+                    .Include(tb => tb.MaTK_Nhan)
                     .AsNoTracking()
                     .OrderByDescending(tb => tb.NgayGui)
                     .ToList();
@@ -39,8 +39,8 @@ namespace Phong_Tro_BUS
             try
             {
                 return db.ThongBaos
-                    .Include(tb => tb.TaiKhoan_Gui)
-                    .Include(tb => tb.TaiKhoan_Nhan)
+                    .Include(tb => tb.MaTK_Gui)
+                    .Include(tb => tb.MaTK_Nhan)
                     .AsNoTracking()
                     .FirstOrDefault(tb => tb.MaTB == maTB);
             }
@@ -57,7 +57,7 @@ namespace Phong_Tro_BUS
             {
                 return db.ThongBaos
                     .Where(tb => tb.MaTK_Nhan == maTKNhan)
-                    .Include(tb => tb.TaiKhoan_Gui)
+                    .Include(tb => tb.MaTK_Gui)
                     .OrderByDescending(tb => tb.NgayGui)
                     .AsNoTracking()
                     .ToList();
@@ -161,8 +161,8 @@ namespace Phong_Tro_BUS
 
                 return db.ThongBaos
                     .Where(tb => tb.NoiDung.ToLower().Contains(keyword))
-                    .Include(tb => tb.TaiKhoan_Gui)
-                    .Include(tb => tb.TaiKhoan_Nhan)
+                    .Include(tb => tb.MaTK_Gui)
+                    .Include(tb => tb.MaTK_Nhan)
                     .OrderByDescending(tb => tb.NgayGui)
                     .AsNoTracking()
                     .ToList();

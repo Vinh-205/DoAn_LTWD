@@ -204,7 +204,6 @@
             this.btnDaDoc.TabIndex = 4;
             this.btnDaDoc.Text = "✓ Đã đọc";
             this.btnDaDoc.UseVisualStyleBackColor = false;
-            this.btnDaDoc.Click += new System.EventHandler(this.btnDaDoc_Click);
             // 
             // btnGui
             // 

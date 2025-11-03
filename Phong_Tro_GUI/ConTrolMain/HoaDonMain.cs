@@ -1,134 +1,131 @@
-﻿using Phong_Tro_BUS;
-using Phong_Tro_DAL.Phong_Tro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Phong_Tro_BUS;
+using Phong_Tro_DAL.PhongTro;
 
-namespace Phong_Tro_GUI.ConTrolMain
+namespace Phong_Tro_GUI
 {
-    // Kế thừa từ UserControl thay vì Form
     public partial class HoaDonMain : UserControl
     {
-        // Khai báo các BUS và DAL như cũ
-        private readonly HoaDonBUS hoaDonBUS = new HoaDonBUS();
-        private readonly ThongBaoBUS thongBaoBUS = new ThongBaoBUS();
-        private readonly Connect db = new Connect();
-
-        // MOCK TẠM CÁC CLASS CẦN THIẾT NẾU CHƯA CÓ TRONG THỰC TẾ
-        // Bạn có thể xóa phần này nếu các class HoaDon, ThongBao đã được định nghĩa
-        private class HoaDon { public string MaHD { get; set; } public decimal TienDien { get; set; } public decimal TienNuoc { get; set; } public decimal GiaPhong { get; set; } public DateTime NgayLap { get; set; } public string MaPhong { get; set; } }
-        private class ThongBao { public string MaPhong { get; set; } public string NoiDung { get; set; } public DateTime NgayTao { get; set; } }
-        private class ThongBaoBUS { public void Them(ThongBao h) { } }
-        private class Connect { public List<Phong> Phongs = new List<Phong> { new Phong { MaPhong = "P001", TenPhong = "Phòng 101" }, new Phong { MaPhong = "P002", TenPhong = "Phòng 102" } }; public List<Phong> PhongsToList() => Phongs; }
-        private class Phong { public string MaPhong { get; set; } public string TenPhong { get; set; } }
-        // End Mock
-
-        // ==================== MOCK TẠM CHO CÁC HÀM BUS (Copy từ Form cũ) ====================
-        private class HoaDonBUS
-        {
-            public List<dynamic> LayTatCa()
-            {
-                return new List<dynamic>
-        {
-            new { MaHD = "HD001", GiaPhong = 2500000m, TienDien = 300000m, TienNuoc = 100000m, NgayLap = DateTime.Now.AddDays(-10), TongTien = 2900000m },
-            new { MaHD = "HD002", GiaPhong = 3000000m, TienDien = 400000m, TienNuoc = 150000m, NgayLap = DateTime.Now.AddDays(-5), TongTien = 3550000m }
-        };
-            }
-
-            public List<dynamic> TimKiem(string k)
-            {
-                var all = LayTatCa();
-                if (k.ToLower().Contains("hd001"))
-                    return all.Where(x => x.MaHD == "HD001").ToList();
-                return all;
-            }
-
-            public void Them(HoaDon h) { }
-            public void Sua(HoaDon h) { }
-            public void Xoa(string id) { }
-            public string LayMaPhongTheoHoaDon(string maHD) => maHD == "HD001" ? "P001" : "P002";
-        }
-        // ==================== KẾT THÚC MOCK ====================
+        private readonly HoaDonBUS hoaDonBUS;
+        private readonly HopDongBUS hopDongBUS;
 
         public HoaDonMain()
         {
             InitializeComponent();
-            // Thiết lập sự kiện Load cho UserControl sau khi component được khởi tạo
-            this.Load += new EventHandler(HoaDonMain_Load);
-            // Gán sự kiện Click cho nút Tìm kiếm
-            this.btnTimKiem.Click += new EventHandler(this.btnTimKiem_Click);
+            hoaDonBUS = new HoaDonBUS();
+            hopDongBUS = new HopDongBUS();
+
+            LoadComboBox();
+            LoadDataGrid();
         }
 
-        // ==================== LOAD USERCONTROL (THAY VÌ FORM) ====================
-        private void HoaDonMain_Load(object sender, EventArgs e)
+        private void LoadComboBox()
         {
-            LoadHoaDon();
-            LoadPhong();
-            ClearFields();
+            try
+            {
+                var hopDongList = hopDongBUS.LayTatCa()
+                    .Where(h => h.TrangThai == "Đang hoạt động")
+                    .ToList();
 
-            // Khởi tạo các sự kiện khác được định nghĩa trong designer nhưng thiếu code
-            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
-            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
-            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
-            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
-            this.btnGuiThongBao.Click += new System.EventHandler(this.btnGuiThongBao_Click);
-            this.dgvHoaDon.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick); // Đã thay bằng CellClick để bao quát hơn CellContentClick
-            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
+                // Hiển thị tên phòng, giá trị thực là MaHopDong
+                cbPhong.DataSource = hopDongList;
+                cbPhong.DisplayMember = "Phong.TenPhong";
+                cbPhong.ValueMember = "MaHopDong";
+
+                cbPhongThongBao.DataSource = hopDongList.ToList();
+                cbPhongThongBao.DisplayMember = "Phong.TenPhong";
+                cbPhongThongBao.ValueMember = "MaHopDong";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi load danh sách phòng: " + ex.Message);
+            }
         }
 
-        // ==================== LOAD DỮ LIỆU ====================
-        private void LoadHoaDon()
+        private void LoadDataGrid()
         {
-            dgvHoaDon.DataSource = hoaDonBUS.LayTatCa();
+            try
+            {
+                var list = hoaDonBUS.LayTatCa();
+                dgvHoaDon.DataSource = list.Select(hd => new
+                {
+                    hd.MaHD,
+                    KhachHang = hd.HopDong.KhachThue.Ten,
+                    Phong = hd.HopDong.Phong.TenPhong,
+                    hd.Thang,
+                    hd.Nam,
+                    hd.TienDien,
+                    hd.TienNuoc,
+                    hd.TienDichVu,
+                    hd.GiaPhong,
+                    hd.TongTien,
+                    hd.NgayLap
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi load dữ liệu hóa đơn: " + ex.Message);
+            }
         }
 
-        private void LoadPhong()
+        private void ClearForm()
         {
-            // Sử dụng ToList() trên Phongs của Connect
-            cbPhong.DataSource = db.Phongs.ToList();
-            cbPhong.DisplayMember = "TenPhong";
-            cbPhong.ValueMember = "MaPhong";
-
-            cbPhongThongBao.DataSource = db.Phongs.ToList();
-            cbPhongThongBao.DisplayMember = "TenPhong";
-            cbPhongThongBao.ValueMember = "MaPhong";
+            txtMaHD.Clear();
+            txtTenKH.Clear();
+            txtTienDien.Clear();
+            txtTienNuoc.Clear();
+            txtTienPhong.Clear();
+            txtTongTien.Clear();
+            dtpNgayLap.Value = DateTime.Now;
+            cbPhong.SelectedIndex = -1;
+            cbTrangThai.SelectedIndex = -1;
         }
 
-        // ==================== CÁC NÚT CHỨC NĂNG ====================
+        private void btnLamMoi_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            LoadDataGrid();
+        }
+
         private void btnThem_Click(object sender, EventArgs e)
         {
             try
             {
-                // Kiểm tra các trường nhập liệu cần thiết
-                if (string.IsNullOrWhiteSpace(txtMaHD.Text) || string.IsNullOrWhiteSpace(txtTienDien.Text) || string.IsNullOrWhiteSpace(txtTienNuoc.Text) || string.IsNullOrWhiteSpace(txtTienPhong.Text))
+                if (cbPhong.SelectedValue == null)
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ Mã HĐ, Tiền phòng, Tiền điện, Tiền nước.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng chọn phòng hợp đồng!");
                     return;
                 }
 
-                HoaDon hd = new HoaDon
+                var hd = new HoaDon
                 {
                     MaHD = txtMaHD.Text.Trim(),
-                    TienDien = Convert.ToDecimal(txtTienDien.Text),
-                    TienNuoc = Convert.ToDecimal(txtTienNuoc.Text),
-                    GiaPhong = Convert.ToDecimal(txtTienPhong.Text),
+                    MaHopDong = (int)cbPhong.SelectedValue,
+                    Thang = dtpNgayLap.Value.Month,
+                    Nam = dtpNgayLap.Value.Year,
+                    SoDienCu = 0,
+                    SoDienMoi = 0,
+                    SoNuocCu = 0,
+                    SoNuocMoi = 0,
+                    TienDien = string.IsNullOrEmpty(txtTienDien.Text) ? 0 : decimal.Parse(txtTienDien.Text),
+                    TienNuoc = string.IsNullOrEmpty(txtTienNuoc.Text) ? 0 : decimal.Parse(txtTienNuoc.Text),
+                    GiaPhong = string.IsNullOrEmpty(txtTienPhong.Text) ? 0 : decimal.Parse(txtTienPhong.Text),
                     NgayLap = dtpNgayLap.Value
-                    // MaPhong chưa được lấy từ cbPhong, cần thêm logic này nếu cần
                 };
 
+                hd.TongTien = hoaDonBUS.TinhTongTien(hd);
+
                 hoaDonBUS.Them(hd);
-                MessageBox.Show("Thêm hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadHoaDon();
-                ClearFields();
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Tiền phòng, Tiền điện, Tiền nước phải là định dạng số hợp lệ.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Thêm hóa đơn thành công!");
+                LoadDataGrid();
+                ClearForm();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi thêm hóa đơn: " + ex.Message);
             }
         }
 
@@ -136,180 +133,114 @@ namespace Phong_Tro_GUI.ConTrolMain
         {
             try
             {
-                if (string.IsNullOrEmpty(txtMaHD.Text))
+                if (dgvHoaDon.SelectedRows.Count == 0)
                 {
-                    MessageBox.Show("Vui lòng chọn hóa đơn cần sửa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng chọn hóa đơn để sửa!");
                     return;
                 }
 
-                // Kiểm tra các trường nhập liệu cần thiết
-                if (string.IsNullOrWhiteSpace(txtTienDien.Text) || string.IsNullOrWhiteSpace(txtTienNuoc.Text) || string.IsNullOrWhiteSpace(txtTienPhong.Text))
+                var selectedMaHD = dgvHoaDon.SelectedRows[0].Cells["MaHD"].Value.ToString();
+                var hd = hoaDonBUS.LayTheoMa(selectedMaHD);
+
+                if (hd == null)
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ Tiền phòng, Tiền điện, Tiền nước.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Không tìm thấy hóa đơn để sửa!");
                     return;
                 }
 
-                HoaDon hd = new HoaDon
+                if (cbPhong.SelectedValue == null)
                 {
-                    MaHD = txtMaHD.Text.Trim(),
-                    TienDien = Convert.ToDecimal(txtTienDien.Text),
-                    TienNuoc = Convert.ToDecimal(txtTienNuoc.Text),
-                    GiaPhong = Convert.ToDecimal(txtTienPhong.Text),
-                    NgayLap = dtpNgayLap.Value
-                };
+                    MessageBox.Show("Vui lòng chọn phòng hợp đồng!");
+                    return;
+                }
+
+                hd.MaHopDong = (int)cbPhong.SelectedValue;
+                hd.Thang = dtpNgayLap.Value.Month;
+                hd.Nam = dtpNgayLap.Value.Year;
+                hd.TienDien = string.IsNullOrEmpty(txtTienDien.Text) ? 0 : decimal.Parse(txtTienDien.Text);
+                hd.TienNuoc = string.IsNullOrEmpty(txtTienNuoc.Text) ? 0 : decimal.Parse(txtTienNuoc.Text);
+                hd.GiaPhong = string.IsNullOrEmpty(txtTienPhong.Text) ? 0 : decimal.Parse(txtTienPhong.Text);
+                hd.NgayLap = dtpNgayLap.Value;
+                hd.TongTien = hoaDonBUS.TinhTongTien(hd);
 
                 hoaDonBUS.Sua(hd);
-                MessageBox.Show("Cập nhật hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadHoaDon();
-                ClearFields();
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Tiền phòng, Tiền điện, Tiền nước phải là định dạng số hợp lệ.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Sửa hóa đơn thành công!");
+                LoadDataGrid();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi sửa hóa đơn: " + ex.Message);
             }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaHD.Text))
+            try
             {
-                MessageBox.Show("Vui lòng chọn hóa đơn cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (MessageBox.Show("Bạn có chắc muốn xóa hóa đơn có mã: " + txtMaHD.Text.Trim() + "?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                try
+                if (dgvHoaDon.SelectedRows.Count == 0)
                 {
-                    hoaDonBUS.Xoa(txtMaHD.Text.Trim());
-                    MessageBox.Show("Đã xóa hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadHoaDon();
-                    ClearFields();
+                    MessageBox.Show("Vui lòng chọn hóa đơn để xóa!");
+                    return;
                 }
-                catch (Exception ex)
+
+                var selectedMaHD = dgvHoaDon.SelectedRows[0].Cells["MaHD"].Value.ToString();
+                if (MessageBox.Show("Bạn có chắc muốn xóa hóa đơn này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    MessageBox.Show("Lỗi khi xóa hóa đơn: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    hoaDonBUS.Xoa(selectedMaHD);
+                    MessageBox.Show("Xóa hóa đơn thành công!");
+                    LoadDataGrid();
+                    ClearForm();
                 }
             }
-        }
-
-        private void btnLamMoi_Click(object sender, EventArgs e)
-        {
-            ClearFields();
-            LoadHoaDon();
-            // Có thể thêm logic load dữ liệu cho dgvThongBao nếu cần
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xóa hóa đơn: " + ex.Message);
+            }
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            string keyword = txtTimKiem.Text.Trim();
-            dgvHoaDon.DataSource = hoaDonBUS.TimKiem(keyword);
-        }
-
-        private void txtTimKiem_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtTimKiem.Text))
-                LoadHoaDon();
-        }
-
-        // ==================== THÔNG BÁO ====================
-        private void btnGuiThongBao_Click(object sender, EventArgs e)
-        {
             try
             {
-                string maPhong = cbPhongThongBao.SelectedValue?.ToString();
-                string noiDung = txtNoiDungThongBao.Text.Trim();
-
-                if (string.IsNullOrEmpty(noiDung))
+                var keyword = txtTimKiem.Text.Trim();
+                var list = hoaDonBUS.TimKiem(keyword);
+                dgvHoaDon.DataSource = list.Select(hd => new
                 {
-                    MessageBox.Show("Vui lòng nhập nội dung thông báo!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                var thongBao = new ThongBao
-                {
-                    MaPhong = maPhong,
-                    NoiDung = noiDung,
-                    NgayTao = DateTime.Now
-                };
-
-                thongBaoBUS.Them(thongBao);
-                MessageBox.Show($"Gửi thông báo thành công đến phòng {cbPhongThongBao.Text}!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtNoiDungThongBao.Clear();
-                // Có thể thêm logic load lại dgvThongBao ở đây
+                    hd.MaHD,
+                    KhachHang = hd.HopDong.KhachThue.Ten,
+                    Phong = hd.HopDong.Phong.TenPhong,
+                    hd.Thang,
+                    hd.Nam,
+                    hd.TienDien,
+                    hd.TienNuoc,
+                    hd.TienDichVu,
+                    hd.GiaPhong,
+                    hd.TongTien,
+                    hd.NgayLap
+                }).ToList();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi gửi thông báo: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi tìm kiếm hóa đơn: " + ex.Message);
             }
         }
 
-        // ==================== GRIDVIEW EVENT ====================
-        private void dgvHoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvHoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                // Thay vì CellContentClick nên dùng CellClick để tránh nhầm lẫn, nhưng tôi giữ nguyên tên hàm của bạn
-                DataGridViewRow row = dgvHoaDon.Rows[e.RowIndex];
+                var row = dgvHoaDon.Rows[e.RowIndex];
+                txtMaHD.Text = row.Cells["MaHD"].Value.ToString();
+                txtTenKH.Text = row.Cells["KhachHang"].Value.ToString();
+                txtTienDien.Text = row.Cells["TienDien"].Value.ToString();
+                txtTienNuoc.Text = row.Cells["TienNuoc"].Value.ToString();
+                txtTienPhong.Text = row.Cells["GiaPhong"].Value.ToString();
+                txtTongTien.Text = row.Cells["TongTien"].Value.ToString();
+                dtpNgayLap.Value = Convert.ToDateTime(row.Cells["NgayLap"].Value);
 
-                // Lấy MaHD
-                string maHD = row.Cells["MaHD"].Value?.ToString();
-                txtMaHD.Text = maHD;
-
-                // Lấy MaPhong từ BUS và thiết lập ComboBox
-                if (!string.IsNullOrEmpty(maHD))
-                {
-                    cbPhong.SelectedValue = hoaDonBUS.LayMaPhongTheoHoaDon(maHD);
-                }
-
-                // Hiển thị các thông tin khác
-                txtTienPhong.Text = row.Cells["GiaPhong"].Value?.ToString(); // Chú ý: Tên cột là GiaPhong, không phải TienPhong
-                txtTienDien.Text = row.Cells["TienDien"].Value?.ToString();
-                txtTienNuoc.Text = row.Cells["TienNuoc"].Value?.ToString();
-
-                // Lấy Ngày Lập
-                if (row.Cells["NgayLap"].Value != null)
-                {
-                    dtpNgayLap.Value = Convert.ToDateTime(row.Cells["NgayLap"].Value);
-                }
-
-                // Tính Tổng Tiền (tự động)
-                if (decimal.TryParse(txtTienPhong.Text, out decimal tienPhong) &&
-                    decimal.TryParse(txtTienDien.Text, out decimal tienDien) &&
-                    decimal.TryParse(txtTienNuoc.Text, out decimal tienNuoc))
-                {
-                    txtTongTien.Text = (tienPhong + tienDien + tienNuoc).ToString();
-                }
-                else
-                {
-                    txtTongTien.Clear(); // Xóa nếu không hợp lệ
-                }
-
-                // Giả định: set trạng thái thanh toán (cần thêm cột và logic trong BUS)
-                //cbTrangThai.SelectedIndex = 0; 
+                // Chọn phòng tương ứng
+                cbPhong.SelectedValue = hoaDonBUS.LayTheoMa(row.Cells["MaHD"].Value.ToString()).MaHopDong;
             }
-        }
-
-        // ==================== HÀM PHỤ ====================
-        private void ClearFields()
-        {
-            txtMaHD.Clear();
-            txtTenKH.Clear(); // Thêm TenKH
-            txtTienPhong.Clear();
-            txtTienDien.Clear();
-            txtTienNuoc.Clear();
-            txtTongTien.Clear(); // Thêm TongTien
-            txtNoiDungThongBao.Clear();
-            txtTimKiem.Clear();
-            dtpNgayLap.Value = DateTime.Now; // Đặt lại ngày lập
-            // Đặt lại ComboBox về trạng thái đầu tiên nếu cần
-            if (cbPhong.Items.Count > 0) cbPhong.SelectedIndex = 0;
-            if (cbPhongThongBao.Items.Count > 0) cbPhongThongBao.SelectedIndex = 0;
-            if (cbTrangThai.Items.Count > 0) cbTrangThai.SelectedIndex = 0;
         }
     }
 }

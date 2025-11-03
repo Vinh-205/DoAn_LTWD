@@ -1,4 +1,4 @@
-﻿namespace Phong_Tro_GUI.ConTrolMain
+﻿namespace Phong_Tro_GUI
 {
     partial class HoaDonMain
     {
@@ -105,6 +105,7 @@
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "➕ Thêm HĐ";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -118,6 +119,7 @@
             this.btnSua.TabIndex = 1;
             this.btnSua.Text = "✏️ Sửa HĐ";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -131,6 +133,7 @@
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "🗑️ Xóa HĐ";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnLamMoi
             // 
@@ -144,6 +147,7 @@
             this.btnLamMoi.TabIndex = 3;
             this.btnLamMoi.Text = "🔄 Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // txtTimKiem
             // 
@@ -167,6 +171,7 @@
             this.btnTimKiem.TabIndex = 5;
             this.btnTimKiem.Text = "🔍 Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = false;
+            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // gbThongTin
             // 
@@ -427,6 +432,7 @@
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHoaDon.Size = new System.Drawing.Size(480, 150);
             this.dgvHoaDon.TabIndex = 19;
+            this.dgvHoaDon.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellClick);
             // 
             // HoaDonMain
             // 
