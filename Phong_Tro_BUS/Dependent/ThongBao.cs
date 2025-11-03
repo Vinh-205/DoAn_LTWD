@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_BUS
 {
-    public class ThongBaoBUS
+    public class ThongBaoBUS : IDisposable
     {
         private readonly Connect db;
 
@@ -15,94 +15,169 @@ namespace Phong_Tro_BUS
             db = new Connect();
         }
 
-        // ======== LẤY TẤT CẢ THÔNG BÁO ========
+        // ========== LẤY TẤT CẢ ==========
         public List<ThongBao> LayTatCa()
         {
-            return db.ThongBaos
-                     .Include(tb => tb.HopDong)
-                     .Include(tb => tb.Phong)
-                     .AsNoTracking()
-                     .ToList();
-        }
-
-        // ======== LẤY THEO MÃ THÔNG BÁO ========
-        public ThongBao LayTheoMa(int maTB)
-        {
-            return db.ThongBaos
-                     .Include(tb => tb.HopDong)
-                     .Include(tb => tb.Phong)
-                     .AsNoTracking()
-                     .FirstOrDefault(tb => tb.MaTB == maTB);
-        }
-
-        // ======== THÊM THÔNG BÁO ========
-        public bool Them(ThongBao tb)
-        {
-            if (tb == null)
-                throw new ArgumentNullException(nameof(tb));
-
-            tb.NgayTao = tb.NgayTao ?? DateTime.Now;
-
-            db.ThongBaos.Add(tb);
-            db.SaveChanges();
-            return true;
-        }
-
-        // ======== SỬA THÔNG BÁO ========
-        public bool Sua(ThongBao tb)
-        {
-            if (tb == null)
-                throw new ArgumentNullException(nameof(tb));
-
-            var existing = db.ThongBaos.Find(tb.MaTB);
-            if (existing == null)
-                throw new Exception("Không tìm thấy thông báo để cập nhật!");
-
-            existing.MaHopDong = tb.MaHopDong;
-            existing.MaPhong = tb.MaPhong;
-            existing.NoiDung = tb.NoiDung;
-            existing.NgayTao = tb.NgayTao ?? existing.NgayTao;
-
-            db.Entry(existing).State = EntityState.Modified;
-            db.SaveChanges();
-            return true;
-        }
-
-        // ======== XÓA THÔNG BÁO ========
-        public bool Xoa(int maTB)
-        {
-            var tb = db.ThongBaos.Find(maTB);
-            if (tb == null)
-                throw new Exception("Không tìm thấy thông báo để xóa!");
-
-            db.ThongBaos.Remove(tb);
-            db.SaveChanges();
-            return true;
-        }
-        // ======== LẤY DANH SÁCH PHÒNG ========
-        public List<Phong> LayDanhSachPhong()
-        {
-            using (var db = new Connect())
+            try
             {
-                return db.Phongs
-                         .AsNoTracking()
-                         .ToList();
+                return db.ThongBaos
+                    .Include(tb => tb.TaiKhoan_Gui)
+                    .Include(tb => tb.TaiKhoan_Nhan)
+                    .AsNoTracking()
+                    .OrderByDescending(tb => tb.NgayGui)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy danh sách thông báo: " + ex.Message);
             }
         }
 
+        // ========== LẤY THEO MÃ ==========
+        public ThongBao LayTheoMa(int maTB)
+        {
+            try
+            {
+                return db.ThongBaos
+                    .Include(tb => tb.TaiKhoan_Gui)
+                    .Include(tb => tb.TaiKhoan_Nhan)
+                    .AsNoTracking()
+                    .FirstOrDefault(tb => tb.MaTB == maTB);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy thông báo: " + ex.Message);
+            }
+        }
 
-        // ======== TÌM KIẾM THEO NỘI DUNG ========
+        // ========== LẤY THEO NGƯỜI NHẬN ==========
+        public List<ThongBao> LayTheoNguoiNhan(int maTKNhan)
+        {
+            try
+            {
+                return db.ThongBaos
+                    .Where(tb => tb.MaTK_Nhan == maTKNhan)
+                    .Include(tb => tb.TaiKhoan_Gui)
+                    .OrderByDescending(tb => tb.NgayGui)
+                    .AsNoTracking()
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy thông báo người nhận: " + ex.Message);
+            }
+        }
+
+        // ========== THÊM ==========
+        public bool Them(ThongBao tb)
+        {
+            try
+            {
+                if (tb == null)
+                    throw new ArgumentNullException(nameof(tb));
+
+                tb.NgayGui = DateTime.Now;
+                tb.DaDoc = false;
+
+                db.ThongBaos.Add(tb);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi thêm thông báo: " + ex.Message);
+            }
+        }
+
+        // ========== CẬP NHẬT / SỬA ==========
+        public bool Sua(ThongBao tb)
+        {
+            try
+            {
+                var existing = db.ThongBaos.Find(tb.MaTB);
+                if (existing == null)
+                    throw new Exception("Không tìm thấy thông báo để cập nhật!");
+
+                existing.NoiDung = tb.NoiDung;
+                existing.DaDoc = tb.DaDoc ?? existing.DaDoc;
+                existing.NgayGui = tb.NgayGui ?? existing.NgayGui;
+
+                db.Entry(existing).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi sửa thông báo: " + ex.Message);
+            }
+        }
+
+        // ========== XÓA ==========
+        public bool Xoa(int maTB)
+        {
+            try
+            {
+                var tb = db.ThongBaos.Find(maTB);
+                if (tb == null)
+                    throw new Exception("Không tìm thấy thông báo để xóa!");
+
+                db.ThongBaos.Remove(tb);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi xóa thông báo: " + ex.Message);
+            }
+        }
+
+        // ========== ĐÁNH DẤU ĐÃ ĐỌC ==========
+        public bool DanhDauDaDoc(int maTB)
+        {
+            try
+            {
+                var tb = db.ThongBaos.Find(maTB);
+                if (tb == null) return false;
+
+                tb.DaDoc = true;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi cập nhật trạng thái thông báo: " + ex.Message);
+            }
+        }
+
+        // ========== TÌM KIẾM ==========
         public List<ThongBao> TimKiem(string keyword)
         {
-            if (string.IsNullOrWhiteSpace(keyword))
-                return LayTatCa();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(keyword))
+                    return LayTatCa();
 
-            return db.ThongBaos
-                     .Where(tb => tb.NoiDung.Contains(keyword))
-                     .Include(tb => tb.HopDong)
-                     .Include(tb => tb.Phong)
-                     .AsNoTracking()
-                     .ToList();
+                keyword = keyword.ToLower();
+
+                return db.ThongBaos
+                    .Where(tb => tb.NoiDung.ToLower().Contains(keyword))
+                    .Include(tb => tb.TaiKhoan_Gui)
+                    .Include(tb => tb.TaiKhoan_Nhan)
+                    .OrderByDescending(tb => tb.NgayGui)
+                    .AsNoTracking()
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi tìm kiếm thông báo: " + ex.Message);
+            }
+        }
+
+        // ========== GIẢI PHÓNG ==========
+        public void Dispose()
+        {
+            db?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

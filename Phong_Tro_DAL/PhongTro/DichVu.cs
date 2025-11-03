@@ -23,7 +23,7 @@ namespace Phong_Tro_DAL.PhongTro
         [StringLength(100)]
         public string TenDV { get; set; }
 
-        public decimal DonGia { get; set; }
+        public decimal? DonGia { get; set; }
 
         [StringLength(200)]
         public string MoTa { get; set; }

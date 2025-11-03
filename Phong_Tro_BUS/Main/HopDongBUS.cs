@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
+using Phong_Tro_DAL.PhongTro;
 using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_BUS
@@ -22,8 +23,8 @@ namespace Phong_Tro_BUS
                      .Include(hd => hd.Phong)
                      .Include(hd => hd.KhachThue)
                      .Include(hd => hd.HoaDons)
-                     .Include(hd => hd.ThongBaos)
                      .AsNoTracking()
+                     .OrderByDescending(hd => hd.NgayBatDau)
                      .ToList();
         }
 
@@ -34,7 +35,6 @@ namespace Phong_Tro_BUS
                      .Include(hd => hd.Phong)
                      .Include(hd => hd.KhachThue)
                      .Include(hd => hd.HoaDons)
-                     .Include(hd => hd.ThongBaos)
                      .AsNoTracking()
                      .FirstOrDefault(hd => hd.MaHopDong == maHopDong);
         }
@@ -44,6 +44,16 @@ namespace Phong_Tro_BUS
         {
             if (hd == null)
                 throw new ArgumentNullException(nameof(hd));
+
+            // Kiểm tra phòng đã có hợp đồng đang hoạt động
+            bool daCoHopDong = db.HopDongs.Any(x => x.MaPhong == hd.MaPhong && x.TrangThai == "Đang hoạt động");
+            if (daCoHopDong)
+                throw new Exception($"❌ Phòng {hd.MaPhong} đã có hợp đồng đang hoạt động!");
+
+            if (hd.NgayBatDau == default)
+                hd.NgayBatDau = DateTime.Now;
+
+            hd.TrangThai ??= "Đang hoạt động";
 
             db.HopDongs.Add(hd);
             db.SaveChanges();
@@ -58,7 +68,7 @@ namespace Phong_Tro_BUS
 
             var existing = db.HopDongs.Find(hd.MaHopDong);
             if (existing == null)
-                throw new Exception("Không tìm thấy hợp đồng để cập nhật!");
+                throw new Exception("❌ Không tìm thấy hợp đồng để cập nhật!");
 
             existing.MaPhong = hd.MaPhong;
             existing.MaKhach = hd.MaKhach;
@@ -79,7 +89,7 @@ namespace Phong_Tro_BUS
         {
             var hd = db.HopDongs.Find(maHopDong);
             if (hd == null)
-                throw new Exception("Không tìm thấy hợp đồng để xóa!");
+                throw new Exception("❌ Không tìm thấy hợp đồng để xóa!");
 
             db.HopDongs.Remove(hd);
             db.SaveChanges();
@@ -92,12 +102,52 @@ namespace Phong_Tro_BUS
             if (string.IsNullOrWhiteSpace(tuKhoa))
                 return LayTatCa();
 
+            tuKhoa = tuKhoa.Trim().ToLower();
+
             return db.HopDongs
-                     .Where(hd => hd.MaPhong.Contains(tuKhoa) ||
-                                  hd.TrangThai.Contains(tuKhoa) ||
-                                  hd.GhiChu.Contains(tuKhoa))
+                     .Where(hd =>
+                         (hd.MaPhong != null && hd.MaPhong.ToLower().Contains(tuKhoa)) ||
+                         (hd.TrangThai != null && hd.TrangThai.ToLower().Contains(tuKhoa)) ||
+                         (hd.GhiChu != null && hd.GhiChu.ToLower().Contains(tuKhoa)) ||
+                         (hd.KhachThue.TenKhach != null && hd.KhachThue.TenKhach.ToLower().Contains(tuKhoa))
+                     )
+                     .Include(hd => hd.KhachThue)
+                     .Include(hd => hd.Phong)
+                     .AsNoTracking()
+                     .OrderByDescending(hd => hd.NgayBatDau)
+                     .ToList();
+        }
+
+        // ======== LẤY DANH SÁCH HỢP ĐỒNG ĐANG HOẠT ĐỘNG ========
+        public List<HopDong> LayHopDongDangHoatDong()
+        {
+            return db.HopDongs
+                     .Where(hd => hd.TrangThai == "Đang hoạt động")
+                     .Include(hd => hd.Phong)
+                     .Include(hd => hd.KhachThue)
                      .AsNoTracking()
                      .ToList();
+        }
+
+        // ======== KIỂM TRA PHÒNG CÓ HỢP ĐỒNG ĐANG THUÊ KHÔNG ========
+        public bool PhongDangCoHopDong(string maPhong)
+        {
+            return db.HopDongs.Any(hd => hd.MaPhong == maPhong && hd.TrangThai == "Đang hoạt động");
+        }
+
+        // ======== KẾT THÚC HỢP ĐỒNG ========
+        public bool KetThucHopDong(int maHopDong)
+        {
+            var hd = db.HopDongs.Find(maHopDong);
+            if (hd == null)
+                throw new Exception("❌ Không tìm thấy hợp đồng để kết thúc!");
+
+            hd.TrangThai = "Đã kết thúc";
+            hd.NgayKetThuc = DateTime.Now;
+
+            db.Entry(hd).State = EntityState.Modified;
+            db.SaveChanges();
+            return true;
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Phong_Tro_DAL.Phong_Tro;
 using System.Data.Entity;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_BUS
 {
-    public class TienIchBUS
+    public class TienIchBUS : IDisposable
     {
         private readonly Connect db;
 
@@ -15,20 +15,20 @@ namespace Phong_Tro_BUS
             db = new Connect();
         }
 
-        // ======== LẤY DANH SÁCH ========
+        // =================== 1️⃣ LẤY TẤT CẢ ===================
         public List<TienIch> LayTatCa()
         {
             return db.TienIches.AsNoTracking().ToList();
         }
 
-        // ======== THÊM ========
+        // =================== 2️⃣ THÊM ===================
         public bool Them(TienIch ti)
         {
             if (ti == null)
-                throw new ArgumentNullException(nameof(ti));
+                throw new ArgumentNullException(nameof(ti), "Dữ liệu tiện ích không hợp lệ!");
 
-            // Kiểm tra trùng tên tiện ích
-            bool tonTai = db.TienIches.Any(x => x.TenTienIch == ti.TenTienIch);
+            // Kiểm tra trùng tên
+            bool tonTai = db.TienIches.Any(x => x.TenTienIch.Trim().ToLower() == ti.TenTienIch.Trim().ToLower());
             if (tonTai)
                 throw new Exception("Tên tiện ích đã tồn tại!");
 
@@ -37,15 +37,23 @@ namespace Phong_Tro_BUS
             return true;
         }
 
-        // ======== SỬA ========
+        // =================== 3️⃣ SỬA ===================
         public bool Sua(TienIch ti)
         {
             if (ti == null)
-                throw new ArgumentNullException(nameof(ti));
+                throw new ArgumentNullException(nameof(ti), "Dữ liệu cập nhật không hợp lệ!");
 
             var existing = db.TienIches.Find(ti.MaTienIch);
             if (existing == null)
                 throw new Exception("Không tìm thấy tiện ích để cập nhật!");
+
+            // Kiểm tra trùng tên (trừ chính nó)
+            bool trungTen = db.TienIches.Any(x =>
+                x.TenTienIch.Trim().ToLower() == ti.TenTienIch.Trim().ToLower() &&
+                x.MaTienIch != ti.MaTienIch);
+
+            if (trungTen)
+                throw new Exception("Tên tiện ích đã tồn tại, vui lòng chọn tên khác!");
 
             existing.TenTienIch = ti.TenTienIch;
             existing.DonGia = ti.DonGia;
@@ -56,34 +64,51 @@ namespace Phong_Tro_BUS
             return true;
         }
 
-        // ======== XÓA ========
+        // =================== 4️⃣ XÓA ===================
         public bool Xoa(int maTienIch)
         {
-            var ti = db.TienIches.Find(maTienIch);
+            var ti = db.TienIches.Include(x => x.ChiTietTienIches)
+                                 .FirstOrDefault(x => x.MaTienIch == maTienIch);
+
             if (ti == null)
                 throw new Exception("Không tìm thấy tiện ích cần xóa!");
+
+            // Nếu tiện ích đang được dùng trong ChiTietTienIch thì không cho xóa
+            if (ti.ChiTietTienIches != null && ti.ChiTietTienIches.Any())
+                throw new Exception("Không thể xóa! Tiện ích này đang được sử dụng trong chi tiết phòng.");
 
             db.TienIches.Remove(ti);
             db.SaveChanges();
             return true;
         }
 
-        // ======== TÌM KIẾM ========
+        // =================== 5️⃣ TÌM KIẾM ===================
         public List<TienIch> TimKiem(string tuKhoa)
         {
             if (string.IsNullOrWhiteSpace(tuKhoa))
                 return LayTatCa();
 
+            tuKhoa = tuKhoa.Trim().ToLower();
+
             return db.TienIches
-                     .Where(x => x.TenTienIch.Contains(tuKhoa))
                      .AsNoTracking()
+                     .Where(x => x.TenTienIch.ToLower().Contains(tuKhoa) ||
+                                 (x.MoTa != null && x.MoTa.ToLower().Contains(tuKhoa)))
                      .ToList();
         }
 
-        // ======== LẤY THEO MÃ ========
+        // =================== 6️⃣ LẤY THEO MÃ ===================
         public TienIch LayTheoMa(int maTienIch)
         {
-            return db.TienIches.AsNoTracking().FirstOrDefault(x => x.MaTienIch == maTienIch);
+            return db.TienIches.AsNoTracking()
+                               .FirstOrDefault(x => x.MaTienIch == maTienIch);
+        }
+
+        // =================== 7️⃣ HỦY (DISPOSE) ===================
+        public void Dispose()
+        {
+            db?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

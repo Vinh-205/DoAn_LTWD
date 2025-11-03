@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_BUS
 {
-    public class ChuTroBUS
+    public class ChuTroBUS : IDisposable
     {
         private readonly Connect db;
 
@@ -15,44 +15,58 @@ namespace Phong_Tro_BUS
             db = new Connect();
         }
 
-        // ======== LẤY TẤT CẢ ========
+        // =================== 1️⃣ LẤY TẤT CẢ ===================
         public List<ChuTro> LayTatCa()
         {
-            return db.ChuTro
-                     .Include(c => c.Phongs)
+            return db.ChuTros
                      .AsNoTracking()
+                     .OrderBy(c => c.Ten)
                      .ToList();
         }
 
-        // ======== LẤY THEO MÃ CHỦ ========
-        public ChuTro LayTheoMa(int maChu)
+        // =================== 2️⃣ LẤY THEO MÃ ===================
+        public ChuTro LayTheoMa(int maChuTro)
         {
-            return db.ChuTro
-                     .Include(c => c.Phongs)
+            return db.ChuTros
                      .AsNoTracking()
-                     .FirstOrDefault(c => c.MaChu == maChu);
+                     .FirstOrDefault(c => c.MaChuTro == maChuTro);
         }
 
-        // ======== THÊM ========
+        // =================== 3️⃣ THÊM MỚI ===================
         public bool Them(ChuTro chu)
         {
             if (chu == null)
-                throw new ArgumentNullException(nameof(chu));
+                throw new ArgumentNullException(nameof(chu), "Dữ liệu chủ trọ không hợp lệ!");
 
-            db.ChuTro.Add(chu);
+            // Kiểm tra trùng email hoặc số điện thoại
+            bool tonTai = db.ChuTros.Any(c =>
+                c.Email == chu.Email || c.SDT == chu.SDT);
+
+            if (tonTai)
+                throw new Exception("Email hoặc số điện thoại đã tồn tại!");
+
+            db.ChuTros.Add(chu);
             db.SaveChanges();
             return true;
         }
 
-        // ======== SỬA ========
+        // =================== 4️⃣ CẬP NHẬT ===================
         public bool Sua(ChuTro chu)
         {
             if (chu == null)
-                throw new ArgumentNullException(nameof(chu));
+                throw new ArgumentNullException(nameof(chu), "Dữ liệu cập nhật không hợp lệ!");
 
-            var existing = db.ChuTro.Find(chu.MaChu);
+            var existing = db.ChuTros.Find(chu.MaChuTro);
             if (existing == null)
                 throw new Exception("Không tìm thấy chủ trọ để cập nhật!");
+
+            // Kiểm tra trùng email/sđt (trừ chính nó)
+            bool trung = db.ChuTros.Any(c =>
+                (c.Email == chu.Email || c.SDT == chu.SDT) &&
+                c.MaChuTro != chu.MaChuTro);
+
+            if (trung)
+                throw new Exception("Email hoặc số điện thoại đã tồn tại!");
 
             existing.Ten = chu.Ten;
             existing.Email = chu.Email;
@@ -64,28 +78,41 @@ namespace Phong_Tro_BUS
             return true;
         }
 
-        // ======== XÓA ========
-        public bool Xoa(int maChu)
+        // =================== 5️⃣ XÓA ===================
+        public bool Xoa(int maChuTro)
         {
-            var chu = db.ChuTro.Find(maChu);
+            var chu = db.ChuTros.Find(maChuTro);
             if (chu == null)
                 throw new Exception("Không tìm thấy chủ trọ để xóa!");
 
-            db.ChuTro.Remove(chu);
+            db.ChuTros.Remove(chu);
             db.SaveChanges();
             return true;
         }
 
-        // ======== TÌM KIẾM ========
+        // =================== 6️⃣ TÌM KIẾM ===================
         public List<ChuTro> TimKiem(string tuKhoa)
         {
             if (string.IsNullOrWhiteSpace(tuKhoa))
                 return LayTatCa();
 
-            return db.ChuTro
-                     .Where(c => c.Ten.Contains(tuKhoa) || c.Email.Contains(tuKhoa) || c.SDT.Contains(tuKhoa))
+            tuKhoa = tuKhoa.Trim().ToLower();
+
+            return db.ChuTros
                      .AsNoTracking()
+                     .Where(c => c.Ten.ToLower().Contains(tuKhoa) ||
+                                 (c.Email != null && c.Email.ToLower().Contains(tuKhoa)) ||
+                                 (c.SDT != null && c.SDT.Contains(tuKhoa)) ||
+                                 (c.Role != null && c.Role.ToLower().Contains(tuKhoa)))
+                     .OrderBy(c => c.Ten)
                      .ToList();
+        }
+
+        // =================== 7️⃣ HỦY (Dispose) ===================
+        public void Dispose()
+        {
+            db?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
