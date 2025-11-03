@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Phong_Tro_DAL.Phong_Tro
         [StringLength(100)]
         public string TenDV { get; set; }
 
-        public decimal? DonGia { get; set; }
+        public decimal DonGia { get; set; }
 
         [StringLength(200)]
         public string MoTa { get; set; }

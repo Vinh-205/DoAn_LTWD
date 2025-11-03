@@ -62,13 +62,17 @@
     <Compile Include="PhongTro\ChuTro.cs" />
     <Compile Include="PhongTro\Connect.cs" />
     <Compile Include="PhongTro\DichVu.cs" />
+    <Compile Include="PhongTro\EmailTaiKhoan.cs" />
     <Compile Include="PhongTro\HoaDon.cs" />
     <Compile Include="PhongTro\HopDong.cs" />
     <Compile Include="PhongTro\KhachThue.cs" />
     <Compile Include="PhongTro\Phong.cs" />
     <Compile Include="PhongTro\TaiKhoan.cs" />
     <Compile Include="PhongTro\ThongBao.cs" />
+    <Compile Include="PhongTro\ThongKeDoanhThu.cs" />
+    <Compile Include="PhongTro\ThuePhong.cs" />
     <Compile Include="PhongTro\TienIch.cs" />
+    <Compile Include="TaiKhoanDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;
@@ -12,17 +12,20 @@ namespace Phong_Tro_DAL.Phong_Tro
         [Key]
         public int MaTB { get; set; }
 
-        public int? MaHopDong { get; set; }
+        public int MaTK_Gui { get; set; }
 
-        [StringLength(5)]
-        public string MaPhong { get; set; }
+        public int? MaTK_Nhan { get; set; }
 
+        [Required]
+        [StringLength(500)]
         public string NoiDung { get; set; }
 
-        public DateTime? NgayTao { get; set; }
+        public bool? DaDoc { get; set; }
 
-        public virtual HopDong HopDong { get; set; }
+        public DateTime? NgayGui { get; set; }
 
-        public virtual Phong Phong { get; set; }
+        public virtual TaiKhoan TaiKhoan { get; set; }
+
+        public virtual TaiKhoan TaiKhoan1 { get; set; }
     }
 }

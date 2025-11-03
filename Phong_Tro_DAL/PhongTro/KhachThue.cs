@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;

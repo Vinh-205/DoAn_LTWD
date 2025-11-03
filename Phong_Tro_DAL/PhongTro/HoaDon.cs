@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;
@@ -41,6 +41,7 @@ namespace Phong_Tro_DAL.Phong_Tro
 
         public decimal? GiaPhong { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? TongTien { get; set; }
 
         public DateTime? NgayLap { get; set; }

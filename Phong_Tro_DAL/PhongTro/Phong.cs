@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;
@@ -14,42 +14,33 @@ namespace Phong_Tro_DAL.Phong_Tro
         {
             ChiTietTienIches = new HashSet<ChiTietTienIch>();
             HopDongs = new HashSet<HopDong>();
-            ThongBaos = new HashSet<ThongBao>();
+            ThuePhongs = new HashSet<ThuePhong>();
         }
 
         [Key]
         [StringLength(5)]
         public string MaPhong { get; set; }
 
-        public int MaChu { get; set; }
-
+        [Required]
         [StringLength(50)]
         public string TenPhong { get; set; }
 
-        [StringLength(50)]
-        public string LoaiPhong { get; set; }
+        public decimal GiaPhong { get; set; }
 
-        public double? DienTich { get; set; }
-
-        public decimal? GiaThue { get; set; }
-
+        [Required]
         [StringLength(20)]
         public string TrangThai { get; set; }
 
-        public string TienNghi { get; set; }
-
-        [StringLength(255)]
-        public string AnhMinhHoa { get; set; }
+        [StringLength(200)]
+        public string MoTa { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTienIch> ChiTietTienIches { get; set; }
-
-        public virtual ChuTro ChuNha { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HopDong> HopDongs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThongBao> ThongBaos { get; set; }
+        public virtual ICollection<ThuePhong> ThuePhongs { get; set; }
     }
 }

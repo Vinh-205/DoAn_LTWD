@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;
@@ -6,17 +6,11 @@ namespace Phong_Tro_DAL.Phong_Tro
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ChuNha")]
+    [Table("ChuTro")]
     public partial class ChuTro
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ChuTro()
-        {
-            Phongs = new HashSet<Phong>();
-        }
-
         [Key]
-        public int MaChu { get; set; }
+        public int MaChuTro { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -30,8 +24,5 @@ namespace Phong_Tro_DAL.Phong_Tro
 
         [StringLength(20)]
         public string Role { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Phong> Phongs { get; set; }
     }
 }

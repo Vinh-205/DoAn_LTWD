@@ -1,4 +1,4 @@
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,6 @@ namespace Phong_Tro_DAL.Phong_Tro
         public HopDong()
         {
             HoaDons = new HashSet<HoaDon>();
-            ThongBaos = new HashSet<ThongBao>();
         }
 
         [Key]
@@ -46,8 +45,5 @@ namespace Phong_Tro_DAL.Phong_Tro
         public virtual KhachThue KhachThue { get; set; }
 
         public virtual Phong Phong { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThongBao> ThongBaos { get; set; }
     }
 }
