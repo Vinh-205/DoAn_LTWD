@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_BUS;                  // Kết nối tầng BUS
-using Phong_Tro_DAL.PhongTro;        // Kết nối tầng DAL (DichVu, Connect, ...)
+using Phong_Tro_BUS;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_GUI
 {

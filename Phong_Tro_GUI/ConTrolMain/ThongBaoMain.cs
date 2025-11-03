@@ -43,7 +43,7 @@ namespace Phong_Tro_GUI.ConTrolMain
                 tb.MaTB,
                 tb.MaPhong,
                 tb.NoiDung,
-                NgayTao = tb.NgayTao?.ToString("dd/MM/yyyy HH:mm") ?? ""
+                NgayTao = tb.NgayTao.ToString("dd/MM/yyyy HH:mm") ?? ""
             }).ToList();
 
             dgvThongBao.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;

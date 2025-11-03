@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Data.Entity;
-namespace Phong_Tro_DAL.Phong_Tro
+namespace Phong_Tro_DAL.PhongTro
 {
     public class TaiKhoanDAL
     {

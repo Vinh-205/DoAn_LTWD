@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Phong_Tro_BUS;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_GUI
 {

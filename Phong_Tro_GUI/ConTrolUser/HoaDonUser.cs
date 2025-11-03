@@ -3,7 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Phong_Tro_DAL.Phong_Tro;
+using Phong_Tro_DAL.PhongTro;
 using Phong_Tro_GUI.ConTrolUser;
 
 namespace Phong_Tro_GUI.ConTrolUser

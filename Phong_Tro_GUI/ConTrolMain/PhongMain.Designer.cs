@@ -167,7 +167,6 @@
             this.dgvDanhSachPhong.RowHeadersWidth = 51;
             this.dgvDanhSachPhong.Size = new System.Drawing.Size(550, 260);
             this.dgvDanhSachPhong.TabIndex = 2;
-            this.dgvDanhSachPhong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDanhSachPhong_CellContentClick);
             // 
             // btnThem
             // 

@@ -1,5 +1,4 @@
-﻿using Phong_Tro_DAL.Phong_Tro;
-using Phong_Tro_DAL.PhongTro;
+﻿using Phong_Tro_DAL.PhongTro;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

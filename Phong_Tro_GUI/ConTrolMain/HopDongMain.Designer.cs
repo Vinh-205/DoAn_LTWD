@@ -216,7 +216,6 @@
             this.dgvHopDong.RowHeadersWidth = 51;
             this.dgvHopDong.Size = new System.Drawing.Size(720, 244);
             this.dgvHopDong.TabIndex = 35;
-            this.dgvHopDong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHopDong_CellContentClick);
             // 
             // panel1
             // 

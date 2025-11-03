@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using Phong_Tro_BUS;
-using Phong_Tro_DAL.Phong_Tro;
-using Phong_Tro_GUI.ConTrolUser;
+using Phong_Tro_DAL.PhongTro;
 
 namespace Phong_Tro_GUI.ConTrolUser
 {
@@ -25,14 +24,16 @@ namespace Phong_Tro_GUI.ConTrolUser
 
         private void TaiDanhSachThongBao()
         {
+            // Lấy danh sách thông báo không có NgayTao
             var ds = _thongBaoBUS.LayTatCa()
-                                 .OrderByDescending(tb => tb.NgayTao)
+                                 .OrderByDescending(tb => tb.MaTB)
                                  .Select(tb => new
                                  {
                                      tb.MaTB,
-                                     tb.MaPhong,
                                      tb.NoiDung,
-                                     NgayTao = tb.NgayTao.HasValue ? tb.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : ""
+                                     tb.NgayGui,
+                                     tb.DaDoc,
+                                     tb.MaTK_Nhan,
                                  })
                                  .ToList();
 
@@ -41,20 +42,21 @@ namespace Phong_Tro_GUI.ConTrolUser
             dgvThongBao.Columns["MaTB"].HeaderText = "Mã TB";
             dgvThongBao.Columns["MaPhong"].HeaderText = "Phòng";
             dgvThongBao.Columns["NoiDung"].HeaderText = "Nội dung";
-            dgvThongBao.Columns["NgayTao"].HeaderText = "Ngày tạo";
         }
 
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
             string keyword = txtTimKiem.Text.Trim();
+
             var ds = _thongBaoBUS.TimKiem(keyword)
-                                 .OrderByDescending(tb => tb.NgayTao)
+                                 .OrderByDescending(tb => tb.MaTB)
                                  .Select(tb => new
                                  {
                                      tb.MaTB,
-                                     tb.MaPhong,
-                                     tb.NoiDung,
-                                     NgayTao = tb.NgayTao.HasValue ? tb.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : ""
+                                     tb.DaDoc,
+                                     tb.MaTK_Nhan,
+                                     tb.MaTK_Gui,
+                                     tb.NoiDung
                                  })
                                  .ToList();
 
@@ -68,7 +70,7 @@ namespace Phong_Tro_GUI.ConTrolUser
                 var row = dgvThongBao.Rows[e.RowIndex];
                 txtNoiDung.Text = row.Cells["NoiDung"].Value?.ToString();
                 lblPhong.Text = "Phòng: " + row.Cells["MaPhong"].Value?.ToString();
-                lblNgay.Text = "Ngày: " + row.Cells["NgayTao"].Value?.ToString();
+                lblNgay.Text = "Ngày: Không xác định";
             }
         }
     }

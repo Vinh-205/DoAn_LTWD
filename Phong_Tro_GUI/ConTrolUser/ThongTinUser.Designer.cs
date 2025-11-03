@@ -44,7 +44,7 @@ namespace Phong_Tro_GUI.ConTrolUser
             // 
             this.picAvatar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.picAvatar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picAvatar.Location = new System.Drawing.Point(32, 78);
+            this.picAvatar.Location = new System.Drawing.Point(33, 90);
             this.picAvatar.Name = "picAvatar";
             this.picAvatar.Size = new System.Drawing.Size(160, 200);
             this.picAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

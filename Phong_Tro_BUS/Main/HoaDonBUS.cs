@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Phong_Tro_DAL.PhongTro;
-using Phong_Tro_DAL.Phong_Tro;
 
 namespace Phong_Tro_BUS
 {
